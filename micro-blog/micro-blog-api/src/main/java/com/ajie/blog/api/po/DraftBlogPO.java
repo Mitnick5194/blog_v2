@@ -9,10 +9,14 @@ import lombok.Setter;
 @Setter
 @TableName("mb_draft_blog")
 public class DraftBlogPO extends BasePO {
+
+    /**
+     * 源博文ID
+     */
+    private Long refBlogId;
     /**
      * 用户ID
      */
-
     private Long userId;
     /**
      * 标题

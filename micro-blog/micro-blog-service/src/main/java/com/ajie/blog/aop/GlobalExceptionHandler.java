@@ -13,14 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 统一异常返回处理器
+ *
+ * @deprecated 使用apiLog拦截
  */
-@ControllerAdvice
+@Deprecated
 public class GlobalExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ResponseBody
-    @ExceptionHandler(Throwable.class)
-    public RestResponse globalException(HttpServletResponse response, Throwable e) {
+    @ExceptionHandler(Exception.class)
+    public RestResponse globalException(HttpServletResponse response, Exception e) {
         logger.error("", e);
         if (e instanceof CommonException) {
             CommonException ex = (CommonException) e;

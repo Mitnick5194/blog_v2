@@ -11,6 +11,18 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class DraftBlogDto implements Serializable {
+
+    /**
+     * 主键ID
+     */
+    @ApiModelProperty(name = "id", value = "主键ID")
+    private Long id;
+
+    /**
+     * 源博文ID
+     */
+    @ApiModelProperty(name = "refBlogId", value = "源博文ID")
+    private Long refBlogId;
     /**
      * 用户ID
      */

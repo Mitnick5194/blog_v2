@@ -21,21 +21,6 @@ public class BlogQueryReqDto extends BasePageReqDto {
     /**
      * 标签
      */
-    private List<String> tagList;
-
-    public String getKeyword() {
-        return keyword;
-    }
-
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public List<String> getTagList() {
-        return tagList;
-    }
-
-    public void setTagList(List<String> tagList) {
-        this.tagList = tagList;
-    }
+    @ApiModelProperty(value = "标签")
+    private List<Long> tagList;
 }

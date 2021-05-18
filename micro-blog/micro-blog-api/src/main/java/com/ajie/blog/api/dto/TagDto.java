@@ -15,6 +15,8 @@ import java.util.List;
 @Getter
 @Setter
 public class TagDto extends BaseReqDto {
+    @ApiModelProperty(value = "主键ID")
+    private Long id;
     @ApiModelProperty(value = "标签名")
     private String tag;
 

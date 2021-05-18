@@ -9,10 +9,14 @@ import lombok.Setter;
 @Setter
 @TableName("mb_comment")
 public class CommentPO extends BasePO {
+
+    /**
+     * 博文ID
+     */
+    private Long blogId;
     /**
      * 用户ID
      */
-
     private Long userId;
     /**
      * 父评论ID
@@ -22,21 +26,5 @@ public class CommentPO extends BasePO {
     /**
      * 内容
      */
-
     private String content;
-    /**
-     * 状态，1正常，2草稿
-     */
-
-    private Integer status;
-    /**
-     * 用户名称
-     */
-
-    private String userName;
-    /**
-     * 用户头像链接
-     */
-
-    private String userHeaderUrl;
 }

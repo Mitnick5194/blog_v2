@@ -38,11 +38,7 @@ public class BlogDto implements Serializable {
      */
     @ApiModelProperty(name = "abstractContent", value = "摘要")
     private String abstractContent;
-    /**
-     * 状态，1正常，2草稿
-     */
-    @ApiModelProperty(name = "status", value = "状态，1正常，2草稿")
-    private Integer status;
+
     /**
      * 类型，1正常，2私密
      */

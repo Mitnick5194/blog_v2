@@ -29,11 +29,7 @@ public class BlogPO extends BasePO {
      */
 
     private String abstractContent;
-    /**
-     * 状态，1正常，2草稿
-     */
 
-    private Integer status;
     /**
      * 类型，1正常，2私密
      */

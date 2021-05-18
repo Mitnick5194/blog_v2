@@ -2,6 +2,7 @@ package com.ajie.blog.controller;
 
 import com.ajie.blog.api.dto.BlogQueryReqDto;
 import com.ajie.blog.api.dto.BlogReqDto;
+import com.ajie.blog.api.dto.BlogRespDto;
 import com.ajie.blog.api.rest.BlogRestApi;
 import com.ajie.blog.service.BlogService;
 import com.ajie.commons.RestResponse;
@@ -17,7 +18,7 @@ import java.util.List;
  * 博文请求入口
  */
 @Api(tags = "博文模块")
-@RequestMapping("/v2/blog")
+@RequestMapping("/micro-blog/v2/blog")
 @RestController
 public class BlogController implements BlogRestApi {
 
@@ -39,6 +40,11 @@ public class BlogController implements BlogRestApi {
         return RestResponse.success(blogService.update(blog));
     }
 
+    @Override
+    public RestResponse<Long> saveDraft(BlogReqDto blog) {
+        return RestResponse.success(blogService.saveDraft(blog));
+    }
+
     @ApiOperation(value = "根据ID删除", notes = "根据ID删除")
     @GetMapping("/delete-by-id")
     @Override
@@ -49,8 +55,13 @@ public class BlogController implements BlogRestApi {
     @ApiOperation(value = "分页查询", notes = "分页查询")
     @PostMapping("/query-by-page")
     @Override
-    public RestResponse<PageDto<List<BlogReqDto>>> queryByPage(@RequestBody BlogQueryReqDto dto) {
+    public RestResponse<PageDto<List<BlogRespDto>>> queryByPage(@RequestBody BlogQueryReqDto dto) {
         return RestResponse.success(blogService.queryByPage(dto));
+    }
+
+    @Override
+    public RestResponse<BlogRespDto> queryBlogById(Long id) {
+        return RestResponse.success(blogService.queryBlogById(id));
     }
 
     @GetMapping("migrate")

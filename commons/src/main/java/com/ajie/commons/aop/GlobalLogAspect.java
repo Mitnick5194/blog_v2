@@ -49,6 +49,7 @@ public abstract class GlobalLogAspect {
             proceed = point.proceed();
             end = System.currentTimeMillis();
         } catch (Throwable e) {
+            logger.error("", e);
             //判断异常类型
             RestResponse resp = new RestResponse();
             if (e instanceof CommonException) {

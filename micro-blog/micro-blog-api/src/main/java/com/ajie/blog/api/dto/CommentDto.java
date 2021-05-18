@@ -11,6 +11,17 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class CommentDto implements Serializable {
+
+    /**
+     * 主键ID
+     */
+    @ApiModelProperty(name = "id", value = "主键ID")
+    private Long id;
+    /**
+     * 博文ID
+     */
+    @ApiModelProperty(name = "blogId", value = "博文ID")
+    private Long blogId;
     /**
      * 用户ID
      */
@@ -26,19 +37,4 @@ public class CommentDto implements Serializable {
      */
     @ApiModelProperty(name = "content", value = "内容")
     private String content;
-    /**
-     * 状态，1正常，2草稿
-     */
-    @ApiModelProperty(name = "status", value = "状态，1正常，2草稿")
-    private Integer status;
-    /**
-     * 用户名称
-     */
-    @ApiModelProperty(name = "userName", value = "用户名称")
-    private String userName;
-    /**
-     * 用户头像链接
-     */
-    @ApiModelProperty(name = "userHeaderUrl", value = "用户头像链接")
-    private String userHeaderUrl;
 }

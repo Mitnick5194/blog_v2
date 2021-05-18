@@ -11,17 +11,10 @@ import java.util.List;
 @Getter
 @Setter
 public class BlogReqDto extends BlogDto {
+
     /**
      * 标签组
      */
     @ApiModelProperty(value = "标签组")
     List<TagDto> tagList;
-
-    public List<TagDto> getTagList() {
-        return tagList;
-    }
-
-    public void setTagList(List<TagDto> tagList) {
-        this.tagList = tagList;
-    }
 }

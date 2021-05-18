@@ -1,13 +1,22 @@
 package com.ajie.commons.po;
 
 import com.ajie.commons.utils.UserInfoUtil;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.collections.CollectionUtils;
 
+import java.beans.Transient;
 import java.io.Serializable;
-import java.util.Date;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 基础持久PO
  */
+@Getter
+@Setter
 public class BasePO implements Serializable {
     /**
      * 主键ID
@@ -35,11 +44,24 @@ public class BasePO implements Serializable {
      */
     private int del = 0;
 
+    private static final String EQ_KEY = "equal";
+    private static final String ORDER_BY_KEY = "order_by";
+
+    /**
+     * 方法缓存，不用每次都用反射获取
+     */
+    private static Map<String, Method> methods = new ConcurrentHashMap<>();
+
+    /**
+     * po对象属性缓存
+     */
+    private static Map<String, List<Field>> poFields = new ConcurrentHashMap<>();
+
     /**
      * 填充公共字段，一般在插入前一步执行
      */
     public void createFill() {
-        Long userId = UserInfoUtil.get().getId();
+        Long userId = UserInfoUtil.getUserId();
         if (null != userId) {
             this.createPerson = String.valueOf(userId);
             this.updatePerson = String.valueOf(userId);
@@ -49,55 +71,125 @@ public class BasePO implements Serializable {
     }
 
     public void updateFill() {
-        this.updatePerson = String.valueOf(UserInfoUtil.get().getId());
+        Long userId = UserInfoUtil.getUserId();
+        if (null != userId) {
+            this.updatePerson = String.valueOf(userId);
+        }
         this.updateTime = new Date();
     }
 
-    public Long getId() {
-        return id;
+    /**
+     * 转换成mybatis-plus查询参数，并添加del参数和按创建时间排序
+     *
+     * @return
+     */
+    public <T> T toQueryWrap() {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Class<?> aClass = this.getClass();
+            List<Field> fields = getFields(aClass);
+            for (Field f : fields) {
+                f.setAccessible(true);
+                String name = f.getName();
+                Object o = f.get(this);
+                if (Objects.isNull(o)) {
+                    continue;
+                }
+                map.put(camelCaseToUnderline(name), o);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Class clazz = Class.forName("com.baomidou.mybatisplus.core.conditions.query.QueryWrapper");
+            Object o = clazz.newInstance();
+            if (map.isEmpty()) {
+                return (T) o;
+            }
+            Method m = getEqMethod(clazz);
+            Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, Object> next = it.next();
+                String key = next.getKey();
+                Object value = next.getValue();
+                m.invoke(o, true, key, value);
+            }
+            m.invoke(o, true, "del", 0);
+            Method orderBy = getOrderByMethod(clazz);
+            orderBy.invoke(0, true, false, "create_time");
+            return (T) o;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    private Method getEqMethod(Class clazz) throws NoSuchMethodException {
+        Method method = methods.get(EQ_KEY);
+        if (null != method) {
+            return method;
+        }
+        Method m = clazz.getSuperclass().getMethod("eq", boolean.class, Object.class, Object.class);
+        methods.put(EQ_KEY, m);//并发也不怕，最多让后一个替换掉，反正都一样的
+        return m;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    private Method getOrderByMethod(Class<?> clazz) throws NoSuchMethodException {
+        Method method = methods.get(ORDER_BY_KEY);
+        if (null != method) {
+            return method;
+        }
+        Method m = clazz.getSuperclass().getMethod("orderBy", boolean.class, boolean.class, Object[].class);
+        methods.put(ORDER_BY_KEY, m);//并发也不怕，最多让后一个替换掉，反正都一样的
+        return m;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    private List<Field> getFields(Class<?> clazz) {
+        String name = clazz.getName();
+        List<Field> fields = poFields.get(name);
+        if (CollectionUtils.isNotEmpty(fields)) {
+            return fields;
+        }
+        List<Field> list = new ArrayList<>();
+        do {
+            Field[] declaredFields = clazz.getDeclaredFields();
+            for (Field f : declaredFields) {
+                //过滤掉final和static属性
+                if (Modifier.isFinal(f.getModifiers()) || Modifier.isStatic(f.getModifiers())) {
+                    continue;
+                }
+                list.add(f);
+            }
+            clazz = clazz.getSuperclass();
+        } while (null != clazz);
+        poFields.put(name, list);
+        return list;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    /**
+     * 将驼峰转换成下划线
+     *
+     * @param property
+     * @return
+     */
+    private static String camelCaseToUnderline(String property) {
+        StringBuilder sb = new StringBuilder();
+        for (char c : property.toCharArray()) {
+            if (c >= 'a' && c <= 'z') {
+                //小写
+                sb.append(c);
+                continue;
+            }
+            sb.append("_").append((char) (c + 32));
+        }
+        return sb.toString();
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    static class Test extends BasePO {
+        private String test;
     }
 
-    public String getCreatePerson() {
-        return createPerson;
-    }
-
-    public void setCreatePerson(String createPerson) {
-        this.createPerson = createPerson;
-    }
-
-    public String getUpdatePerson() {
-        return updatePerson;
-    }
-
-    public void setUpdatePerson(String updatePerson) {
-        this.updatePerson = updatePerson;
-    }
-
-    public int getDel() {
-        return del;
-    }
-
-    public void setDel(int del) {
-        this.del = del;
+    public static void main(String[] args) {
+        Test t = new Test();
+        t.toQueryWrap();
     }
 }

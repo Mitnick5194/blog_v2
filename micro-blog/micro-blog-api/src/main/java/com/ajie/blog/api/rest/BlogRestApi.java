@@ -2,6 +2,7 @@ package com.ajie.blog.api.rest;
 
 import com.ajie.blog.api.dto.BlogQueryReqDto;
 import com.ajie.blog.api.dto.BlogReqDto;
+import com.ajie.blog.api.dto.BlogRespDto;
 import com.ajie.commons.RestResponse;
 import com.ajie.commons.dto.PageDto;
 import io.swagger.annotations.Api;
@@ -12,7 +13,7 @@ import java.util.List;
 
 /*@FeignClient*/
 @Api(tags = "博文模块")
-@RequestMapping("/v2/blog")
+@RequestMapping("/micro-blog/v2/blog")
 public interface BlogRestApi {
 
     /**
@@ -37,6 +38,16 @@ public interface BlogRestApi {
     RestResponse<Integer> update(@RequestBody BlogReqDto blog);
 
     /**
+     * 保存草稿
+     *
+     * @param blog
+     * @return
+     */
+    @ApiOperation(value = "保存草稿", notes = "更新博文")
+    @PostMapping("/save-draft")
+    RestResponse<Long> saveDraft(@RequestBody BlogReqDto blog);
+
+    /**
      * 根据ID删除
      *
      * @param id
@@ -54,7 +65,11 @@ public interface BlogRestApi {
      */
     @ApiOperation(value = "根据ID删除", notes = "根据ID删除")
     @PostMapping("/query-by-page")
-    RestResponse<PageDto<List<BlogReqDto>>> queryByPage(@RequestBody BlogQueryReqDto dto);
+    RestResponse<PageDto<List<BlogRespDto>>> queryByPage(@RequestBody BlogQueryReqDto dto);
+
+    @ApiOperation(value = "根据ID查询", notes = "根据ID查询")
+    @GetMapping("/query-by-id")
+    RestResponse<BlogRespDto> queryBlogById(@RequestParam("id") Long id);
 
 
 }
