@@ -1,14 +1,15 @@
 package com.ajie.commons.po;
 
 import com.ajie.commons.utils.UserInfoUtil;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections.CollectionUtils;
 
-import java.beans.Transient;
 import java.io.Serializable;
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -82,7 +83,9 @@ public class BasePO implements Serializable {
      * 转换成mybatis-plus查询参数，并添加del参数和按创建时间排序
      *
      * @return
+     * @deprecated commons引入了mp包，不用反射了，使用wrap方法代替
      */
+    @Deprecated
     public <T> T toQueryWrap() {
         Map<String, Object> map = new HashMap<>();
         try {
@@ -121,6 +124,36 @@ public class BasePO implements Serializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public <T extends BasePO> QueryWrapper<T> wrap(Class<T> clazz) {
+        Map<String, Object> map = new HashMap<>();
+        try {
+            Class<?> aClass = this.getClass();
+            List<Field> fields = getFields(aClass);
+            for (Field f : fields) {
+                f.setAccessible(true);
+                String name = f.getName();
+                Object o = f.get(this);
+                if (Objects.isNull(o)) {
+                    continue;
+                }
+                map.put(camelCaseToUnderline(name), o);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        QueryWrapper wrap = new QueryWrapper();
+        Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> next = it.next();
+            String key = next.getKey();
+            Object value = next.getValue();
+            wrap.eq(key, value);
+        }
+        wrap.eq("del", 0);
+        wrap.orderByDesc("create_time");
+        return wrap;
     }
 
     private Method getEqMethod(Class clazz) throws NoSuchMethodException {
@@ -190,6 +223,6 @@ public class BasePO implements Serializable {
 
     public static void main(String[] args) {
         Test t = new Test();
-        t.toQueryWrap();
+        Test test = t.toQueryWrap();
     }
 }

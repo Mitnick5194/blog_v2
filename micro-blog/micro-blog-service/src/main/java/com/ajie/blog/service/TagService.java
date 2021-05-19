@@ -4,15 +4,17 @@ import com.ajie.blog.api.dto.TagDto;
 import com.ajie.commons.dto.BasePageReqDto;
 import com.ajie.commons.dto.PageDto;
 
+import java.util.List;
+
 public interface TagService {
 
     /**
-     * 新增标签，已存在不会添加
+     * 新增标签，已存在不会添加，保存后id会保存到dto
      *
-     * @param tagName
+     * @param dto
      * @return
      */
-    Long createTag(String tagName);
+    Integer createTags(List<TagDto> dto);
 
     /**
      * 分页查询

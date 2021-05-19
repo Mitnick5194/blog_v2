@@ -23,4 +23,14 @@ public class BlogQueryReqDto extends BasePageReqDto {
      */
     @ApiModelProperty(value = "标签")
     private List<Long> tagList;
+
+    /**
+     * 状态1正常，2草稿
+     */
+    @ApiModelProperty(value = "状态1正常，2草稿")
+    private Integer status = 1;
+
+    public boolean isDraft() {
+        return Integer.valueOf(2).equals(status);
+    }
 }

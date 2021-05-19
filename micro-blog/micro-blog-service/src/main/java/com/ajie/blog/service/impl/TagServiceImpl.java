@@ -9,33 +9,52 @@ import com.ajie.blog.service.TagService;
 import com.ajie.commons.dto.BasePageReqDto;
 import com.ajie.commons.dto.PageDto;
 import com.ajie.commons.utils.PageDtoUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
-
 public class TagServiceImpl implements TagService {
     @Resource
     private TagMapper tagMapper;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public Long createTag(String tagName) {
-        if (StringUtils.isBlank(tagName)) {
+    public Integer createTags(List<TagDto> dto) {
+        if (CollectionUtils.isEmpty(dto)) {
             throw BlogException.of(BlogExceptionEmun.PARAM_ERROR.getCode(), "标签内容为空");
         }
+        List<Long> ids = dto.stream().map(TagDto::getId).collect(Collectors.toList());
         TagPO po = new TagPO();
-        po.setTagName(tagName);
-        TagPO tag = tagMapper.selectOne(po.toQueryWrap());
-        if (null != tag) {
-            return tag.getId();
+        QueryWrapper<TagPO> wrap = po.wrap(TagPO.class);
+        wrap.in("id", StringUtils.join(ids, ","));
+        List<TagPO> tags = tagMapper.selectList(wrap);
+        Map<String, TagPO> map = tags.stream().collect(Collectors.toMap(TagPO::getTagName, Function.identity()));
+        int ret = 0;
+        for (TagDto t : dto) {
+            TagPO tagPO = map.get(t.getTag());
+            if (null != tagPO) {
+                t.setId(tagPO.getId());
+                continue;
+            }
+            po = new TagPO();
+            po.setTagName(t.getTag());
+            tagMapper.insert(po);
+            t.setId(po.getId());
+            ret++;
         }
-        tagMapper.insert(po);
-        return po.getId();
+        return ret;
     }
 
     @Override
