@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password:
+    driver-class-name: com.mysql.jdbc.Driver
+
+  #application:
+   # name: micro-blog
+
+#下划线转驼峰
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+
+#配置日志
+logging:
+  #此处存放日志的路径
+  path:
+    config: classpath:logback-spring.xml
+    #指定不同目录下的日志的级别
+    #level:
+    #com.shimain.springboot.mapper: INFO

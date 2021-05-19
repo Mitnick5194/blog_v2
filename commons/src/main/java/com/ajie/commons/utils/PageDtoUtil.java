@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class PageDtoUtils {
+public class PageDtoUtil {
 
     /**
      * 将Page转换成PageDto
