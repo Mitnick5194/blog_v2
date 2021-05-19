@@ -32,6 +32,11 @@ public class UserInfoUtil {
                     threadLocal.set(new HashMap<>(4));
                 }
             }
+        }else{
+            Map<String, String> map = threadLocal.get();
+            if(null == map){
+                threadLocal.set(new HashMap<>(4));
+            }
         }
         return threadLocal;
     }

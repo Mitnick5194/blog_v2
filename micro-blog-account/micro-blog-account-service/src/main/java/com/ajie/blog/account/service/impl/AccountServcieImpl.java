@@ -10,6 +10,7 @@ import com.ajie.commons.encrypt.EncryptUtil;
 import com.ajie.commons.exception.MicroCommonException;
 import com.ajie.commons.utils.ParamCheck;
 import com.ajie.commons.utils.RandomUtil;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class AccountServcieImpl implements AccountService {
         if (StringUtils.isBlank(accountName)) {
             //用户名为空，生成随机用户名
             accountName = AccountHelper.genRandomAccountName(accountMapper, 0);
+            dto.setAccountName(accountName);
         } else {
             Integer exist = checkUserName(accountName);
             if (Integer.valueOf(1).equals(exist)) {
@@ -60,7 +62,9 @@ public class AccountServcieImpl implements AccountService {
         password += accountName;
         password = EncryptUtil.sha256Encrypt(password);
         dto.setPassword(password);
-        int ret = accountMapper.register(dto);
+        //好像自定义sql不会自动生成id，只能手动来了
+        long id = IdWorker.getId();
+        int ret = accountMapper.register(id, dto);
         if (0 == ret) {
             throw AccountException.USER_NAME_EXIST;
         }

@@ -10,10 +10,10 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface AccountMapper extends BaseMapper<AccountPO> {
     @Insert({"<script>",
-            "insert into mb_account (account_name,nick_name,password,mail,phone,gender,personal_sign,header_url) ",
-            "select #{dto.accountName},#{dto.nickName},#{dto.password},#{dto.mail},#{dto.phone},#{dto.gender},#{dto.personalSign},#{dto.header_url} ",
+            "insert into mb_account (id,account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,del) ",
+            "select #{id}, #{dto.accountName},#{dto.nickName},#{dto.password},#{dto.mail},#{dto.phone},#{dto.gender},#{dto.personalSign},#{dto.headerUrl},now(),now(),0 ",
             "from DUAL ",
-            "where not exists(select account_name from mb_account where mb_account = #{dto.accountName} )",
+            "where not exists(select account_name from mb_account where account_name = #{dto.accountName} )",
             "</script>"})
-    int register(@Param("dto") RegisterReqDto dto);
+    int register(@Param("id") Long id, @Param("dto") RegisterReqDto dto);
 }
