@@ -8,7 +8,7 @@ import com.ajie.blog.mapper.TagMapper;
 import com.ajie.blog.service.TagService;
 import com.ajie.commons.dto.BasePageReqDto;
 import com.ajie.commons.dto.PageDto;
-import com.ajie.commons.utils.PageDtoUtils;
+import com.ajie.commons.utils.PageDtoUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -61,7 +61,7 @@ public class TagServiceImpl implements TagService {
     public PageDto<TagDto> queryTagPage(BasePageReqDto dto) {
         Page page = new Page(dto.getCurrentPage(), dto.getPageSize());
         IPage<TagPO> list = tagMapper.selectPage(page, new TagPO().toQueryWrap());
-        PageDto<TagDto> pageDto = PageDtoUtils.toPageDto(list, (s) -> {
+        PageDto<TagDto> pageDto = PageDtoUtil.toPageDto(list, (s) -> {
             TagDto t = new TagDto();
             BeanUtils.copyProperties(s, t);
             return t;

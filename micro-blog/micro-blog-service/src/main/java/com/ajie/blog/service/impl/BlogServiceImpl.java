@@ -16,7 +16,7 @@ import com.ajie.blog.service.BlogService;
 import com.ajie.blog.service.TagService;
 import com.ajie.commons.constant.TableConstant;
 import com.ajie.commons.dto.PageDto;
-import com.ajie.commons.utils.PageDtoUtils;
+import com.ajie.commons.utils.PageDtoUtil;
 import com.ajie.commons.utils.ParamCheck;
 import com.ajie.commons.utils.UserInfoUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -166,7 +166,7 @@ public class BlogServiceImpl implements BlogService, TableConstant {
             blogIds = btp.stream().map(BlogTagPO::getBlogId).collect(Collectors.toList());
         }
         IPage<BlogRespDto> blogPoPage = blogMapper.queryByPage(page, dto, blogIds, 324134234L);
-        PageDto<List<BlogRespDto>> result = PageDtoUtils.toPageDto(blogPoPage);
+        PageDto<List<BlogRespDto>> result = PageDtoUtil.toPageDto(blogPoPage);
         //TODO 用户信息
         return result;
     }
@@ -180,7 +180,7 @@ public class BlogServiceImpl implements BlogService, TableConstant {
             wrap.like("content", dto.getKeyword());
         }
         IPage iPage = draftBlogMapper.selectPage(page, wrap);
-        return PageDtoUtils.toPageDto(iPage, (s) -> {
+        return PageDtoUtil.toPageDto(iPage, (s) -> {
             BlogRespDto t = new BlogRespDto();
             BeanUtils.copyProperties(s, t);
             return t;

@@ -8,7 +8,7 @@ import com.ajie.blog.exception.BlogException;
 import com.ajie.blog.mapper.CommentMapper;
 import com.ajie.blog.service.CommentService;
 import com.ajie.commons.dto.PageDto;
-import com.ajie.commons.utils.PageDtoUtils;
+import com.ajie.commons.utils.PageDtoUtil;
 import com.ajie.commons.utils.ParamCheck;
 import com.ajie.commons.utils.UserInfoUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -68,7 +68,7 @@ public class CommentServiceImpl implements CommentService {
             return t;
         }).collect(Collectors.toList());
         fillChildrenComment(list);
-        return PageDtoUtils.toPageDto(p, list);
+        return PageDtoUtil.toPageDto(p, list);
     }
 
     /**
