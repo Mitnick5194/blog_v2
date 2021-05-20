@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/micro-blog/v2/account")
@@ -43,5 +44,18 @@ public class AccountController implements AccountRestApi {
     @Override
     public RestResponse<Integer> updateAccountName(String accountName) {
         return RestResponse.success(accountService.updateAccountName(accountName));
+    }
+
+    @Override
+    public RestResponse<List<AccountRespDto>> queryAccountInfo(List<Long> ids) {
+        return RestResponse.success(accountService.queryAccountInfo(ids));
+    }
+
+    @Override
+    public RestResponse<AccountRespDto> test() {
+        AccountRespDto data = new AccountRespDto();
+        data.setNickName("xylx");
+        data.setAccountName("独孤怎会求败");
+        return RestResponse.success(data);
     }
 }

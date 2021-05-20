@@ -54,8 +54,7 @@ public class JwtUtil {
      * @return
      */
     private static String createToken(String secret, Date expireTime, JwtAccount account) {
-        Date date = new Date();
-        return JWT.create().withAudience(String.valueOf(account.getId())).withIssuedAt(new Date()).withExpiresAt(expireTime).withClaim("name", account.getAccountName()).
+        return JWT.create().withAudience(String.valueOf(account.getId())).withIssuedAt(new Date()).withExpiresAt(expireTime).withClaim("accountName", account.getAccountName()).
                 withClaim("nickName", account.getNickName()).withClaim("headerUrl", account.getHeaderUrl()).
                 withClaim("attach", account.getAttach()).sign(Algorithm.HMAC256(secret));
     }
@@ -73,15 +72,11 @@ public class JwtUtil {
             verifier.verify(token);
             //解析jwt
             DecodedJWT decode = JWT.decode(token);
-            //校验是否过期
-            Date expiresAt = decode.getExpiresAt();
-            if (expiresAt.compareTo(new Date()) <= 0) {
-                return null;//过期了
-            }
             String payload = decode.getPayload();
             //解析base64
             String json = StringUtils.newStringUtf8(Base64.decodeBase64(payload));
             JwtAccount jwtAccount = JSON.parseObject(json, JwtAccount.class);
+            jwtAccount.setId(Long.valueOf(decode.getAudience().get(0)));
             return jwtAccount;
         } catch (TokenExpiredException e) {
             //过期了

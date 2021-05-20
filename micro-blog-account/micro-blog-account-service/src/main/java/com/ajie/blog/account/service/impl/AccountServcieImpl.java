@@ -2,30 +2,32 @@ package com.ajie.blog.account.service.impl;
 
 import com.ajie.blog.account.api.dto.*;
 import com.ajie.blog.account.api.po.AccountPO;
-import com.ajie.blog.account.config.Properties;
+import com.ajie.blog.account.config.PropertiesUtil;
 import com.ajie.blog.account.exception.AccountException;
 import com.ajie.blog.account.mapper.AccountMapper;
 import com.ajie.blog.account.service.AccountService;
 import com.ajie.commons.constant.TableConstant;
 import com.ajie.commons.dto.JwtAccount;
-import com.ajie.commons.exception.CommonException;
 import com.ajie.commons.exception.MicroCommonException;
 import com.ajie.commons.utils.JwtUtil;
 import com.ajie.commons.utils.ParamCheck;
 import com.ajie.commons.utils.UserInfoUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountServcieImpl implements AccountService {
     @Resource
     private AccountMapper accountMapper;
-    @Resource
-    private Properties properties;
 
     @Override
     public Integer register(RegisterReqDto dto) {
@@ -102,13 +104,14 @@ public class AccountServcieImpl implements AccountService {
         }
         String password = account.getPassword();
         //匹配密码
-        String paramPassword = AccountHelper.encryptPassword(password, account.getAccountName());
+        String paramPassword = AccountHelper.encryptPassword(dto.getPassword(), account.getAccountName());
         if (!password.equals(paramPassword)) {
             throw AccountException.LOGIN_FAIL;
         }
+        //创建token
         JwtAccount jwtAccount = new JwtAccount();
         BeanUtils.copyProperties(account, jwtAccount);
-        String token = JwtUtil.createToken(properties.getTokenSecret(), jwtAccount);
+        String token = JwtUtil.createToken(PropertiesUtil.getTokenSecret(), jwtAccount);
         return token;
     }
 
@@ -164,6 +167,25 @@ public class AccountServcieImpl implements AccountService {
         }
         accountPO.setAccountName(accountName);
         return accountMapper.updateById(accountPO);
+    }
+
+    @Override
+    public List<AccountRespDto> queryAccountInfo(List<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return Collections.emptyList();
+        }
+        AccountPO po = new AccountPO();
+        QueryWrapper<AccountPO> wrap = po.wrap(AccountPO.class);
+        wrap.in("id", StringUtils.join(ids, ","));
+        List<AccountPO> accounts = accountMapper.selectList(wrap);
+        if (CollectionUtils.isEmpty(accounts)) {
+            return Collections.emptyList();
+        }
+        return accounts.stream().map(s -> {
+            AccountRespDto t = new AccountRespDto();
+            BeanUtils.copyProperties(s, t);
+            return t;
+        }).collect(Collectors.toList());
     }
 
     /**

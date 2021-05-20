@@ -207,12 +207,12 @@ public class BasePO implements Serializable {
     private static String camelCaseToUnderline(String property) {
         StringBuilder sb = new StringBuilder();
         for (char c : property.toCharArray()) {
-            if (c >= 'a' && c <= 'z') {
-                //小写
-                sb.append(c);
+            if (c >= 'A' && c <= 'Z') {
+                //大写
+                sb.append("_").append((char) (c + 32));
                 continue;
             }
-            sb.append("_").append((char) (c + 32));
+            sb.append(c);
         }
         return sb.toString();
     }

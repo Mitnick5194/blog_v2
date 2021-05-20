@@ -2,6 +2,11 @@ package com.ajie.blog.account.service;
 
 import com.ajie.blog.account.api.dto.*;
 import com.ajie.commons.RestResponse;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
 
 /**
  * 账号服务
@@ -62,4 +67,12 @@ public interface AccountService {
      * @return
      */
     Integer updateAccountName(String accountName);
+
+    /**
+     * 根据ID查询用户列表信息
+     *
+     * @param ids
+     * @return
+     */
+    List<AccountRespDto> queryAccountInfo(List<Long> ids);
 }

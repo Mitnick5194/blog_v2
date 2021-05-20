@@ -19,6 +19,11 @@ public class MicroCommonException extends CommonException {
      */
     public static final MicroCommonException USER_LOGIN_EXPIRE = new MicroCommonException(401, "会话过期，请重新登录");
 
+    /**
+     * 用户登录过期
+     */
+    public static final MicroCommonException REMOTE_CALL_FAIL = new MicroCommonException(5004, "远程请求失败");
+
 
     public MicroCommonException(int code, String msg, Throwable e) {
         super(code, msg, e);
@@ -33,10 +38,11 @@ public class MicroCommonException extends CommonException {
     }
 
     public MicroCommonException paramErrorFiled(String field) {
+        MicroCommonException e = new MicroCommonException(this.getCode(), this.getMsg(), this.getCause());
         if (StringUtils.isNotBlank(field)) {
             String msg = getMsg();
-            setMsg(new StringBuffer().append(msg).append(":").append(field).toString());
+            e.setMsg(new StringBuffer().append(msg).append(":").append(field).toString());
         }
-        return this;
+        return e;
     }
 }

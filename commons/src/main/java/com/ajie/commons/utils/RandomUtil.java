@@ -111,16 +111,13 @@ public class RandomUtil {
         }
         if (isContainNum) {
             int numSize = (int) getRandomLongFromRange(1, size - 1);
-            System.out.println(numSize);
             if (numSize > (size >> 1)) {
                 //数字数量多于一般字母，数字减半
                 numSize >>= 1;
             }
-            System.out.println("===>" + numSize);
             for (int i = 0; i < numSize; i++) {
                 //生成随机数
                 String r = String.valueOf(getRandomLongFromRange(0, 9));
-                System.out.println("r=" + r);
                 //将随机数插入字符中
                 int poi = (int) getRandomLongFromRange(0, size - 1);
                 sb.setCharAt(poi, r.charAt(0));

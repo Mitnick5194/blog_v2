@@ -7,11 +7,12 @@ import com.ajie.commons.RestResponse;
 import com.ajie.commons.dto.PageDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/*@FeignClient*/
+@FeignClient("micro-blog")
 @Api(tags = "博文模块")
 @RequestMapping("/micro-blog/v2/blog")
 public interface BlogRestApi {

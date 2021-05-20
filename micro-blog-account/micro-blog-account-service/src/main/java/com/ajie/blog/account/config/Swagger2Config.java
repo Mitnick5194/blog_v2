@@ -1,4 +1,5 @@
-package com.ajie.blog.config;
+package com.ajie.blog.account.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -15,21 +16,21 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@Profile({"dev","test"})
+@Profile({"dev", "test"})
 public class Swagger2Config {
     /**
      * 添加摘要信息(Docket)
      */
-    //@Bean
+    @Bean
     public Docket controllerApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
-                        .title("博客系统_v2接口文档")
-                        .description("描述：博客模块接口文档.")
+                        .title("博客-用户系统_v2接口文档")
+                        .description("描述：博客-用户接口文档.")
                         .version("版本号:v_1.0")
                         .build())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ajie.blog.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.ajie.blog.account.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

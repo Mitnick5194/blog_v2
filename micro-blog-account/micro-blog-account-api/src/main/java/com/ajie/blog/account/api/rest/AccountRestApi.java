@@ -4,9 +4,12 @@ import com.ajie.blog.account.api.dto.*;
 import com.ajie.commons.RestResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-/*@FeignClient*/
+import java.util.List;
+
+@FeignClient(name = "micro-blog-account")
 @Api(tags = "用户模块")
 @RequestMapping("/micro-blog/v2/account")
 public interface AccountRestApi {
@@ -67,8 +70,28 @@ public interface AccountRestApi {
      * @return
      */
     @ApiOperation(value = "更新用户名", notes = "更新用户名")
-    @PostMapping("/update-account-name")
+    @GetMapping("/update-account-name")
     RestResponse<Integer> updateAccountName(@RequestParam("accountName") String accountName);
+
+    /**
+     * 根据ID查询用户列表信息
+     *
+     * @param ids
+     * @return
+     */
+    @ApiOperation(value = "根据ID查询用户列表信息", notes = "根据ID查询用户列表信息")
+    @PostMapping("/query-account-info")
+    RestResponse<List<AccountRespDto>> queryAccountInfo(@RequestBody List<Long> ids);
+
+    /**
+     * 根据ID查询用户列表信息
+     *
+     * @param =
+     * @return
+     */
+    @ApiOperation(value = "根据ID查询用户列表信息", notes = "根据ID查询用户列表信息")
+    @GetMapping("/hello")
+    RestResponse<AccountRespDto> test();
 
 
 }

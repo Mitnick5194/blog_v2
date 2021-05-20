@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import javax.annotation.Resource;
 
 @Configuration
-public class InteceptionConfig extends WebMvcConfigurerAdapter {
+public class InterceptionConfig extends WebMvcConfigurerAdapter {
     @Resource
     private AuthInterceptor interceptor;
 

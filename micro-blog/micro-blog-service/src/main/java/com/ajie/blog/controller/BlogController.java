@@ -1,5 +1,7 @@
 package com.ajie.blog.controller;
 
+import com.ajie.blog.account.api.dto.AccountRespDto;
+import com.ajie.blog.account.api.rest.AccountRestApi;
 import com.ajie.blog.api.dto.BlogQueryReqDto;
 import com.ajie.blog.api.dto.BlogReqDto;
 import com.ajie.blog.api.dto.BlogRespDto;
@@ -12,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,6 +27,9 @@ public class BlogController implements BlogRestApi {
 
     @Resource
     private BlogService blogService;
+
+    @Resource
+    private AccountRestApi accountRestApi;
 
     @ApiOperation(value = "新增博文", notes = "新增博文")
     @PostMapping("/create")
@@ -67,5 +73,13 @@ public class BlogController implements BlogRestApi {
     @GetMapping("migrate")
     public RestResponse<Integer> migrate() {
         return RestResponse.success(blogService.migrate());
+    }
+
+    @GetMapping("test")
+    public void test() {
+        //1395288739512655873
+        RestResponse<List<AccountRespDto>> data = accountRestApi.queryAccountInfo(Collections.singletonList(1395288739512655872L));
+        //RestResponse<AccountRespDto> data = accountRestApi.test();
+        System.out.println(data);
     }
 }
