@@ -29,7 +29,7 @@ public interface AccountRestApi {
      */
     @ApiOperation(value = "登录", notes = "登录")
     @PostMapping("/login")
-    RestResponse<AccountRespDto> login(@RequestBody LoginReqDto dto);
+    RestResponse<String> login(@RequestBody LoginReqDto dto);
 
     /**
      * 退出登录
@@ -58,6 +58,17 @@ public interface AccountRestApi {
     @ApiOperation(value = "更新用户信息", notes = "更新用户信息")
     @PostMapping("/update-user-info")
     RestResponse<Integer> updateUserInfo(@RequestBody UpdateUserReqDto dto);
+
+
+    /**
+     * 更新用户名
+     *
+     * @param accountName
+     * @return
+     */
+    @ApiOperation(value = "更新用户名", notes = "更新用户名")
+    @PostMapping("/update-account-name")
+    RestResponse<Integer> updateAccountName(@RequestParam("accountName") String accountName);
 
 
 }

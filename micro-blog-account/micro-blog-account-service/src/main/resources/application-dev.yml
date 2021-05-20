@@ -9,8 +9,8 @@ spring:
     password:
     driver-class-name: com.mysql.jdbc.Driver
 
-  #application:
-   # name: micro-blog
+    #application:
+    # name: micro-blog
 
 #下划线转驼峰
 mybatis:
@@ -27,3 +27,7 @@ logging:
     #指定不同目录下的日志的级别
     #level:
     #com.shimain.springboot.mapper: INFO
+
+properties:
+  #token秘钥
+  tokenSecret: MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBALMDRWtDsRalb8neM0JavVw1Kww5EO/ocSNkmvufeM+eWzKZtNGqULFFoU6kOoGGWFv4sHZ+vGu5oZqi/KYVxFFT3mt7r5cWGPtFQrPJGEpMuA2RDRImh0Ot2KCICQV2uuQhTRw52N7YqSMy5cSpgekGDwH6aC7PtjLaiTsUGiEtAgMBAAECgYB7UACM4Edn2zSDcW4MAme40eNCezkAmjT9dXsRZAwbsPEPjTQyzcjiJJ32h0jKGppZWJluNuViq6/3ztiNLCdb2e5Cyuhum769Zd1MvOxemfb3EGcOg/hs9WkaWap64KPRfEI70yJ/e7/uvsyiijPsU7vw0DwNsh+UHkwnBVp13QJBAO5rJ9pfoVt43K+HvWYZXCQxJ1UBl2r1VDL9Q/ygfLq5Nu3seAOkX6GOy0OVtNlUTaMAbyuW8LRyrCbL+CE01bsCQQDANqh/g6Ie1DbxQu9MExeQMaceVfakJSOwsYCa9rusQVtcplx4fiS19q2dGojuzXKD3CQ9vyjOgTcnyAFqkkI3AkBDwK/Sntp75BzSxQBNw2cr4cwLnCgrfQwwcUigwfqwFXJGqqxwXIXQo4Of8Sszl4F4kOcGvB4rKWtCmzQoO5uBAkBn9Cek7xga/ELKsJyi1CCGR5ROf8dodv2abiVTqeVN//rdXMveDrrj/ole0h8Ep/ArCEBBdMUpChE+XpkFfhx5AkBmqR/AIPvmk8aTzh61aEtolBfVaitiPFcGn0NS33GNGtbMvJoRLgkeS0tFrOnyCgsFX1f8Ktcfw5xfIA75THFo

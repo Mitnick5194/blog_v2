@@ -8,6 +8,10 @@ public class AccountException extends MicroCommonException {
 
     public static final AccountException USER_REGISTER_FAIL = new AccountException(1004, "注册失败，请重新提交");
 
+    public static final AccountException USER_ILLEGAL_NAME = new AccountException(1005, "非法用户名，用户名只能包含英文数字和'-''_'，且不能纯数字");
+
+    public static final AccountException LOGIN_FAIL = new AccountException(1006, "登录失败，用户名或密码错误");
+
     public AccountException(int code, String msg, Throwable e) {
         super(code, msg, e);
     }

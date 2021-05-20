@@ -21,22 +21,27 @@ public class AccountController implements AccountRestApi {
     }
 
     @Override
-    public RestResponse<AccountRespDto> login(LoginReqDto dto) {
-        return null;
+    public RestResponse<String> login(LoginReqDto dto) {
+        return RestResponse.success(accountService.login(dto));
     }
 
     @Override
     public RestResponse<Integer> loginout() {
-        return null;
+        return RestResponse.success(accountService.loginout());
     }
 
     @Override
     public RestResponse<Integer> changePassword(ChangePasswordReqDto dto) {
-        return null;
+        return RestResponse.success(accountService.changePassword(dto));
     }
 
     @Override
     public RestResponse<Integer> updateUserInfo(UpdateUserReqDto dto) {
-        return null;
+        return RestResponse.success(accountService.updateUserInfo(dto));
+    }
+
+    @Override
+    public RestResponse<Integer> updateAccountName(String accountName) {
+        return RestResponse.success(accountService.updateAccountName(accountName));
     }
 }
