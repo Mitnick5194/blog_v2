@@ -10,6 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AccountRespDto extends BaseRespDto {
+    @ApiModelProperty(name = "id", value = "主键ID")
+    private Long id;
     @ApiModelProperty(name = "accountName", value = "用户名")
     private String accountName;
     @ApiModelProperty(name = "nickName", value = "昵称")

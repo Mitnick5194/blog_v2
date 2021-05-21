@@ -11,7 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "properties")
 @Getter
-@Setter
 public class Properties {
-    private String tokenSecret;
+    public static String tokenSecret;
+
+    public void setTokenSecret(String secret) {
+        tokenSecret = secret;
+    }
 }

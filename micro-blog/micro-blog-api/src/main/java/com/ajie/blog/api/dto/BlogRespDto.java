@@ -1,5 +1,6 @@
 package com.ajie.blog.api.dto;
 
+import com.ajie.blog.account.api.dto.AccountRespDto;
 import com.ajie.blog.api.po.BlogPO;
 import com.ajie.blog.api.po.TagPO;
 import com.ajie.commons.dto.BaseReqDto;
@@ -41,7 +42,13 @@ public class BlogRespDto extends BlogDto {
     private String userHeaderUrl;
 
     public void build(BlogPO blog) {
-        BeanUtils.copyProperties(blog, this, "tagList", "userName", "userHeaderUrl");
+        BeanUtils.copyProperties(blog, this);
+    }
+
+    public void build(AccountRespDto account) {
+        this.setUserHeaderUrl(account.getHeaderUrl());
+        this.setUserName(account.getAccountName());
+        this.setUserId(account.getId());
     }
 
     public void build(List<TagPO> tags) {

@@ -1,13 +1,7 @@
-package com.ajie.commons.dto;
+package com.ajie.dto;
 
 import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.annotation.JsonAlias;
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 
-@Getter
-@Setter
 public class JwtAccount {
     /**
      * 用户ID
@@ -32,10 +26,49 @@ public class JwtAccount {
     private String attach;
 
     public <T> T getAttachObject(Class<T> clazz) {
-        if (StringUtils.isBlank(attach)) {
+        if (null == attach || attach.trim().length() == 0) {
             return (T) null;
         }
         return JSON.parseObject(attach, clazz);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getHeaderUrl() {
+        return headerUrl;
+    }
+
+    public void setHeaderUrl(String headerUrl) {
+        this.headerUrl = headerUrl;
+    }
+
+    public String getAttach() {
+        return attach;
+    }
+
+    public void setAttach(String attach) {
+        this.attach = attach;
+    }
 }

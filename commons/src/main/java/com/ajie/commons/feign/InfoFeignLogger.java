@@ -16,6 +16,6 @@ public class InfoFeignLogger extends feign.Logger {
 
     @Override
     protected void log(String s, String s1, Object... objects) {
-        logger.info(String.format(methodTag(s) + s1, objects));
+        logger.info("feign invoke ===>>> {},{}", String.format(methodTag(s) + s1, objects));
     }
 }

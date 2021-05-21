@@ -20,8 +20,10 @@ public class ApiUtil {
 
     public static <T> T checkAndGetData(RestResponse<T> data) {
         checkSuccess(data);
-        JSONObject obj = (JSONObject) data.getData();
-        Object o = obj.toJavaObject(Object.class);
-        return (T) o;
+        Object obj = data.getData();
+        if (null == obj) {
+            return null;
+        }
+        return (T) obj;
     }
 }

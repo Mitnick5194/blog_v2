@@ -2,7 +2,7 @@ package com.ajie.blog.account.service.impl;
 
 import com.ajie.blog.account.api.dto.*;
 import com.ajie.blog.account.api.po.AccountPO;
-import com.ajie.blog.account.config.PropertiesUtil;
+import com.ajie.blog.account.config.Properties;
 import com.ajie.blog.account.exception.AccountException;
 import com.ajie.blog.account.mapper.AccountMapper;
 import com.ajie.blog.account.service.AccountService;
@@ -111,7 +111,7 @@ public class AccountServcieImpl implements AccountService {
         //创建token
         JwtAccount jwtAccount = new JwtAccount();
         BeanUtils.copyProperties(account, jwtAccount);
-        String token = JwtUtil.createToken(PropertiesUtil.getTokenSecret(), jwtAccount);
+        String token = JwtUtil.createToken(Properties.tokenSecret, jwtAccount);
         return token;
     }
 

@@ -1,4 +1,4 @@
-package com.ajie.commons.utils;
+package com.ajie.utils;
 
 import java.util.HashSet;
 import java.util.Set;

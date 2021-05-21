@@ -13,12 +13,6 @@ public class ApplicationContextUtil implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         cx = applicationContext;
-        init();
-    }
-
-    private void init() {
-        Properties bean = cx.getBean(Properties.class);
-        PropertiesUtil.init(bean);
     }
 
     public static ApplicationContext getApplicationContext() {

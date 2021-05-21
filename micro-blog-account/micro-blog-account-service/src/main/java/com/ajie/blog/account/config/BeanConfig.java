@@ -1,4 +1,4 @@
-package com.ajie.blog.config;
+package com.ajie.blog.account.config;
 
 import com.ajie.commons.feign.FeignInterceptionConfig;
 import com.ajie.commons.feign.InfoFeignLoggerFactory;

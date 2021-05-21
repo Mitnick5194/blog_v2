@@ -1,24 +1,16 @@
 package com.ajie.blog.account.interception;
 
-import com.ajie.blog.account.config.Properties;
-import com.ajie.blog.account.config.PropertiesUtil;
-import com.ajie.commons.RestResponse;
-import com.ajie.commons.dto.JwtAccount;
-import com.ajie.commons.utils.JwtUtil;
 import com.ajie.commons.utils.RandomUtil;
-import com.ajie.commons.utils.UserInfoUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.UUID;
 
 @Component
 public class AuthInterceptor extends HandlerInterceptorAdapter {

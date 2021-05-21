@@ -9,6 +9,7 @@ import com.ajie.blog.api.rest.BlogRestApi;
 import com.ajie.blog.service.BlogService;
 import com.ajie.commons.RestResponse;
 import com.ajie.commons.dto.PageDto;
+import com.ajie.commons.utils.ApiUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -78,7 +79,8 @@ public class BlogController implements BlogRestApi {
     @GetMapping("test")
     public void test() {
         //1395288739512655873
-        RestResponse<List<AccountRespDto>> data = accountRestApi.queryAccountInfo(Collections.singletonList(1395288739512655872L));
+        RestResponse<List<AccountRespDto>> data = accountRestApi.queryAccountInfo(Collections.singletonList(1395288739512655873L));
+        List<AccountRespDto> accountRespDtos = ApiUtil.checkAndGetData(data);
         //RestResponse<AccountRespDto> data = accountRestApi.test();
         System.out.println(data);
     }

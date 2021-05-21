@@ -1,5 +1,7 @@
 package com.ajie.blog.service.impl;
 
+import com.ajie.blog.account.api.dto.AccountRespDto;
+import com.ajie.blog.account.api.rest.AccountRestApi;
 import com.ajie.blog.api.dto.BlogQueryReqDto;
 import com.ajie.blog.api.dto.BlogReqDto;
 import com.ajie.blog.api.dto.BlogRespDto;
@@ -16,6 +18,7 @@ import com.ajie.blog.service.BlogService;
 import com.ajie.blog.service.TagService;
 import com.ajie.commons.constant.TableConstant;
 import com.ajie.commons.dto.PageDto;
+import com.ajie.commons.utils.ApiUtil;
 import com.ajie.commons.utils.PageDtoUtil;
 import com.ajie.commons.utils.ParamCheck;
 import com.ajie.commons.utils.UserInfoUtil;
@@ -31,12 +34,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class BlogServiceImpl implements BlogService, TableConstant {
-    Logger logger = LoggerFactory.getLogger(BlogServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(BlogServiceImpl.class);
     @Resource
     private BlogMapper blogMapper;
     @Resource
@@ -45,6 +51,8 @@ public class BlogServiceImpl implements BlogService, TableConstant {
     private BlogTagMapper blogTagMapper;
     @Resource
     private TagService tagService;
+    @Resource
+    private AccountRestApi accountRestApi;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -151,10 +159,6 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         if (dto.isDraft()) {
             return queryDraft(dto);
         }
-        BlogPO po = new BlogPO();
-        po.setUserId(4234234L);
-        List<BlogPO> blogPOS = blogMapper.selectList(po.wrap(BlogPO.class));
-        System.out.println(blogPOS.size());
         Page<BlogPO> page = new Page<>(dto.getCurrentPage(), dto.getPageSize());
         List<Long> blogIds = null;
         if (CollectionUtils.isNotEmpty(dto.getTagList())) {
@@ -165,10 +169,26 @@ public class BlogServiceImpl implements BlogService, TableConstant {
             List<BlogTagPO> btp = blogTagMapper.selectList(wrap);
             blogIds = btp.stream().map(BlogTagPO::getBlogId).collect(Collectors.toList());
         }
-        IPage<BlogRespDto> blogPoPage = blogMapper.queryByPage(page, dto, blogIds, 324134234L);
+        IPage<BlogRespDto> blogPoPage = blogMapper.queryByPage(page, dto, blogIds, UserInfoUtil.getUserId());
+        List<BlogRespDto> records = blogPoPage.getRecords();
+        fillAccountInfo(records);
         PageDto<List<BlogRespDto>> result = PageDtoUtil.toPageDto(blogPoPage);
-        //TODO 用户信息
         return result;
+    }
+
+    private void fillAccountInfo(List<BlogRespDto> records) {
+        List<Long> userIds = records.stream().map(BlogRespDto::getUserId).collect(Collectors.toList());
+        List<AccountRespDto> accountList = ApiUtil.checkAndGetData(accountRestApi.queryAccountInfo(userIds));
+        if (CollectionUtils.isNotEmpty(accountList)) {
+            Map<Long, AccountRespDto> map = accountList.stream().collect(Collectors.toMap(AccountRespDto::getId, Function.identity()));
+            for (BlogRespDto item : records) {
+                AccountRespDto accountRespDto = map.get(item.getUserId());
+                if (null == accountRespDto) {
+                    continue;
+                }
+                item.build(accountRespDto);
+            }
+        }
     }
 
     private PageDto<List<BlogRespDto>> queryDraft(BlogQueryReqDto dto) {
@@ -195,6 +215,7 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         }
         BlogRespDto dto = new BlogRespDto();
         dto.build(blogPO);
+        fillAccountInfo(Collections.singletonList(dto));
         return dto;
     }
 

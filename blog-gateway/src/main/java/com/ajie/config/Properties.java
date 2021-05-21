@@ -1,7 +1,5 @@
-package com.ajie.blog.account.config;
+package com.ajie.config;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +8,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "properties")
-@Getter
 public class Properties {
     public static String tokenSecret;
 
     public void setTokenSecret(String secret) {
         tokenSecret = secret;
     }
+
 }
