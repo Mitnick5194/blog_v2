@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>首页-百花社区</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link href="css/cropper.css" rel="stylesheet" type="text/css">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <style>
+        .banner-wrap {
+            width: 100%;
+            height: 250px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .comment-show-wrap {
+            display: block;
+        }
+
+    </style>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<div class="main hidden" id="app" :class="{'remove-hidden':loadFlag}">
+    <div class="header-navi">
+        <div class="title">百花社区养老服务管理系统</div>
+        <div class="user fb-select">欢迎您：{{user.nickName? user.nickName: user.account}}</div>
+        <div class="user btn-exit fb-select" @click="logout">退出</div>
+    </div>
+    <div class="container">
+        <div class="left">
+            <div class="menu" v-for="(m,index) in menus">
+                <div class="memu-item" :class="{'selected':menu.type==m.type}" @click="queryInfo" :data-idx="index">
+                    {{m.value}}
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="sec-menu">
+                <div class="position-nvi width-50-per"> 当前位置：首页&gt;{{isEdit? isDetail ? '查看':'新增':''}}{{menu.value}}
+                </div>
+                <div v-if="isCommunity" v-show="user.isAdmin" @click="gotoEditCommunity" class="opera">
+                         <span v-if="!isEditCommunity" class="fb-select">
+                             {{infos.length && infos[0].id ? '修改':'新增'}}
+                         </span>
+                        <span v-else-if="infos.length && infos[0].id" class="fb-select"  @click="deleteRecord">
+                           删除
+                        </span>
+
+
+                </div>
+                <div v-else v-show="user.isAdmin && (!isEdit || isDetail)" @click="gotoEdit" class="opera">
+                    <span class="fb-select">
+                        {{isDetail?'修改':'新增'}}
+                    </span>
+                    <span @click="deleteRecord" v-if="isDetail" class="fb-select">
+                        删除
+                    </span>
+                </div>
+            </div>
+            <!--社区信息页面-->
+            <div v-if="isCommunity" class="flex-outer-wrap show-wrap comment-show-wrap">
+                <div v-if="!isEditCommunity" class="show-block">
+                    <div class="banner-wrap">
+                        <img :src="infos.length ? infos[0].imgUrl:''"/>
+                    </div>
+                    <div class="flex community-text">
+                        <section>
+                            &nbsp;&nbsp; &nbsp;&nbsp;{{ infos.length ? infos[0].content:""}}
+                        </section>
+                    </div>
+                </div>
+                <div v-else class="edit-block">
+                    <div class="banner-img-block">
+                        <!--没有图片的情况-->
+                        <div v-show="!imgSelected" class="select-img">
+                            <!--点击进入编辑页面是要判断是否有页面，如果没有，则将imgSelected设为false-->
+                            <label class="banner-select-img-label select-img-label">
+                                <!-- + 号标记-->
+                                <span></span>
+                                <span></span>
+                                <input ref="bannerInputClear" @change="coverImg"
+                                       accept="image/gif,image/jpeg,image/jpg,image/png,image/bmp"
+                                       name="file"
+                                       type="file">
+                            </label>
+                        </div>
+                        <!--有图片的情况-->
+                        <div v-show="imgSelected" class="banner-show-img">
+                            <!--通过数据下标是无法获取的，只能用这种变态的写法了-->
+                            <label v-if="coverImgSrc">
+                                <img :src="coverImgSrc"/>
+                            </label>
+                            <label v-else>
+                                <img v-for="(item,index) in updateBlock" v-if="index == 0" :src="item.imgUrl"/>
+                            </label>
+                            <div @click="clearImg" class="marquee_img_del" title="点击删除">Χ</div>
+                        </div>
+                    </div>
+                    <div class="community-edit-content">
+                        <!--v-model不能三目不能赋值空子串，所以用对象随便给个值，反正是空就行了-->
+                        <textarea placeholder="请编辑内容" class="community-edit-content-input"
+                                  v-model=" updateBlock[0].content"></textarea>
+                    </div>
+                    <div class="btn-wrap fb-select" id="banner-btn-wrap-id">
+                        <span @click="cancelEdit" class="cancel-btn">取消</span>
+                        <span @click="submit" class="submit-btn">提交</span>
+                    </div>
+                </div>
+            </div>
+
+            <!--其他的信息页面-->
+            <div v-else v-show="!isEdit" class="flex-outer-wrap show-wrap">
+                <div v-for="(info,index) in infos" class="item-wrap">
+                    <div v-if="info.imgUrl" class="item-img">
+                        <img :src="info.imgUrl"/>
+                    </div>
+                    <div v-else class="item-img">
+                        <img src="images/default_img.png"/>
+                    </div>
+                    <div class="item-opera">
+                        <section>{{info.name}}</section>
+                        <section class="btn-detail fb-select" @click="gotoDetail" :data-idx="index">查看详情</section>
+                    </div>
+                </div>
+            </div>
+            <!--编辑页面-->
+            <div v-show="isEdit && !isEditCommunity" class="edit-wrap flex-outer-wrap ">
+                <div class="base-info-block">
+                    <section v-for="(item,index) in updateBlock" v-if="index > 1">
+                        <div class="label">{{item.label}}：</div>
+                        <!--编号不能修改-->
+                        <div class="input-dv" :class="{'disable': (isDetail  || (update && index == 2)) }">
+                            <textarea
+                                    v-if="item.key  == 'introduction'|| item.key == 'nursingRecord' || item.key == 'testRecord' || item.key == 'serviceRecord' "
+                                    v-model="item.model" :disabled="(isDetail  || (update && index == 2))"
+                                    :placeholder="'请输入'+item.label"></textarea>
+                            <input v-else v-model="item.model" :disabled="(isDetail  || (update && index == 2))"
+                                   :placeholder="'请输入'+item.label"/>
+                        </div>
+                    </section>
+
+                    <div v-show="isEdit && !isDetail" class="btn-wrap fb-select" id="btn-wrap-id">
+                        <span @click="cancelEdit" class="cancel-btn">取消</span>
+                        <span @click="submit" class="submit-btn">提交</span>
+                    </div>
+                    <div v-show="isDetail && !update" class="comment-block">
+                        <div v-show="user.isAdmin" class="comment">
+                            <div class="text-dv">
+                                <textarea v-model="commentContent" id="iComment" class="comment-text darkMode"
+                                          placeholder="留下您的评论"></textarea>
+                            </div>
+                            <div class="submit-btn" id="iSubmit" @click="submitComment"><span>发表</span></div>
+                        </div>
+                        <div class="comment-show">
+                            <div class="comment-title-tip">评论内容：</div>
+                            <section v-for="(item,index) in comments">
+                                <div>{{item.commenter}}:</div>
+                                <div>{{item.content}}（{{item.createTime}}）</div>
+                            </section>
+                            <!-- <section>
+                                 <div>张医生:</div>
+                                 <div>sdfsadfsdfsdf（2021年2月28日20:32:07）</div>
+                             </section>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="img-block">
+                    <div v-if="isEdit && !isDetail" class="img-item">
+                        <!--只是新增会进来-->
+                        <div v-show="!imgSelected" class="select-img">
+                            <label class="select-img-label">
+                                <span></span>
+                                <span></span>
+                                <input ref="imgInputClear" @change="coverImg"
+                                       accept="image/gif,image/jpeg,image/jpg,image/png,image/bmp"
+                                       name="file"
+                                       type="file">
+                            </label>
+                            <div class="select-img-tip">上传图片</div>
+                        </div>
+                        <div v-show="imgSelected" class="show-img">
+                            <img ref="imgClear" :src="coverImgSrc"/>
+                            <div @click="clearImg" class="marquee_img_del" title="点击删除">Χ</div>
+                        </div>
+
+                    </div>
+                    <div v-else class="img-item">
+                        <!--这是查看详情或者更新页面-->
+                        <div v-if="isDetail" class="show-img">
+                            <!--详情一定有头像哦，即使没有，也会给默认头像-->
+                            <img v-for="(item,index) in updateBlock" v-if="index == 1" :src="item.model"/>
+                        </div>
+                        <div v-if="update && !imgSelected" class="select-img">
+                            <!--进入编辑页面，当发现没有头像是，会将imgSelected值为false,所以会进入这里-->
+                            <label class="select-img-label">
+                                <span></span>
+                                <span></span>
+                                <input ref="imgInputClear" @change="coverImg"
+                                       accept="image/gif,image/jpeg,image/jpg,image/png,image/bmp"
+                                       name="file"
+                                       type="file">
+                            </label>
+                            <div class="select-img-tip">上传图片</div>
+                        </div>
+                        <div v-if="update && imgSelected" class="show-img">
+                            <img ref="bannerClear" :src="coverImgSrc"/>
+                            <div @click="clearImg" class="marquee_img_del" title="点击删除">Χ</div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div @click="closeDialog" v-if="isShowDialog || isShowLoading" class="outer-mask"></div>
+    <div v-if="isShowDialog" class="mask-content-outer">
+        <div @click="closeDialog" class="close">x</div>
+        <div class="mask-content-parent">
+            <div class="mark-content-title"></div>
+            <div class="mark-content">{{dialogMsg}}</div>
+        </div>
+        <div class="mask-btn">
+            <!-- <div v-show="isShowCancel" class="btn-cancel" @click="dialogCancel">取消</div>-->
+            <div class="btn-confirm" @click="closeDialog">关闭</div>
+        </div>
+    </div>
+    <div v-if="isShowLoading" class="showLoading">
+        <img src="images/loading.gif"/>
+
+    </div>
+
+</div>
+
+
+<script src="js/axios.js"></script>
+<!--<script src="js/jquery-1.9.1.js"></script>-->
+<script src="js/commons.js"></script>
+<!--<script src="js/cropper.js"></script>-->
+<script src="js/index.js"></script>
+<script>
+
+</script>
+
+</body>
+</html>

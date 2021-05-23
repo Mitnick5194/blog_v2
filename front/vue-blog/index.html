@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html class="darkMode">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width , initial-scale=1,maximum-scale=1.0, user-scalable=0">
+    <title>首页</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+    </style>
+</head>
+<body class="darkMode ">
+<div class="main " id="app">
+    <div id="iSlider" class="tag-btn darkMode">
+        <span class="bar-icon"></span>
+        <span class="bar-icon"></span>
+        <span class="bar-icon"></span>
+        <span class="bar-icon"></span>
+    </div>
+    <div class="header-navi darkMode" id="iHeaderNavi">
+        <div class="addblog">写博客</div>
+        <div class="user-header">
+            <div class="login-btn" id="iLogin">登录/注册</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="iTags" class="tags-block darkMode">
+            <div class="list-group " id="iListTags">
+                <div class="title">标签分类</div>
+                <div class="tag">全部</div>
+                <div class="tag" data-name="ubuntu">ubuntu（8）</div>
+                <div class="tag" data-name="ssh">ssh（3）</div>
+                <div class="tag" data-name="linux">linux（26）</div>
+                <div class="tag" data-name="服务器">服务器（5）</div>
+                <div class="tag" data-name="算法">算法（4）</div>
+                <div class="tag" data-name="前端">前端（6）</div>
+                <div class="tag" data-name="vue">vue（2）</div>
+                <div class="tag moreTags">更多标签</div>
+            </div>
+        </div>
+        <div class="blogs" id="iBlogs">
+            <section v-for="(item,index) in blogs" class="darkMode">
+                <div class="title">{{item.title}}</div>
+                <div class="abstract-content">{{item.abstractContent}}</div>
+                <div class="extract-list">
+                    <div class="list-left flex">
+                        <img class="user" data-id="6" data-type="userinfo"
+                             src="http://www.nzjie.cn/static/images/logo.jpg">
+                        <div class="user" data-id="6" data-type="userinfo">独孤怎会求败</div>
+                        <div>10小时前</div>
+                    </div>
+                    <div class="list-right flex">
+                        <div>阅读 0</div>
+                        <div>评论 0</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="qr-code">
+            <div>关注公众号和小程序，获取获取最新状态</div>
+            <div>
+                <img src="images/my_wxgz_qrcode.jpg"/>
+            </div>
+            <div>
+                <img src="images/my_wxapp_code.jpg"/>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/global/vue.js"></script>
+<script src="js/global/axios.js"></script>
+<script src="js/global/common.js"></script>
+<script src="js/global/request.js"></script>
+<script>
+    const queryParam = {
+        currentPage: 1,
+        pageSize: 20,
+        keyword: null,
+        tagList: [],
+        status: 1
+    }
+    const account = {}
+    new Vue({
+        el: "#app",
+        data: {
+            blogs: [],
+            queryParam: queryParam,
+            account: account,
+
+        },
+        created: () => {
+        },
+        mounted: function () {
+            this.loadBlog();
+        },
+        methods: {
+            loadBlog: function () {
+                let that = this;
+                doPost("/api-blog/v2/blog/query-by-page", queryParam, function (data) {
+                    if (data.data) {
+                        that.blogs = that.blogs.concat(data.data);
+                    }
+
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>

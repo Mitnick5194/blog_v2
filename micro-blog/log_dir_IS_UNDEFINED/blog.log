@@ -8204,3 +8204,633 @@ java.lang.IllegalStateException: Shutdown in progress
 2021-05-23 18:22:46.879 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Unregistering ...
 2021-05-23 18:22:46.905 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG/DESKTOP-MVUDEUV:micro-blog:8080 - deregister  status: 200
 2021-05-23 18:22:46.943 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Completed shut down of DiscoveryClient
+2021-05-23 23:07:24.165 [INFO ] [reqId:] [o.h.v.internal.util.Version] HV000001: Hibernate Validator 6.1.7.Final
+2021-05-23 23:07:30.361 [INFO ] [reqId:] [com.ajie.blog.App] The following profiles are active: dev
+2021-05-23 23:07:37.294 [INFO ] [reqId:] [o.s.c.context.scope.GenericScope] BeanFactory id=1dc83b2f-c9d4-3249-af36-41c3eebf1c7e
+2021-05-23 23:07:40.640 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+2021-05-23 23:07:40.676 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8080"]
+2021-05-23 23:07:40.677 [INFO ] [reqId:] [o.a.c.core.StandardService] Starting service [Tomcat]
+2021-05-23 23:07:40.678 [INFO ] [reqId:] [o.a.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-05-23 23:07:41.736 [INFO ] [reqId:] [o.a.c.c.C.[.[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2021-05-23 23:07:41.737 [INFO ] [reqId:] [o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 11234 ms
+2021-05-23 23:07:43.785 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2021-05-23 23:07:46.019 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2021-05-23 23:07:52.091 [INFO ] [reqId:] [s.d.s.w.PropertySourcedRequestMappingHandlerMapping] Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-05-23 23:07:52.134 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 23:07:52.134 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 23:07:52.153 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 23:07:52.154 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 23:07:52.782 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Initializing ExecutorService 'applicationTaskExecutor'
+2021-05-23 23:07:56.576 [INFO ] [reqId:] [o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration] Eureka HTTP Client uses Jersey
+2021-05-23 23:07:58.262 [WARN ] [reqId:] [o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger] You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2021-05-23 23:07:58.697 [INFO ] [reqId:] [o.s.c.n.e.InstanceInfoFactory] Setting initial instance status as: STARTING
+2021-05-23 23:07:58.975 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Initializing Eureka in region us-east-1
+2021-05-23 23:08:00.077 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON encoding codec LegacyJacksonJson
+2021-05-23 23:08:00.078 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON decoding codec LegacyJacksonJson
+2021-05-23 23:08:00.627 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML encoding codec XStreamXml
+2021-05-23 23:08:00.628 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML decoding codec XStreamXml
+2021-05-23 23:08:01.720 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 23:08:03.262 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Disable delta property : false
+2021-05-23 23:08:03.262 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Single vip registry refresh property : null
+2021-05-23 23:08:03.262 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Force full registry fetch : false
+2021-05-23 23:08:03.262 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application is null : false
+2021-05-23 23:08:03.262 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Registered Applications size is zero : true
+2021-05-23 23:08:03.262 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application version is -1: true
+2021-05-23 23:08:03.263 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Getting all instance registry info from the eureka server
+2021-05-23 23:08:07.819 [INFO ] [reqId:] [c.n.d.s.t.d.RedirectingEurekaHttpClient] Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:9527/eureka/}, exception=java.net.ConnectException: Connection refused: connect stacktrace=com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused: connect
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187)
+	at com.sun.jersey.api.client.filter.GZIPContentEncodingFilter.handle(GZIPContentEncodingFilter.java:123)
+	at com.netflix.discovery.EurekaIdentityHeaderFilter.handle(EurekaIdentityHeaderFilter.java:27)
+	at com.sun.jersey.api.client.Client.handle(Client.java:652)
+	at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682)
+	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74)
+	at com.sun.jersey.api.client.WebResource$Builder.get(WebResource.java:509)
+	at com.netflix.discovery.shared.transport.jersey.AbstractJerseyEurekaHttpClient.getApplicationsInternal(AbstractJerseyEurekaHttpClient.java:196)
+	at com.netflix.discovery.shared.transport.jersey.AbstractJerseyEurekaHttpClient.getApplications(AbstractJerseyEurekaHttpClient.java:167)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.MetricsCollectingEurekaHttpClient.execute(MetricsCollectingEurekaHttpClient.java:73)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:77)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.DiscoveryClient.getAndStoreFullRegistry(DiscoveryClient.java:1101)
+	at com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:1014)
+	at com.netflix.discovery.DiscoveryClient.<init>(DiscoveryClient.java:441)
+	at com.netflix.discovery.DiscoveryClient.<init>(DiscoveryClient.java:283)
+	at com.netflix.discovery.DiscoveryClient.<init>(DiscoveryClient.java:279)
+	at org.springframework.cloud.netflix.eureka.CloudEurekaClient.<init>(CloudEurekaClient.java:67)
+	at org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration$RefreshableEurekaClientConfiguration.eurekaClient(EurekaClientAutoConfiguration.java:316)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:652)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:637)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1336)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1176)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$1(AbstractBeanFactory.java:363)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$$Lambda$617/725215101.getObject(Unknown Source)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.getBean(GenericScope.java:389)
+	at org.springframework.cloud.context.scope.GenericScope.get(GenericScope.java:186)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:360)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.aop.target.SimpleBeanTargetSource.getTarget(SimpleBeanTargetSource.java:35)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration.getTargetObject(EurekaRegistration.java:129)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration.getEurekaClient(EurekaRegistration.java:117)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:282)
+	at org.springframework.cloud.context.scope.GenericScope$LockedScopedProxyFactoryBean.invoke(GenericScope.java:499)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration$$EnhancerBySpringCGLIB$$d8a2a3d4.getEurekaClient(<generated>)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry.maybeInitializeClient(EurekaServiceRegistry.java:57)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry.register(EurekaServiceRegistry.java:38)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaAutoServiceRegistration.start(EurekaAutoServiceRegistration.java:83)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:182)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:53)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:360)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:158)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:122)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:895)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:554)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:405)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at com.ajie.blog.App.main(App.java:13)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:121)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
+	at org.apache.http.impl.conn.AbstractPoolEntry.open(AbstractPoolEntry.java:144)
+	at org.apache.http.impl.conn.AbstractPooledConnAdapter.open(AbstractPooledConnAdapter.java:134)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:605)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:440)
+	at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:835)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:118)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173)
+	... 76 more
+
+2021-05-23 23:08:07.820 [WARN ] [reqId:] [c.n.d.s.t.d.RetryableEurekaHttpClient] Request execution failed with message: java.net.ConnectException: Connection refused: connect
+2021-05-23 23:08:07.822 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG/DESKTOP-MVUDEUV:micro-blog:8080 - was unable to refresh its cache! This periodic background refresh will be retried in 30 seconds. status = Cannot execute request on any known server stacktrace = com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:77)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
+	at com.netflix.discovery.DiscoveryClient.getAndStoreFullRegistry(DiscoveryClient.java:1101)
+	at com.netflix.discovery.DiscoveryClient.fetchRegistry(DiscoveryClient.java:1014)
+	at com.netflix.discovery.DiscoveryClient.<init>(DiscoveryClient.java:441)
+	at com.netflix.discovery.DiscoveryClient.<init>(DiscoveryClient.java:283)
+	at com.netflix.discovery.DiscoveryClient.<init>(DiscoveryClient.java:279)
+	at org.springframework.cloud.netflix.eureka.CloudEurekaClient.<init>(CloudEurekaClient.java:67)
+	at org.springframework.cloud.netflix.eureka.EurekaClientAutoConfiguration$RefreshableEurekaClientConfiguration.eurekaClient(EurekaClientAutoConfiguration.java:316)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:652)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:637)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1336)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1176)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:556)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:516)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$1(AbstractBeanFactory.java:363)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$$Lambda$617/725215101.getObject(Unknown Source)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.getBean(GenericScope.java:389)
+	at org.springframework.cloud.context.scope.GenericScope.get(GenericScope.java:186)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:360)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+	at org.springframework.aop.target.SimpleBeanTargetSource.getTarget(SimpleBeanTargetSource.java:35)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration.getTargetObject(EurekaRegistration.java:129)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration.getEurekaClient(EurekaRegistration.java:117)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:282)
+	at org.springframework.cloud.context.scope.GenericScope$LockedScopedProxyFactoryBean.invoke(GenericScope.java:499)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration$$EnhancerBySpringCGLIB$$d8a2a3d4.getEurekaClient(<generated>)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry.maybeInitializeClient(EurekaServiceRegistry.java:57)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaServiceRegistry.register(EurekaServiceRegistry.java:38)
+	at org.springframework.cloud.netflix.eureka.serviceregistry.EurekaAutoServiceRegistration.start(EurekaAutoServiceRegistration.java:83)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:182)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:53)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:360)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:158)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:122)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:895)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:554)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:750)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:405)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:315)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at com.ajie.blog.App.main(App.java:13)
+
+2021-05-23 23:08:07.823 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Initial registry fetch from primary servers failed
+2021-05-23 23:08:07.823 [WARN ] [reqId:] [c.n.discovery.DiscoveryClient] Using default backup registry implementation which does not do anything.
+2021-05-23 23:08:07.825 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Initial registry fetch from backup servers failed
+2021-05-23 23:08:07.826 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Starting heartbeat executor: renew interval is: 30
+2021-05-23 23:08:07.832 [INFO ] [reqId:] [c.n.d.InstanceInfoReplicator] InstanceInfoReplicator onDemand update allowed rate per min is 4
+2021-05-23 23:08:07.843 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Discovery Client initialized at timestamp 1621782487840 with initial instances count: 0
+2021-05-23 23:08:07.861 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Registering application MICRO-BLOG with eureka with status UP
+2021-05-23 23:08:07.863 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621782487863, current=UP, previous=STARTING]
+2021-05-23 23:08:07.873 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8080"]
+2021-05-23 23:08:07.893 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG/DESKTOP-MVUDEUV:micro-blog:8080: registering service...
+2021-05-23 23:08:07.967 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+2021-05-23 23:08:07.976 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaAutoServiceRegistration] Updating port to 8080
+2021-05-23 23:08:09.770 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Context refreshed
+2021-05-23 23:08:09.834 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Found 1 custom documentation plugin(s)
+2021-05-23 23:08:09.977 [INFO ] [reqId:] [s.d.s.w.s.ApiListingReferenceScanner] Scanning for api listing references
+2021-05-23 23:08:11.135 [INFO ] [reqId:] [s.d.s.w.r.o.CachingOperationNameGenerator] Generating unique operation named: testUsingGET_1
+2021-05-23 23:08:11.170 [INFO ] [reqId:] [s.d.s.w.r.o.CachingOperationNameGenerator] Generating unique operation named: testUsingGET_2
+2021-05-23 23:08:11.243 [INFO ] [reqId:] [com.ajie.blog.App] Started App in 50.083 seconds (JVM running for 56.103)
+2021-05-23 23:08:12.114 [INFO ] [reqId:] [c.n.d.s.t.d.RedirectingEurekaHttpClient] Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:9527/eureka/}, exception=java.net.ConnectException: Connection refused: connect stacktrace=com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused: connect
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:187)
+	at com.sun.jersey.api.client.filter.GZIPContentEncodingFilter.handle(GZIPContentEncodingFilter.java:123)
+	at com.netflix.discovery.EurekaIdentityHeaderFilter.handle(EurekaIdentityHeaderFilter.java:27)
+	at com.sun.jersey.api.client.Client.handle(Client.java:652)
+	at com.sun.jersey.api.client.WebResource.handle(WebResource.java:682)
+	at com.sun.jersey.api.client.WebResource.access$200(WebResource.java:74)
+	at com.sun.jersey.api.client.WebResource$Builder.post(WebResource.java:570)
+	at com.netflix.discovery.shared.transport.jersey.AbstractJerseyEurekaHttpClient.register(AbstractJerseyEurekaHttpClient.java:57)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.MetricsCollectingEurekaHttpClient.execute(MetricsCollectingEurekaHttpClient.java:73)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.executeOnNewServer(RedirectingEurekaHttpClient.java:121)
+	at com.netflix.discovery.shared.transport.decorator.RedirectingEurekaHttpClient.execute(RedirectingEurekaHttpClient.java:80)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:120)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:77)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:876)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:121)
+	at com.netflix.discovery.InstanceInfoReplicator$1.run(InstanceInfoReplicator.java:101)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+	at java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:345)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at org.apache.http.conn.scheme.PlainSocketFactory.connectSocket(PlainSocketFactory.java:121)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:180)
+	at org.apache.http.impl.conn.AbstractPoolEntry.open(AbstractPoolEntry.java:144)
+	at org.apache.http.impl.conn.AbstractPooledConnAdapter.open(AbstractPooledConnAdapter.java:134)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:605)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:440)
+	at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:835)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:118)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:56)
+	at com.sun.jersey.client.apache4.ApacheHttpClient4Handler.handle(ApacheHttpClient4Handler.java:173)
+	... 31 more
+
+2021-05-23 23:08:12.114 [WARN ] [reqId:] [c.n.d.s.t.d.RetryableEurekaHttpClient] Request execution failed with message: java.net.ConnectException: Connection refused: connect
+2021-05-23 23:08:12.119 [WARN ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG/DESKTOP-MVUDEUV:micro-blog:8080 - registration failed Cannot execute request on any known server
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:77)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:876)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:121)
+	at com.netflix.discovery.InstanceInfoReplicator$1.run(InstanceInfoReplicator.java:101)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+	at java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+2021-05-23 23:08:12.119 [WARN ] [reqId:] [c.n.d.InstanceInfoReplicator] There was a problem with the instance info replicator
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$1.execute(EurekaHttpClientDecorator.java:59)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:77)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.register(EurekaHttpClientDecorator.java:56)
+	at com.netflix.discovery.DiscoveryClient.register(DiscoveryClient.java:876)
+	at com.netflix.discovery.InstanceInfoReplicator.run(InstanceInfoReplicator.java:121)
+	at com.netflix.discovery.InstanceInfoReplicator$1.run(InstanceInfoReplicator.java:101)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+	at java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+2021-05-23 23:08:37.829 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Disable delta property : false
+2021-05-23 23:08:37.830 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Single vip registry refresh property : null
+2021-05-23 23:08:37.830 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Force full registry fetch : false
+2021-05-23 23:08:37.830 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application is null : false
+2021-05-23 23:08:37.830 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Registered Applications size is zero : true
+2021-05-23 23:08:37.831 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application version is -1: true
+2021-05-23 23:08:37.831 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Getting all instance registry info from the eureka server
+2021-05-23 23:08:37.929 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG/DESKTOP-MVUDEUV:micro-blog:8080 - Re-registering apps/MICRO-BLOG
+2021-05-23 23:08:37.930 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG/DESKTOP-MVUDEUV:micro-blog:8080: registering service...
+2021-05-23 23:08:38.005 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG/DESKTOP-MVUDEUV:micro-blog:8080 - registration status: 204
+2021-05-23 23:08:38.024 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] The response status is 200
+2021-05-23 23:10:16.336 [INFO ] [reqId:] [o.a.c.c.C.[.[localhost].[/]] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-05-23 23:10:16.336 [INFO ] [reqId:] [o.s.w.servlet.DispatcherServlet] Initializing Servlet 'dispatcherServlet'
+2021-05-23 23:10:16.353 [INFO ] [reqId:] [o.s.w.servlet.DispatcherServlet] Completed initialization in 17 ms
+2021-05-23 23:10:16.436 [INFO ] [reqId:hlflas9nuhh9] [c.ajie.blog.aop.BlogApiLogAspect] API start===> uri:/micro-blog/v2/blog/query-by-id，method:GET,ip:127.0.0.1,classMethodcom.ajie.blog.controller.BlogController.queryBlogById,bizParam:[1395952336643301378]
+2021-05-23 23:10:16.524 [DEBUG] [reqId:hlflas9nuhh9] [c.a.b.m.BlogMapper.selectById] ==>  Preparing: SELECT id,user_id,title,content,abstract_content,type,create_time,update_time,create_person,update_person,del FROM mb_blog WHERE id=? 
+2021-05-23 23:10:16.565 [DEBUG] [reqId:hlflas9nuhh9] [c.a.b.m.BlogMapper.selectById] ==> Parameters: 1395952336643301378(Long)
+2021-05-23 23:10:16.980 [DEBUG] [reqId:hlflas9nuhh9] [c.a.b.m.BlogMapper.selectById] <==      Total: 1
+2021-05-23 23:10:17.112 [INFO ] [reqId:hlflas9nuhh9] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] ---> POST http://micro-blog-account/micro-blog/v2/account/query-account-info HTTP/1.1,{}
+2021-05-23 23:10:17.113 [INFO ] [reqId:hlflas9nuhh9] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] Content-Length: 21,{}
+2021-05-23 23:10:17.113 [INFO ] [reqId:hlflas9nuhh9] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] Content-Type: application/json,{}
+2021-05-23 23:10:17.113 [INFO ] [reqId:hlflas9nuhh9] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] reqId: hlflas9nuhh9,{}
+2021-05-23 23:10:17.114 [INFO ] [reqId:hlflas9nuhh9] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] ticket: {"accountName":null,"attach":null,"headerUrl":null,"id":null,"nickName":null},{}
+2021-05-23 23:10:17.115 [INFO ] [reqId:hlflas9nuhh9] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] ,{}
+2021-05-23 23:10:17.116 [INFO ] [reqId:hlflas9nuhh9] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] [1395288739512655873],{}
+2021-05-23 23:10:17.116 [INFO ] [reqId:hlflas9nuhh9] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] ---> END HTTP (21-byte body),{}
+2021-05-23 23:10:17.395 [INFO ] [reqId:hlflas9nuhh9] [c.n.c.ChainedDynamicProperty] Flipping property: micro-blog-account.ribbon.ActiveConnectionsLimit to use NEXT property: niws.loadbalancer.availabilityFilteringRule.activeConnectionsLimit = 2147483647
+2021-05-23 23:10:17.423 [INFO ] [reqId:hlflas9nuhh9] [c.n.u.c.ShutdownEnabledTimer] Shutdown hook installed for: NFLoadBalancer-PingTimer-micro-blog-account
+2021-05-23 23:10:17.425 [INFO ] [reqId:hlflas9nuhh9] [c.n.l.BaseLoadBalancer] Client: micro-blog-account instantiated a LoadBalancer: DynamicServerListLoadBalancer:{NFLoadBalancer:name=micro-blog-account,current list of Servers=[],Load balancer stats=Zone stats: {},Server stats: []}ServerList:null
+2021-05-23 23:10:17.439 [INFO ] [reqId:hlflas9nuhh9] [c.n.l.DynamicServerListLoadBalancer] Using serverListUpdater PollingServerListUpdater
+2021-05-23 23:10:17.448 [INFO ] [reqId:hlflas9nuhh9] [c.n.l.DynamicServerListLoadBalancer] DynamicServerListLoadBalancer for client micro-blog-account initialized: DynamicServerListLoadBalancer:{NFLoadBalancer:name=micro-blog-account,current list of Servers=[],Load balancer stats=Zone stats: {},Server stats: []}ServerList:org.springframework.cloud.netflix.ribbon.eureka.DomainExtractingServerList@67b8834
+2021-05-23 23:10:17.648 [ERROR] [reqId:hlflas9nuhh9] [c.ajie.blog.aop.BlogApiLogAspect] 
+java.lang.RuntimeException: com.netflix.client.ClientException: Load balancer does not have available server for client: micro-blog-account
+	at org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient.execute(LoadBalancerFeignClient.java:90)
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:119)
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:89)
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:100)
+	at com.sun.proxy.$Proxy123.queryAccountInfo(Unknown Source)
+	at com.ajie.blog.service.impl.BlogServiceImpl.fillAccountInfo(BlogServiceImpl.java:184)
+	at com.ajie.blog.service.impl.BlogServiceImpl.queryBlogById(BlogServiceImpl.java:221)
+	at com.ajie.blog.service.impl.BlogServiceImpl$$FastClassBySpringCGLIB$$aaa3b24e.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:687)
+	at com.ajie.blog.service.impl.BlogServiceImpl$$EnhancerBySpringCGLIB$$d4a1f888.queryBlogById(<generated>)
+	at com.ajie.blog.controller.BlogController.queryBlogById(BlogController.java:75)
+	at com.ajie.blog.controller.BlogController$$FastClassBySpringCGLIB$$276df860.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:771)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:88)
+	at com.ajie.commons.aop.GlobalLogAspect.logAround(GlobalLogAspect.java:49)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:644)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:70)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:95)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
+	at com.ajie.blog.controller.BlogController$$EnhancerBySpringCGLIB$$288dc67c.queryBlogById(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:878)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:792)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:888)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1597)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: com.netflix.client.ClientException: Load balancer does not have available server for client: micro-blog-account
+	at com.netflix.loadbalancer.LoadBalancerContext.getServerFromLoadBalancer(LoadBalancerContext.java:483)
+	at com.netflix.loadbalancer.reactive.LoadBalancerCommand$1.call(LoadBalancerCommand.java:184)
+	at com.netflix.loadbalancer.reactive.LoadBalancerCommand$1.call(LoadBalancerCommand.java:180)
+	at rx.Observable.unsafeSubscribe(Observable.java:10327)
+	at rx.internal.operators.OnSubscribeConcatMap.call(OnSubscribeConcatMap.java:94)
+	at rx.internal.operators.OnSubscribeConcatMap.call(OnSubscribeConcatMap.java:42)
+	at rx.Observable.unsafeSubscribe(Observable.java:10327)
+	at rx.internal.operators.OperatorRetryWithPredicate$SourceSubscriber$1.call(OperatorRetryWithPredicate.java:127)
+	at rx.internal.schedulers.TrampolineScheduler$InnerCurrentThreadScheduler.enqueue(TrampolineScheduler.java:73)
+	at rx.internal.schedulers.TrampolineScheduler$InnerCurrentThreadScheduler.schedule(TrampolineScheduler.java:52)
+	at rx.internal.operators.OperatorRetryWithPredicate$SourceSubscriber.onNext(OperatorRetryWithPredicate.java:79)
+	at rx.internal.operators.OperatorRetryWithPredicate$SourceSubscriber.onNext(OperatorRetryWithPredicate.java:45)
+	at rx.internal.util.ScalarSynchronousObservable$WeakSingleProducer.request(ScalarSynchronousObservable.java:276)
+	at rx.Subscriber.setProducer(Subscriber.java:209)
+	at rx.internal.util.ScalarSynchronousObservable$JustOnSubscribe.call(ScalarSynchronousObservable.java:138)
+	at rx.internal.util.ScalarSynchronousObservable$JustOnSubscribe.call(ScalarSynchronousObservable.java:129)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:48)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:30)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:48)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:30)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:48)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:30)
+	at rx.Observable.subscribe(Observable.java:10423)
+	at rx.Observable.subscribe(Observable.java:10390)
+	at rx.observables.BlockingObservable.blockForSingle(BlockingObservable.java:443)
+	at rx.observables.BlockingObservable.single(BlockingObservable.java:340)
+	at com.netflix.client.AbstractLoadBalancerAwareClient.executeWithLoadBalancer(AbstractLoadBalancerAwareClient.java:112)
+	at org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient.execute(LoadBalancerFeignClient.java:83)
+	... 82 common frames omitted
+2021-05-23 23:10:17.659 [INFO ] [reqId:hlflas9nuhh9] [c.ajie.blog.aop.BlogApiLogAspect] API end ===> uri:/micro-blog/v2/blog/query-by-id，method:GET,ip:127.0.0.1,classMethodcom.ajie.blog.controller.BlogController.queryBlogById,bizParam:[1395952336643301378],response:{"msg":"com.netflix.client.ClientException: Load balancer does not have available server for client: micro-blog-account","code":500}
+2021-05-23 23:13:03.269 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 23:18:03.271 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 23:18:04.799 [WARN ] [reqId:] [o.s.w.s.m.s.DefaultHandlerExceptionResolver] Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
+2021-05-23 23:18:27.799 [INFO ] [reqId:etsksxg5jr9o] [c.ajie.blog.aop.BlogApiLogAspect] API start===> uri:/micro-blog/v2/blog/query-by-page，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.controller.BlogController.queryByPage,bizParam:[{"tagList":[],"draft":false,"pageSize":20,"currentPage":1,"status":1}]
+2021-05-23 23:18:28.096 [DEBUG] [reqId:etsksxg5jr9o] [c.a.b.m.BlogMapper.queryByPage] ==>  Preparing: (SELECT COUNT(1) FROM mb_blog WHERE del = 0 AND type = 1) 
+2021-05-23 23:18:28.097 [DEBUG] [reqId:etsksxg5jr9o] [c.a.b.m.BlogMapper.queryByPage] ==> Parameters: 
+2021-05-23 23:18:28.310 [DEBUG] [reqId:etsksxg5jr9o] [c.a.b.m.BlogMapper.queryByPage] ==>  Preparing: (select * from mb_blog where del=0 and type=1 order by create_time desc) LIMIT ?,? 
+2021-05-23 23:18:28.310 [DEBUG] [reqId:etsksxg5jr9o] [c.a.b.m.BlogMapper.queryByPage] ==> Parameters: 0(Long), 20(Long)
+2021-05-23 23:18:28.454 [DEBUG] [reqId:etsksxg5jr9o] [c.a.b.m.BlogMapper.queryByPage] <==      Total: 20
+2021-05-23 23:18:28.458 [INFO ] [reqId:etsksxg5jr9o] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] ---> POST http://micro-blog-account/micro-blog/v2/account/query-account-info HTTP/1.1,{}
+2021-05-23 23:18:28.458 [INFO ] [reqId:etsksxg5jr9o] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] Content-Length: 401,{}
+2021-05-23 23:18:28.458 [INFO ] [reqId:etsksxg5jr9o] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] Content-Type: application/json,{}
+2021-05-23 23:18:28.458 [INFO ] [reqId:etsksxg5jr9o] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] reqId: etsksxg5jr9o,{}
+2021-05-23 23:18:28.459 [INFO ] [reqId:etsksxg5jr9o] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] ticket: {"accountName":null,"attach":null,"headerUrl":null,"id":null,"nickName":null},{}
+2021-05-23 23:18:28.459 [INFO ] [reqId:etsksxg5jr9o] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] ,{}
+2021-05-23 23:18:28.459 [INFO ] [reqId:etsksxg5jr9o] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] [1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873,1395288739512655873],{}
+2021-05-23 23:18:28.459 [INFO ] [reqId:etsksxg5jr9o] [c.a.b.a.api.rest.AccountRestApi] feign invoke ===>>> [AccountRestApi#queryAccountInfo] ---> END HTTP (401-byte body),{}
+2021-05-23 23:18:28.462 [ERROR] [reqId:etsksxg5jr9o] [c.ajie.blog.aop.BlogApiLogAspect] 
+java.lang.RuntimeException: com.netflix.client.ClientException: Load balancer does not have available server for client: micro-blog-account
+	at org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient.execute(LoadBalancerFeignClient.java:90)
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:119)
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:89)
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:100)
+	at com.sun.proxy.$Proxy123.queryAccountInfo(Unknown Source)
+	at com.ajie.blog.service.impl.BlogServiceImpl.fillAccountInfo(BlogServiceImpl.java:184)
+	at com.ajie.blog.service.impl.BlogServiceImpl.queryByPage(BlogServiceImpl.java:177)
+	at com.ajie.blog.service.impl.BlogServiceImpl$$FastClassBySpringCGLIB$$aaa3b24e.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:687)
+	at com.ajie.blog.service.impl.BlogServiceImpl$$EnhancerBySpringCGLIB$$d4a1f888.queryByPage(<generated>)
+	at com.ajie.blog.controller.BlogController.queryByPage(BlogController.java:70)
+	at com.ajie.blog.controller.BlogController$$FastClassBySpringCGLIB$$276df860.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:771)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:88)
+	at com.ajie.commons.aop.GlobalLogAspect.logAround(GlobalLogAspect.java:49)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:644)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:633)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:70)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:95)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:749)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:691)
+	at com.ajie.blog.controller.BlogController$$EnhancerBySpringCGLIB$$288dc67c.queryByPage(<generated>)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:190)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:138)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:105)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:878)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:792)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1040)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:652)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:888)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1597)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: com.netflix.client.ClientException: Load balancer does not have available server for client: micro-blog-account
+	at com.netflix.loadbalancer.LoadBalancerContext.getServerFromLoadBalancer(LoadBalancerContext.java:483)
+	at com.netflix.loadbalancer.reactive.LoadBalancerCommand$1.call(LoadBalancerCommand.java:184)
+	at com.netflix.loadbalancer.reactive.LoadBalancerCommand$1.call(LoadBalancerCommand.java:180)
+	at rx.Observable.unsafeSubscribe(Observable.java:10327)
+	at rx.internal.operators.OnSubscribeConcatMap.call(OnSubscribeConcatMap.java:94)
+	at rx.internal.operators.OnSubscribeConcatMap.call(OnSubscribeConcatMap.java:42)
+	at rx.Observable.unsafeSubscribe(Observable.java:10327)
+	at rx.internal.operators.OperatorRetryWithPredicate$SourceSubscriber$1.call(OperatorRetryWithPredicate.java:127)
+	at rx.internal.schedulers.TrampolineScheduler$InnerCurrentThreadScheduler.enqueue(TrampolineScheduler.java:73)
+	at rx.internal.schedulers.TrampolineScheduler$InnerCurrentThreadScheduler.schedule(TrampolineScheduler.java:52)
+	at rx.internal.operators.OperatorRetryWithPredicate$SourceSubscriber.onNext(OperatorRetryWithPredicate.java:79)
+	at rx.internal.operators.OperatorRetryWithPredicate$SourceSubscriber.onNext(OperatorRetryWithPredicate.java:45)
+	at rx.internal.util.ScalarSynchronousObservable$WeakSingleProducer.request(ScalarSynchronousObservable.java:276)
+	at rx.Subscriber.setProducer(Subscriber.java:209)
+	at rx.internal.util.ScalarSynchronousObservable$JustOnSubscribe.call(ScalarSynchronousObservable.java:138)
+	at rx.internal.util.ScalarSynchronousObservable$JustOnSubscribe.call(ScalarSynchronousObservable.java:129)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:48)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:30)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:48)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:30)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:48)
+	at rx.internal.operators.OnSubscribeLift.call(OnSubscribeLift.java:30)
+	at rx.Observable.subscribe(Observable.java:10423)
+	at rx.Observable.subscribe(Observable.java:10390)
+	at rx.observables.BlockingObservable.blockForSingle(BlockingObservable.java:443)
+	at rx.observables.BlockingObservable.single(BlockingObservable.java:340)
+	at com.netflix.client.AbstractLoadBalancerAwareClient.executeWithLoadBalancer(AbstractLoadBalancerAwareClient.java:112)
+	at org.springframework.cloud.openfeign.ribbon.LoadBalancerFeignClient.execute(LoadBalancerFeignClient.java:83)
+	... 82 common frames omitted
+2021-05-23 23:18:28.463 [INFO ] [reqId:etsksxg5jr9o] [c.ajie.blog.aop.BlogApiLogAspect] API end ===> uri:/micro-blog/v2/blog/query-by-page，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.controller.BlogController.queryByPage,bizParam:[{"tagList":[],"draft":false,"pageSize":20,"currentPage":1,"status":1}],response:{"msg":"com.netflix.client.ClientException: Load balancer does not have available server for client: micro-blog-account","code":500}
+2021-05-23 23:18:56.154 [INFO ] [reqId:] [c.n.l.PollingServerListUpdater] Shutting down the Executor Pool for PollingServerListUpdater
+2021-05-23 23:18:56.157 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Unregistering application MICRO-BLOG with eureka with status DOWN
+2021-05-23 23:18:56.157 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621783136157, current=DOWN, previous=UP]
+2021-05-23 23:18:56.158 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG/DESKTOP-MVUDEUV:micro-blog:8080: registering service...
+2021-05-23 23:18:56.173 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG/DESKTOP-MVUDEUV:micro-blog:8080 - registration status: 204
+2021-05-23 23:18:58.288 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-05-23 23:18:58.314 [INFO ] [reqId:] [c.n.u.c.ShutdownEnabledTimer] Shutdown hook removed for: NFLoadBalancer-PingTimer-micro-blog-account
+2021-05-23 23:18:58.317 [INFO ] [reqId:] [c.n.u.c.ShutdownEnabledTimer] Exception caught (might be ok if at shutdown)
+java.lang.IllegalStateException: Shutdown in progress
+	at java.lang.ApplicationShutdownHooks.remove(ApplicationShutdownHooks.java:82)
+	at java.lang.Runtime.removeShutdownHook(Runtime.java:239)
+	at com.netflix.util.concurrent.ShutdownEnabledTimer.cancel(ShutdownEnabledTimer.java:70)
+	at com.netflix.loadbalancer.BaseLoadBalancer.cancelPingTask(BaseLoadBalancer.java:632)
+	at com.netflix.loadbalancer.BaseLoadBalancer.shutdown(BaseLoadBalancer.java:883)
+	at com.netflix.loadbalancer.DynamicServerListLoadBalancer.shutdown(DynamicServerListLoadBalancer.java:285)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.invokeCustomDestroyMethod(DisposableBeanAdapter.java:339)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:273)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:587)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:559)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1092)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:520)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1085)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1061)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1030)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:979)
+	at org.springframework.cloud.context.named.NamedContextFactory.destroy(NamedContextFactory.java:93)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:258)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:587)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:559)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1092)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:520)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1085)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1061)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1030)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:170)
+	at org.springframework.context.support.AbstractApplicationContext$1.run(AbstractApplicationContext.java:949)
+2021-05-23 23:18:58.343 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+2021-05-23 23:18:58.376 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+2021-05-23 23:18:58.378 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Shutting down DiscoveryClient ...
+2021-05-23 23:19:01.383 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Unregistering ...
+2021-05-23 23:19:01.394 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG/DESKTOP-MVUDEUV:micro-blog:8080 - deregister  status: 200
+2021-05-23 23:19:01.438 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Completed shut down of DiscoveryClient
