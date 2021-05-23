@@ -20,6 +20,9 @@ import java.lang.reflect.Method;
  */
 public abstract class AbstractMapperAspect {
 
+    public static final String IGNORE_CHECK_BELONG = "ignore_belong";
+    public static final String IGNORE_FILL = "ignore_fill";
+
     /**
      * 拦截插入接口
      *
@@ -29,6 +32,9 @@ public abstract class AbstractMapperAspect {
      */
     @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.insert(..))")
     public Object insert(ProceedingJoinPoint point) throws Throwable {
+        if (IGNORE_FILL.equals(System.getProperty(IGNORE_FILL))) {
+            return point.proceed();
+        }
         Object param = point.getArgs()[0];
         if (param instanceof BasePO) {
             BasePO basePO = (BasePO) param;
@@ -46,6 +52,9 @@ public abstract class AbstractMapperAspect {
      */
     @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.update*(..))")
     public Object update(ProceedingJoinPoint point) throws Throwable {
+        if (IGNORE_FILL.equals(System.getProperty(IGNORE_FILL))) {
+            return point.proceed();
+        }
         Object param = point.getArgs()[0];
         if (param instanceof BasePO) {
             BasePO basePO = (BasePO) param;
@@ -63,6 +72,9 @@ public abstract class AbstractMapperAspect {
      * @return
      */
     private boolean checkBelong(ProceedingJoinPoint point, BasePO basePO) {
+        if (IGNORE_CHECK_BELONG.equals(System.getProperty(IGNORE_CHECK_BELONG))) {
+            return true;
+        }
         Long id = UserInfoUtil.getUserId();
        /* if (null == id) {
             throw new CommonException(CommonsExceptionEmun.BELONG_NOT_MATCH.getCode(), CommonsExceptionEmun.BELONG_NOT_MATCH.getMsg());

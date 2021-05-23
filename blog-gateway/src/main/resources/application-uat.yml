@@ -47,3 +47,9 @@ logging:
     #指定不同目录下的日志的级别
     #level:
     #com.shimain.springboot.mapper: INFO
+
+properties:
+  #token秘钥
+  tokenSecret: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALKG8UjJx0eVrkJNDOzYc4ke17sr8rcQ3f3UY4IJsHeW9Ca/V/3ssuwsla1XiEg2/BLE0g2GrZuAlmzyXCEfNuiQ3QU74CB4J3xJUsyB0940m2eIaPWGBwge7pGGfTPKHyh1bSh34UzPF9pG3HzhR4cG1k02Gip4QaJBs81mo4UfAgMBAAECgYEAn7LIqkUdx7JkxJhqRIBHsdRuRNfGce5btpFERnHmcsQNOZAW5WXUlCI57msL1RWiniOEh2b/a8g2R9TxhwuGMDlyrhLxmkE+vWMCOCOUDXnNSlM6bDSk+0yPYaQEL4VW23Fpivtnha3UoLMd5b28eBPYFE/T0dsNYGC7iwTLj+kCQQDvAAdP/JKwauUODBIvANb92+GZIfkWcfHwhOb9wi7BVhJZVE9P0hPzNPN6IkqyCfXFT4s/h12ORSokL5QcJ0B1AkEAvznBrxZ8kTRzWMeZLS/DrJXoWZYsyvbakY+ZYB3ESDO0oUCG73be4XlzhfhwrJUZd1vd7H6TOcCcyWRCpto8wwJANuFxzGs6H+qb6GrbLhHqTGbWWfyUHxRRMyLBjBmv9NNX6U1T3Qdnb1yEYFJJhrKEzici2Zay4/173M1UHFbjFQJAaiRL7ryjjhG4CMpZqqw9h5l56+ggmtQkg/FaJ/C913njxDHF9DteAXdheTZqjFECXq8+Ypvran4QSPT+zhCK8wJBAKeURwniU5GbnWCKmkKQQxcIjkws1/u7U6P72ZlIqEGXEVdh0mcIqypNCn86HIBW6CD5/o5OgpfLdMgMplZt6HU=
+  ignoreAuthPath: []
+  authPath: ['**/create*/**','**/update*/**','**/save*/**','**/delete*/**','**/migrate*/**','**/change*/**',]

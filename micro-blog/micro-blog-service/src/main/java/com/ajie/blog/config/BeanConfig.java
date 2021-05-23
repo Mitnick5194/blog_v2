@@ -2,6 +2,7 @@ package com.ajie.blog.config;
 
 import com.ajie.commons.feign.FeignInterceptionConfig;
 import com.ajie.commons.feign.InfoFeignLoggerFactory;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import feign.Logger;
 import org.springframework.cloud.openfeign.FeignLoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -38,5 +39,15 @@ public class BeanConfig {
     @Bean
     FeignInterceptionConfig getFeignInterceptionConfig() {
         return new FeignInterceptionConfig();
+    }
+
+    /**
+     * mp分页拦截器
+     *
+     * @return
+     */
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        return new PaginationInterceptor();
     }
 }

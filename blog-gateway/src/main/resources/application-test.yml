@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 16002
 
 spring:
   application:
@@ -15,29 +15,29 @@ spring:
         - id: micro-blog         #路由的ID，没有固定规则但要求统一，建议配合服务名
           uri: lb://micro-blog #匹配后提供服务的路由地址
           predicates:
-            - Path=/micro-blog/*     #断言，路径相匹配的进行路由
+            - Path=/api-blog/**     #断言，路径相匹配的进行路由（注意：uri如果是多级的，要用**）
+          filters:
+            #- RewritePath=/api-blog/(?<segment>.*), /$\{segment}    #路径重写的过滤器，在yml中$写为$\，代理后api-blog将被去掉，后面的保留
+            - StripPrefix=1
+            - PrefixPath=/micro-blog
+
+        - id: micro-blog-account        #路由的ID，没有固定规则但要求统一，建议配合服务名
+          uri: lb://micro-blog-account #匹配后提供服务的路由地址
+          predicates:
+            - Path=/api-account/**     #断言，路径相匹配的进行路由
           filters:
             - StripPrefix=1
-
-        - id: account         #路由的ID，没有固定规则但要求统一，建议配合服务名
-          #uri: http://localhost:8001  #匹配后提供服务的路由地址
-          uri: lb://account #匹配后提供服务的路由地址
-          predicates:
-            - Path=/account/*     #断言，路径相匹配的进行路由
-
-
-
-
+            - PrefixPath=/micro-blog
 
 eureka:
   client:
     register-with-eureka: true    # 是否将自己注册进eurekaServer，默认true
     fetchRegistry: true         #是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
     service-url:
-      defaultZone: http://localhost:9527/eureka   #单机版
+      defaultZone: http://172.17.0.1:16001/eureka   #单机版
       #defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka  #集群版
   instance:
-    hostname: localhost
+    hostname: 172.17.0.1
 
 #配置日志
 logging:
@@ -47,3 +47,11 @@ logging:
     #指定不同目录下的日志的级别
     #level:
     #com.shimain.springboot.mapper: INFO
+
+
+properties:
+  #token秘钥
+  tokenSecret: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALKG8UjJx0eVrkJNDOzYc4ke17sr8rcQ3f3UY4IJsHeW9Ca/V/3ssuwsla1XiEg2/BLE0g2GrZuAlmzyXCEfNuiQ3QU74CB4J3xJUsyB0940m2eIaPWGBwge7pGGfTPKHyh1bSh34UzPF9pG3HzhR4cG1k02Gip4QaJBs81mo4UfAgMBAAECgYEAn7LIqkUdx7JkxJhqRIBHsdRuRNfGce5btpFERnHmcsQNOZAW5WXUlCI57msL1RWiniOEh2b/a8g2R9TxhwuGMDlyrhLxmkE+vWMCOCOUDXnNSlM6bDSk+0yPYaQEL4VW23Fpivtnha3UoLMd5b28eBPYFE/T0dsNYGC7iwTLj+kCQQDvAAdP/JKwauUODBIvANb92+GZIfkWcfHwhOb9wi7BVhJZVE9P0hPzNPN6IkqyCfXFT4s/h12ORSokL5QcJ0B1AkEAvznBrxZ8kTRzWMeZLS/DrJXoWZYsyvbakY+ZYB3ESDO0oUCG73be4XlzhfhwrJUZd1vd7H6TOcCcyWRCpto8wwJANuFxzGs6H+qb6GrbLhHqTGbWWfyUHxRRMyLBjBmv9NNX6U1T3Qdnb1yEYFJJhrKEzici2Zay4/173M1UHFbjFQJAaiRL7ryjjhG4CMpZqqw9h5l56+ggmtQkg/FaJ/C913njxDHF9DteAXdheTZqjFECXq8+Ypvran4QSPT+zhCK8wJBAKeURwniU5GbnWCKmkKQQxcIjkws1/u7U6P72ZlIqEGXEVdh0mcIqypNCn86HIBW6CD5/o5OgpfLdMgMplZt6HU=
+  ignoreAuthPath: []
+  authPath: ['**/create*/**','**/update*/**','**/save*/**','**/delete*/**','**/migrate*/**','**/change*/**',]
+

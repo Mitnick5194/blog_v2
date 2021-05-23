@@ -9,9 +9,9 @@
     </appender>
 
     <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${logDir}/account.log</file>
+        <file>${log_dir}/account.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${logDir}/account-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <fileNamePattern>${log_dir}/account-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
             <maxFileSize>200MB</maxFileSize>
             <maxHistory>30</maxHistory>
             <totalSizeCap>10GB</totalSizeCap>
@@ -42,7 +42,7 @@
     <logger name="java.sql.ResultSet" level="DEBUG" />
 
     <root>
-        <level value="DEBUG"/>
+        <level value="INFO"/>
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="ASYNC"/>
     </root>

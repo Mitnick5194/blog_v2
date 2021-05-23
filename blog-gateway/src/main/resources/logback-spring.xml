@@ -9,9 +9,9 @@
     </appender>
 
     <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${logDir}/gateway.log</file>
+        <file>${log_dir}/gateway.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${logDir}/gateway-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <fileNamePattern>${log_dir}/gateway-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
             <maxFileSize>200MB</maxFileSize>
             <maxHistory>30</maxHistory>
             <totalSizeCap>10GB</totalSizeCap>

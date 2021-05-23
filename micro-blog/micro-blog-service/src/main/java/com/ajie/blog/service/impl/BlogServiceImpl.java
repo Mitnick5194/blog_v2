@@ -18,10 +18,7 @@ import com.ajie.blog.service.BlogService;
 import com.ajie.blog.service.TagService;
 import com.ajie.commons.constant.TableConstant;
 import com.ajie.commons.dto.PageDto;
-import com.ajie.commons.utils.ApiUtil;
-import com.ajie.commons.utils.PageDtoUtil;
-import com.ajie.commons.utils.ParamCheck;
-import com.ajie.commons.utils.UserInfoUtil;
+import com.ajie.commons.utils.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -63,6 +60,9 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         BlogPO po = new BlogPO();
         BeanUtils.copyProperties(dto, po);
         po.setUserId(UserInfoUtil.getUserId());
+        //处理摘要
+        String ac = handleAbstractContent(dto.getContent());
+        po.setAbstractContent(ac);
         blogMapper.insert(po);
         handleTag(dto.getTagList(), po.getId(), false);
         return po.getId();
@@ -105,6 +105,9 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         ParamCheck.assertNull(dto.getTagList(), BlogException.paramError("标签"));
         BlogPO po = new BlogPO();
         BeanUtils.copyProperties(dto, po);
+        //处理摘要
+        String ac = handleAbstractContent(dto.getContent());
+        po.setAbstractContent(ac);
         int ret = blogMapper.updateById(po);
         handleTag(dto.getTagList(), po.getId(), true);
         return ret;
@@ -220,17 +223,49 @@ public class BlogServiceImpl implements BlogService, TableConstant {
     }
 
     public int migrate() {
-        List<BlogPO> blogPOs = blogMapper.queryOldData();
+        List<BlogPO> blogPOs = blogMapper.selectList(new QueryWrapper<>());
+        //List<BlogPO> blogPOs = blogMapper.queryOldData();
         List<BlogPO> list = blogPOs.stream().map(s -> {
             BlogPO t = new BlogPO();
             BeanUtils.copyProperties(s, t);
-            t.setId(null);
+            t.setAbstractContent(handleAbstractContent(s.getContent()));
             return t;
         }).collect(Collectors.toList());
         for (BlogPO item : list) {
-            blogMapper.insert(item);
+            blogMapper.updateById(item);
         }
         return blogPOs.size();
+    }
+
+    /**
+     * 摘要部分去除html标签（因为截取一段内容，可能前面有标签，但是结束标签没有被包含，会导致页面标签混乱）<br>
+     * 摘要保留200字
+     *
+     * @param content
+     */
+    private String handleAbstractContent(String content) {
+        // 先取400
+        if (content.length() > 400) {
+            content = content.substring(0, 399);
+        }
+        StringBuilder sb = new StringBuilder();
+        // 过滤完整的标签组
+        content = HtmlFilter.filterHtml(content, sb);
+        if (content.length() > 200) {
+            content = content.substring(0, 200);// 只显示200个字
+        }
+        // 结束可能是<div class='' 需要手动处理一下
+        for (int i = content.length() - 1, j = 0; i >= 0; i--) {
+            if (++j == 50) { // 只检查后50个字符
+                break;
+            }
+            char ch = content.charAt(i);
+            if (ch == HtmlFilter.MARK_LEFT) {
+                content = content.substring(0, i - 1);
+                break;
+            }
+        }
+        return content;
     }
 
     public static void main(String[] args) {

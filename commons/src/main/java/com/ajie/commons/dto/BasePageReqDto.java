@@ -4,11 +4,11 @@ public class BasePageReqDto extends BaseReqDto {
     /**
      * 当前页
      */
-    private int currentPage;
+    private int currentPage = 1;
     /**
-     * 每页条数
+     * 每页条数，默认10条
      */
-    private int pageSize;
+    private int pageSize = 10;
 
     public int getCurrentPage() {
         return currentPage;

@@ -62,6 +62,8 @@ public class BasePO implements Serializable {
      * 填充公共字段，一般在插入前一步执行
      */
     public void createFill() {
+        String ignoreFill = System.getProperty("ignore_fill");
+
         Long userId = UserInfoUtil.getUserId();
         if (null != userId) {
             this.createPerson = String.valueOf(userId);

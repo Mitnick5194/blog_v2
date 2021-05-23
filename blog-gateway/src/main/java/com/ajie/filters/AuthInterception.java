@@ -2,10 +2,14 @@ package com.ajie.filters;
 
 import com.ajie.config.Properties;
 import com.ajie.dto.JwtAccount;
+import com.ajie.exception.VerifyException;
 import com.ajie.utils.JwtUtil;
+import com.ajie.utils.PathUtil;
 import com.ajie.utils.RandomUtil;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -25,8 +29,11 @@ import java.util.List;
 
 @Component
 public class AuthInterception implements GlobalFilter, Ordered {
+    private static final Logger logger = LoggerFactory.getLogger(AuthInterception.class);
     private static final String LOGINRESP = "{\"code\":401,\"msg\":\"未登录\",\"data\":\"\"}";
     private static final String FORBIDDEN = "{\"code\":403,\"msg\":\"权限不足\",\"data\":\"\"}";
+
+    private static final String SERVER_ERROR = "{\"code\":500,\"msg\":\"服务器异常\",\"data\":\"\"}";
     /**
      * 解析后的用户信息
      */
@@ -36,36 +43,45 @@ public class AuthInterception implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        ServerHttpRequest request = exchange.getRequest();
-        //日志追踪
-        String reqId = RandomUtil.getRandomString(12, true);
-        //日志追踪id
-        MDC.put("reqId", reqId);
-        request.getQueryParams().add("reqId", reqId);
-        List<String> auths = request.getHeaders().get("auth");
-        String token = null;
-        if (CollectionUtils.isEmpty(auths) || StringUtils.isBlank(token = auths.get(0))) {
-            return write(LOGINRESP, exchange);
-        }
-        if (testHeader.equals(token) && isDev()) {
-            return chain.filter(exchange);
-        }
-        //获取jwt信息
         try {
+            ServerHttpRequest request = exchange.getRequest();
+            //日志追踪7
+            String reqId = RandomUtil.getRandomString(12, true);
+            //日志追踪id
+            MDC.put("reqId", reqId);
+            //放入头部
+            ServerHttpRequest.Builder mutate = request.mutate().header("reqId", reqId);
+            exchange = exchange.mutate().request(mutate.build()).build();
+            //验证路径是否要登录
+            if (!PathUtil.assertAuth(request.getPath().toString())) {
+                //不需要登录，放行
+                return chain.filter(exchange);
+            }
+            String token = request.getHeaders().getFirst("auth");
+            if (StringUtils.isBlank(token)) {
+                return write(LOGINRESP, exchange);
+            }
+            if (testHeader.equals(token) && isDev()) {
+                return chain.filter(exchange);
+            }
+            //获取jwt信息
             JwtAccount account = JwtUtil.verifyToken(token, Properties.tokenSecret);
             //将用户信息放入头部
-            request.getHeaders().put(TICKET_KEY, Collections.singletonList(JSON.toJSONString(account)));
-        } catch (Exception e) {
+            mutate.header(TICKET_KEY, JSON.toJSONString(account));
+            return chain.filter(exchange);
+        }/* catch (VerifyException e) {
+            logger.error("用户验证异常", e);
             return write(LOGINRESP, exchange);
+        } */catch (Throwable e) {
+            logger.error("", e);
+            return write(SERVER_ERROR, exchange);
         }
-        return chain.filter(exchange);
     }
 
     private Mono<Void> write(String msg, ServerWebExchange exchange) {
         ServerHttpResponse response = exchange.getResponse();
-        byte[] bits = LOGINRESP.getBytes(StandardCharsets.UTF_8);
+        byte[] bits = msg.getBytes(StandardCharsets.UTF_8);
         DataBuffer buffer = response.bufferFactory().wrap(bits);
-        response.setStatusCode(HttpStatus.UNAUTHORIZED);
         //指定编码，否则在浏览器中会中文乱码
         response.getHeaders().add("Content-Type", "text/plain;charset=UTF-8");
         return response.writeWith(Mono.just(buffer));
@@ -77,7 +93,7 @@ public class AuthInterception implements GlobalFilter, Ordered {
     }
 
     private boolean isDev() {
-        String dev = System.getProperty("dev");
-        return "true".equals(dev);
+        String env = System.getProperty("env");
+        return "dev".equals(env);
     }
 }

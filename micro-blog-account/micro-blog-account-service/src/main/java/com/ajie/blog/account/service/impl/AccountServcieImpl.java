@@ -8,6 +8,7 @@ import com.ajie.blog.account.mapper.AccountMapper;
 import com.ajie.blog.account.service.AccountService;
 import com.ajie.commons.constant.TableConstant;
 import com.ajie.commons.dto.JwtAccount;
+import com.ajie.commons.exception.CommonException;
 import com.ajie.commons.exception.MicroCommonException;
 import com.ajie.commons.utils.JwtUtil;
 import com.ajie.commons.utils.ParamCheck;
@@ -81,7 +82,7 @@ public class AccountServcieImpl implements AccountService {
 
 
     @Override
-    public String login(LoginReqDto dto) {
+    public LoginRespDto login(LoginReqDto dto) {
         ParamCheck.assertNull(dto.getUser(), MicroCommonException.PARAM_ERROR.paramErrorFiled("登录账号为空"));
         ParamCheck.assertNull(dto.getPassword(), MicroCommonException.PARAM_ERROR.paramErrorFiled("密码为空"));
         //分析用户登录类型
@@ -112,7 +113,12 @@ public class AccountServcieImpl implements AccountService {
         JwtAccount jwtAccount = new JwtAccount();
         BeanUtils.copyProperties(account, jwtAccount);
         String token = JwtUtil.createToken(Properties.tokenSecret, jwtAccount);
-        return token;
+        LoginRespDto resp = new LoginRespDto();
+        BeanUtils.copyProperties(account, resp);
+        resp.setPhone(AccountHelper.mask(account.getPhone()));
+        resp.setMail(AccountHelper.mask(account.getMail()));
+        resp.setToken(token);
+        return resp;
     }
 
     @Override
@@ -153,19 +159,31 @@ public class AccountServcieImpl implements AccountService {
     }
 
     @Override
-    public Integer updateAccountName(String accountName) {
-        if (StringUtils.isBlank(accountName)) {
-            throw MicroCommonException.PARAM_ERROR.paramErrorFiled("用户名");
-        }
+    public Integer updateAccountName(UpdateAccountNameReqDto dto) {
+        String password = dto.getPassword();
+        String accountName = dto.getAccountName();
+        ParamCheck.assertNull(password, MicroCommonException.PARAM_ERROR.paramErrorFiled("登录账号为空"));
+        ParamCheck.assertNull(accountName, MicroCommonException.PARAM_ERROR.paramErrorFiled("用户名"));
         AccountPO accountPO = getLoginAccount();
         if (null == accountPO) {
             throw AccountException.USER_NAME_EXIST;
+        }
+        if (accountName.equals(accountPO.getAccountName())) {
+            throw new AccountException(AccountException.USER_VERIFY_ERROR.getCode(), "新用户名不能和旧用户名一样");
         }
         Integer autoAccountName = accountPO.getAutoAccountName();
         if (!Integer.valueOf(1).equals(autoAccountName)) {
             throw new AccountException(AccountException.USER_VERIFY_ERROR.getCode(), "用户名不可修改");
         }
-        accountPO.setAccountName(accountName);
+        //验证密码
+        String oldPassword = AccountHelper.encryptPassword(password, accountName);
+        if (!oldPassword.equals(accountPO.getPassword())) {
+            throw new AccountException(MicroCommonException.PARAM_ERROR.getCode(), "密码错误");
+        }
+        //处理密码
+        String newPassword = AccountHelper.encryptPassword(password, accountName);
+        accountPO.setAccountName(dto.getAccountName());
+        accountPO.setPassword(newPassword);
         return accountMapper.updateById(accountPO);
     }
 

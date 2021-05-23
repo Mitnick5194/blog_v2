@@ -1,0 +1,426 @@
+2021-05-23 16:13:55.302 [INFO ] [reqId:] [o.h.v.internal.util.Version] HV000001: Hibernate Validator 6.1.7.Final
+2021-05-23 16:14:00.903 [ERROR] [reqId:] [o.s.boot.SpringApplication] Application run failed
+java.lang.IllegalStateException: Failed to load property source from 'file:/M:/_idea_ws/blog_v2/micro-blog-account/micro-blog-account-service/target/classes/application-test.yml' (classpath:/application-test.yml) for profile test
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:564)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.loadForFileExtension(ConfigFileApplicationListener.java:490)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:471)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.lambda$null$7(ConfigFileApplicationListener.java:450)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader$$Lambda$88/479459041.accept(Unknown Source)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.lambda$load$8(ConfigFileApplicationListener.java:450)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader$$Lambda$85/21422054.accept(Unknown Source)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:447)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.lambda$load$0(ConfigFileApplicationListener.java:350)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader$$Lambda$65/57241990.accept(Unknown Source)
+	at org.springframework.boot.context.config.FilteredPropertySource.apply(FilteredPropertySource.java:54)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:338)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.addPropertySources(ConfigFileApplicationListener.java:229)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.postProcessEnvironment(ConfigFileApplicationListener.java:213)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.onApplicationEnvironmentPreparedEvent(ConfigFileApplicationListener.java:203)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.onApplicationEvent(ConfigFileApplicationListener.java:191)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:127)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:80)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:53)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:345)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1237)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
+	at com.ajie.blog.account.App.main(App.java:13)
+Caused by: org.yaml.snakeyaml.parser.ParserException: while parsing a block mapping
+ in 'reader', line 43, column 3:
+      tokenSecret: 
+      ^
+expected <block end>, but found '<block mapping start>'
+ in 'reader', line 45, column 5:
+        authPath: ['**/create*/**','**/u ... 
+        ^
+
+	at org.yaml.snakeyaml.parser.ParserImpl$ParseBlockMappingKey.produce(ParserImpl.java:572)
+	at org.yaml.snakeyaml.parser.ParserImpl.peekEvent(ParserImpl.java:158)
+	at org.yaml.snakeyaml.parser.ParserImpl.checkEvent(ParserImpl.java:148)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:235)
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:162)
+	at org.yaml.snakeyaml.composer.Composer.composeValueNode(Composer.java:257)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingChildren(Composer.java:248)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:236)
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:162)
+	at org.yaml.snakeyaml.composer.Composer.getNode(Composer.java:95)
+	at org.yaml.snakeyaml.constructor.BaseConstructor.getData(BaseConstructor.java:134)
+	at org.yaml.snakeyaml.Yaml$1.next(Yaml.java:494)
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:200)
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:164)
+	at org.springframework.boot.env.OriginTrackedYamlLoader.load(OriginTrackedYamlLoader.java:82)
+	at org.springframework.boot.env.YamlPropertySourceLoader.load(YamlPropertySourceLoader.java:50)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.loadDocuments(ConfigFileApplicationListener.java:632)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:534)
+	... 28 common frames omitted
+2021-05-23 16:17:26.989 [INFO ] [reqId:] [o.h.v.internal.util.Version] HV000001: Hibernate Validator 6.1.7.Final
+2021-05-23 16:17:29.650 [INFO ] [reqId:] [com.ajie.blog.account.App] The following profiles are active: dev
+2021-05-23 16:17:31.868 [INFO ] [reqId:] [o.s.c.context.scope.GenericScope] BeanFactory id=1123d462-be43-3ad5-a5d5-38c4af308b0d
+2021-05-23 16:17:33.187 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8081 (http)
+2021-05-23 16:17:33.203 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8081"]
+2021-05-23 16:17:33.204 [INFO ] [reqId:] [o.a.c.core.StandardService] Starting service [Tomcat]
+2021-05-23 16:17:33.204 [INFO ] [reqId:] [o.a.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-05-23 16:17:33.406 [INFO ] [reqId:] [o.a.c.c.C.[.[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2021-05-23 16:17:33.407 [INFO ] [reqId:] [o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 3720 ms
+2021-05-23 16:17:34.122 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2021-05-23 16:17:36.498 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2021-05-23 16:17:37.703 [INFO ] [reqId:] [s.d.s.w.PropertySourcedRequestMappingHandlerMapping] Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-05-23 16:17:37.754 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 16:17:37.754 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 16:17:37.761 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 16:17:37.761 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 16:17:38.029 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Initializing ExecutorService 'applicationTaskExecutor'
+2021-05-23 16:17:39.744 [INFO ] [reqId:] [o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration] Eureka HTTP Client uses Jersey
+2021-05-23 16:17:41.139 [WARN ] [reqId:] [o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger] You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2021-05-23 16:17:41.359 [INFO ] [reqId:] [o.s.c.n.e.InstanceInfoFactory] Setting initial instance status as: STARTING
+2021-05-23 16:17:41.424 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Initializing Eureka in region us-east-1
+2021-05-23 16:17:41.686 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON encoding codec LegacyJacksonJson
+2021-05-23 16:17:41.686 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON decoding codec LegacyJacksonJson
+2021-05-23 16:17:41.906 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML encoding codec XStreamXml
+2021-05-23 16:17:41.906 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML decoding codec XStreamXml
+2021-05-23 16:17:42.389 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 16:17:43.003 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Disable delta property : false
+2021-05-23 16:17:43.003 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Single vip registry refresh property : null
+2021-05-23 16:17:43.003 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Force full registry fetch : false
+2021-05-23 16:17:43.003 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application is null : false
+2021-05-23 16:17:43.003 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Registered Applications size is zero : true
+2021-05-23 16:17:43.004 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application version is -1: true
+2021-05-23 16:17:43.004 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Getting all instance registry info from the eureka server
+2021-05-23 16:17:43.304 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] The response status is 200
+2021-05-23 16:17:43.308 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Starting heartbeat executor: renew interval is: 30
+2021-05-23 16:17:43.312 [INFO ] [reqId:] [c.n.d.InstanceInfoReplicator] InstanceInfoReplicator onDemand update allowed rate per min is 4
+2021-05-23 16:17:43.319 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Discovery Client initialized at timestamp 1621757863317 with initial instances count: 1
+2021-05-23 16:17:43.328 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Registering application MICRO-BLOG-ACCOUNT with eureka with status UP
+2021-05-23 16:17:43.329 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621757863329, current=UP, previous=STARTING]
+2021-05-23 16:17:43.334 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081: registering service...
+2021-05-23 16:17:43.335 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8081"]
+2021-05-23 16:17:43.400 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat started on port(s): 8081 (http) with context path ''
+2021-05-23 16:17:43.402 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaAutoServiceRegistration] Updating port to 8081
+2021-05-23 16:17:43.429 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - registration status: 204
+2021-05-23 16:17:44.299 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Context refreshed
+2021-05-23 16:17:44.326 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Found 1 custom documentation plugin(s)
+2021-05-23 16:17:44.400 [INFO ] [reqId:] [s.d.s.w.s.ApiListingReferenceScanner] Scanning for api listing references
+2021-05-23 16:17:44.716 [INFO ] [reqId:] [s.d.s.w.r.o.CachingOperationNameGenerator] Generating unique operation named: testUsingGET_1
+2021-05-23 16:17:44.751 [INFO ] [reqId:] [com.ajie.blog.account.App] Started App in 20.555 seconds (JVM running for 25.476)
+2021-05-23 16:22:43.007 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 16:27:43.016 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 16:28:19.138 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Unregistering application MICRO-BLOG-ACCOUNT with eureka with status DOWN
+2021-05-23 16:28:19.139 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621758499138, current=DOWN, previous=UP]
+2021-05-23 16:28:19.140 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081: registering service...
+2021-05-23 16:28:19.213 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - registration status: 204
+2021-05-23 16:28:21.629 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-05-23 16:28:21.653 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+2021-05-23 16:28:21.686 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+2021-05-23 16:28:21.689 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Shutting down DiscoveryClient ...
+2021-05-23 16:28:24.702 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Unregistering ...
+2021-05-23 16:28:24.782 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - deregister  status: 200
+2021-05-23 16:28:24.814 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Completed shut down of DiscoveryClient
+2021-05-23 16:28:50.026 [INFO ] [reqId:] [o.h.v.internal.util.Version] HV000001: Hibernate Validator 6.1.7.Final
+2021-05-23 16:28:52.634 [INFO ] [reqId:] [com.ajie.blog.account.App] The following profiles are active: dev
+2021-05-23 16:28:55.807 [INFO ] [reqId:] [o.s.c.context.scope.GenericScope] BeanFactory id=0fc942cd-38b0-3343-8713-13b700b0d397
+2021-05-23 16:28:57.295 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8081 (http)
+2021-05-23 16:28:57.319 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8081"]
+2021-05-23 16:28:57.320 [INFO ] [reqId:] [o.a.c.core.StandardService] Starting service [Tomcat]
+2021-05-23 16:28:57.321 [INFO ] [reqId:] [o.a.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-05-23 16:28:57.635 [INFO ] [reqId:] [o.a.c.c.C.[.[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2021-05-23 16:28:57.635 [INFO ] [reqId:] [o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 4951 ms
+2021-05-23 16:28:58.263 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2021-05-23 16:28:58.978 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2021-05-23 16:29:00.730 [INFO ] [reqId:] [s.d.s.w.PropertySourcedRequestMappingHandlerMapping] Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-05-23 16:29:00.793 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 16:29:00.793 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 16:29:00.803 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 16:29:00.803 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 16:29:01.160 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Initializing ExecutorService 'applicationTaskExecutor'
+2021-05-23 16:29:03.145 [INFO ] [reqId:] [o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration] Eureka HTTP Client uses Jersey
+2021-05-23 16:29:04.393 [WARN ] [reqId:] [o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger] You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2021-05-23 16:29:04.607 [INFO ] [reqId:] [o.s.c.n.e.InstanceInfoFactory] Setting initial instance status as: STARTING
+2021-05-23 16:29:04.688 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Initializing Eureka in region us-east-1
+2021-05-23 16:29:05.010 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON encoding codec LegacyJacksonJson
+2021-05-23 16:29:05.010 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON decoding codec LegacyJacksonJson
+2021-05-23 16:29:05.451 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML encoding codec XStreamXml
+2021-05-23 16:29:05.452 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML decoding codec XStreamXml
+2021-05-23 16:29:06.434 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 16:29:07.083 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Disable delta property : false
+2021-05-23 16:29:07.083 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Single vip registry refresh property : null
+2021-05-23 16:29:07.083 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Force full registry fetch : false
+2021-05-23 16:29:07.083 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application is null : false
+2021-05-23 16:29:07.083 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Registered Applications size is zero : true
+2021-05-23 16:29:07.083 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application version is -1: true
+2021-05-23 16:29:07.083 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Getting all instance registry info from the eureka server
+2021-05-23 16:29:07.438 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] The response status is 200
+2021-05-23 16:29:07.442 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Starting heartbeat executor: renew interval is: 30
+2021-05-23 16:29:07.447 [INFO ] [reqId:] [c.n.d.InstanceInfoReplicator] InstanceInfoReplicator onDemand update allowed rate per min is 4
+2021-05-23 16:29:07.454 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Discovery Client initialized at timestamp 1621758547452 with initial instances count: 1
+2021-05-23 16:29:07.462 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Registering application MICRO-BLOG-ACCOUNT with eureka with status UP
+2021-05-23 16:29:07.464 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621758547464, current=UP, previous=STARTING]
+2021-05-23 16:29:07.467 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081: registering service...
+2021-05-23 16:29:07.468 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8081"]
+2021-05-23 16:29:07.527 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat started on port(s): 8081 (http) with context path ''
+2021-05-23 16:29:07.530 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaAutoServiceRegistration] Updating port to 8081
+2021-05-23 16:29:07.566 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - registration status: 204
+2021-05-23 16:29:08.484 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Context refreshed
+2021-05-23 16:29:08.506 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Found 1 custom documentation plugin(s)
+2021-05-23 16:29:08.597 [INFO ] [reqId:] [s.d.s.w.s.ApiListingReferenceScanner] Scanning for api listing references
+2021-05-23 16:29:08.907 [INFO ] [reqId:] [s.d.s.w.r.o.CachingOperationNameGenerator] Generating unique operation named: testUsingGET_1
+2021-05-23 16:29:08.941 [INFO ] [reqId:] [com.ajie.blog.account.App] Started App in 22.11 seconds (JVM running for 27.215)
+2021-05-23 16:32:10.491 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Unregistering application MICRO-BLOG-ACCOUNT with eureka with status DOWN
+2021-05-23 16:32:10.493 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621758730493, current=DOWN, previous=UP]
+2021-05-23 16:32:10.494 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081: registering service...
+2021-05-23 16:32:10.503 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - registration status: 204
+2021-05-23 16:33:01.670 [INFO ] [reqId:] [o.h.v.internal.util.Version] HV000001: Hibernate Validator 6.1.7.Final
+2021-05-23 16:33:03.908 [INFO ] [reqId:] [com.ajie.blog.account.App] The following profiles are active: dev
+2021-05-23 16:33:05.844 [INFO ] [reqId:] [o.s.c.context.scope.GenericScope] BeanFactory id=0fc942cd-38b0-3343-8713-13b700b0d397
+2021-05-23 16:33:06.880 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8081 (http)
+2021-05-23 16:33:06.895 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8081"]
+2021-05-23 16:33:06.896 [INFO ] [reqId:] [o.a.c.core.StandardService] Starting service [Tomcat]
+2021-05-23 16:33:06.897 [INFO ] [reqId:] [o.a.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-05-23 16:33:07.093 [INFO ] [reqId:] [o.a.c.c.C.[.[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2021-05-23 16:33:07.093 [INFO ] [reqId:] [o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 3114 ms
+2021-05-23 16:33:07.447 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2021-05-23 16:33:07.784 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2021-05-23 16:33:08.906 [INFO ] [reqId:] [s.d.s.w.PropertySourcedRequestMappingHandlerMapping] Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-05-23 16:33:08.951 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 16:33:08.951 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 16:33:08.957 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 16:33:08.958 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 16:33:09.494 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Initializing ExecutorService 'applicationTaskExecutor'
+2021-05-23 16:33:11.219 [INFO ] [reqId:] [o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration] Eureka HTTP Client uses Jersey
+2021-05-23 16:33:12.202 [WARN ] [reqId:] [o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger] You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2021-05-23 16:33:12.399 [INFO ] [reqId:] [o.s.c.n.e.InstanceInfoFactory] Setting initial instance status as: STARTING
+2021-05-23 16:33:12.457 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Initializing Eureka in region us-east-1
+2021-05-23 16:33:12.705 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON encoding codec LegacyJacksonJson
+2021-05-23 16:33:12.706 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON decoding codec LegacyJacksonJson
+2021-05-23 16:33:12.929 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML encoding codec XStreamXml
+2021-05-23 16:33:12.929 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML decoding codec XStreamXml
+2021-05-23 16:33:13.410 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 16:33:14.045 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Disable delta property : false
+2021-05-23 16:33:14.045 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Single vip registry refresh property : null
+2021-05-23 16:33:14.045 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Force full registry fetch : false
+2021-05-23 16:33:14.045 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application is null : false
+2021-05-23 16:33:14.045 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Registered Applications size is zero : true
+2021-05-23 16:33:14.045 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application version is -1: true
+2021-05-23 16:33:14.045 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Getting all instance registry info from the eureka server
+2021-05-23 16:33:14.330 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] The response status is 200
+2021-05-23 16:33:14.338 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Starting heartbeat executor: renew interval is: 30
+2021-05-23 16:33:14.342 [INFO ] [reqId:] [c.n.d.InstanceInfoReplicator] InstanceInfoReplicator onDemand update allowed rate per min is 4
+2021-05-23 16:33:14.348 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Discovery Client initialized at timestamp 1621758794346 with initial instances count: 2
+2021-05-23 16:33:14.356 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Registering application MICRO-BLOG-ACCOUNT with eureka with status UP
+2021-05-23 16:33:14.357 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621758794357, current=UP, previous=STARTING]
+2021-05-23 16:33:14.361 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081: registering service...
+2021-05-23 16:33:14.362 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8081"]
+2021-05-23 16:33:14.422 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat started on port(s): 8081 (http) with context path ''
+2021-05-23 16:33:14.424 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaAutoServiceRegistration] Updating port to 8081
+2021-05-23 16:33:14.439 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - registration status: 204
+2021-05-23 16:33:15.575 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Context refreshed
+2021-05-23 16:33:15.597 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Found 1 custom documentation plugin(s)
+2021-05-23 16:33:15.672 [INFO ] [reqId:] [s.d.s.w.s.ApiListingReferenceScanner] Scanning for api listing references
+2021-05-23 16:33:16.002 [INFO ] [reqId:] [s.d.s.w.r.o.CachingOperationNameGenerator] Generating unique operation named: testUsingGET_1
+2021-05-23 16:33:16.038 [INFO ] [reqId:] [com.ajie.blog.account.App] Started App in 16.683 seconds (JVM running for 20.854)
+2021-05-23 16:38:14.061 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 16:43:14.064 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 16:48:14.067 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 16:48:29.947 [INFO ] [reqId:] [o.a.c.c.C.[.[localhost].[/]] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-05-23 16:48:29.947 [INFO ] [reqId:] [o.s.w.servlet.DispatcherServlet] Initializing Servlet 'dispatcherServlet'
+2021-05-23 16:48:29.964 [INFO ] [reqId:] [o.s.w.servlet.DispatcherServlet] Completed initialization in 17 ms
+2021-05-23 16:48:30.067 [INFO ] [reqId:sx39m59bbs8y] [c.a.b.a.aop.AccountApiLogAspect] API start===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]]
+2021-05-23 16:48:30.590 [DEBUG] [reqId:sx39m59bbs8y] [c.a.b.a.m.A.selectList] ==>  Preparing: SELECT id,account_name,auto_account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,create_person,update_person,del FROM mb_account WHERE del = ? AND del = ? AND id IN (?) ORDER BY create_time DESC 
+2021-05-23 16:48:30.619 [DEBUG] [reqId:sx39m59bbs8y] [c.a.b.a.m.A.selectList] ==> Parameters: 0(Integer), 0(Integer), 1395288739512655873(String)
+2021-05-23 16:48:30.966 [DEBUG] [reqId:sx39m59bbs8y] [c.a.b.a.m.A.selectList] <==      Total: 1
+2021-05-23 16:48:31.113 [INFO ] [reqId:sx39m59bbs8y] [c.a.b.a.aop.AccountApiLogAspect] API end ===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]],response:{"msg":"请求成功","code":200,"data":[{"gender":1,"accountName":"ajie","nickName":"独孤怎会求败","personalSign":"","headerUrl":"http://www.nzjie.cn/static/images/logo.jpg","id":1395288739512655873}]}
+2021-05-23 16:53:14.076 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 16:58:14.078 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 17:03:14.081 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 17:06:36.607 [INFO ] [reqId:lbpi8j551irh] [c.a.b.a.aop.AccountApiLogAspect] API start===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]]
+2021-05-23 17:06:38.168 [INFO ] [reqId:8c32nvh5mfpj] [c.a.b.a.aop.AccountApiLogAspect] API start===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]]
+2021-05-23 17:06:46.288 [DEBUG] [reqId:8c32nvh5mfpj] [c.a.b.a.m.A.selectList] ==>  Preparing: SELECT id,account_name,auto_account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,create_person,update_person,del FROM mb_account WHERE del = ? AND del = ? AND id IN (?) ORDER BY create_time DESC 
+2021-05-23 17:06:46.288 [DEBUG] [reqId:lbpi8j551irh] [c.a.b.a.m.A.selectList] ==>  Preparing: SELECT id,account_name,auto_account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,create_person,update_person,del FROM mb_account WHERE del = ? AND del = ? AND id IN (?) ORDER BY create_time DESC 
+2021-05-23 17:06:46.534 [DEBUG] [reqId:lbpi8j551irh] [c.a.b.a.m.A.selectList] ==> Parameters: 0(Integer), 0(Integer), 1395288739512655873(String)
+2021-05-23 17:06:46.534 [DEBUG] [reqId:8c32nvh5mfpj] [c.a.b.a.m.A.selectList] ==> Parameters: 0(Integer), 0(Integer), 1395288739512655873(String)
+2021-05-23 17:06:46.968 [DEBUG] [reqId:lbpi8j551irh] [c.a.b.a.m.A.selectList] <==      Total: 1
+2021-05-23 17:06:46.968 [DEBUG] [reqId:8c32nvh5mfpj] [c.a.b.a.m.A.selectList] <==      Total: 1
+2021-05-23 17:06:47.232 [INFO ] [reqId:lbpi8j551irh] [c.a.b.a.aop.AccountApiLogAspect] API end ===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]],response:{"msg":"请求成功","code":200,"data":[{"gender":1,"accountName":"ajie","nickName":"独孤怎会求败","personalSign":"","headerUrl":"http://www.nzjie.cn/static/images/logo.jpg","id":1395288739512655873}]}
+2021-05-23 17:06:47.233 [INFO ] [reqId:8c32nvh5mfpj] [c.a.b.a.aop.AccountApiLogAspect] API end ===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]],response:{"msg":"请求成功","code":200,"data":[{"gender":1,"accountName":"ajie","nickName":"独孤怎会求败","personalSign":"","headerUrl":"http://www.nzjie.cn/static/images/logo.jpg","id":1395288739512655873}]}
+2021-05-23 17:06:58.663 [INFO ] [reqId:waalkfa4pvyv] [c.a.b.a.aop.AccountApiLogAspect] API start===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]]
+2021-05-23 17:06:58.828 [DEBUG] [reqId:waalkfa4pvyv] [c.a.b.a.m.A.selectList] ==>  Preparing: SELECT id,account_name,auto_account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,create_person,update_person,del FROM mb_account WHERE del = ? AND del = ? AND id IN (?) ORDER BY create_time DESC 
+2021-05-23 17:06:58.829 [DEBUG] [reqId:waalkfa4pvyv] [c.a.b.a.m.A.selectList] ==> Parameters: 0(Integer), 0(Integer), 1395288739512655873(String)
+2021-05-23 17:06:58.856 [DEBUG] [reqId:waalkfa4pvyv] [c.a.b.a.m.A.selectList] <==      Total: 1
+2021-05-23 17:06:58.857 [INFO ] [reqId:waalkfa4pvyv] [c.a.b.a.aop.AccountApiLogAspect] API end ===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]],response:{"msg":"请求成功","code":200,"data":[{"gender":1,"accountName":"ajie","nickName":"独孤怎会求败","personalSign":"","headerUrl":"http://www.nzjie.cn/static/images/logo.jpg","id":1395288739512655873}]}
+2021-05-23 17:07:02.851 [INFO ] [reqId:pn3bbf1gnr76] [c.a.b.a.aop.AccountApiLogAspect] API start===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]]
+2021-05-23 17:07:02.959 [DEBUG] [reqId:pn3bbf1gnr76] [c.a.b.a.m.A.selectList] ==>  Preparing: SELECT id,account_name,auto_account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,create_person,update_person,del FROM mb_account WHERE del = ? AND del = ? AND id IN (?) ORDER BY create_time DESC 
+2021-05-23 17:07:02.960 [DEBUG] [reqId:pn3bbf1gnr76] [c.a.b.a.m.A.selectList] ==> Parameters: 0(Integer), 0(Integer), 1395288739512655873(String)
+2021-05-23 17:07:02.962 [DEBUG] [reqId:pn3bbf1gnr76] [c.a.b.a.m.A.selectList] <==      Total: 1
+2021-05-23 17:07:02.963 [INFO ] [reqId:pn3bbf1gnr76] [c.a.b.a.aop.AccountApiLogAspect] API end ===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]],response:{"msg":"请求成功","code":200,"data":[{"gender":1,"accountName":"ajie","nickName":"独孤怎会求败","personalSign":"","headerUrl":"http://www.nzjie.cn/static/images/logo.jpg","id":1395288739512655873}]}
+2021-05-23 17:08:14.082 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 17:13:14.092 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 17:18:14.125 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 17:23:14.127 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 17:24:51.640 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Unregistering application MICRO-BLOG-ACCOUNT with eureka with status DOWN
+2021-05-23 17:24:51.646 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621761891646, current=DOWN, previous=UP]
+2021-05-23 17:24:51.675 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081: registering service...
+2021-05-23 17:24:52.194 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - registration status: 204
+2021-05-23 17:24:57.829 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-05-23 17:24:58.792 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+2021-05-23 17:24:59.414 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+2021-05-23 17:24:59.472 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Shutting down DiscoveryClient ...
+2021-05-23 17:25:02.783 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Unregistering ...
+2021-05-23 17:25:03.267 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - deregister  status: 200
+2021-05-23 17:25:04.336 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Completed shut down of DiscoveryClient
+2021-05-23 18:09:08.022 [INFO ] [reqId:] [o.h.v.internal.util.Version] HV000001: Hibernate Validator 6.1.7.Final
+2021-05-23 18:09:11.510 [INFO ] [reqId:] [com.ajie.blog.account.App] The following profiles are active: dev
+2021-05-23 18:09:14.045 [INFO ] [reqId:] [o.s.c.context.scope.GenericScope] BeanFactory id=0fc942cd-38b0-3343-8713-13b700b0d397
+2021-05-23 18:09:15.379 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8081 (http)
+2021-05-23 18:09:15.402 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8081"]
+2021-05-23 18:09:15.403 [INFO ] [reqId:] [o.a.c.core.StandardService] Starting service [Tomcat]
+2021-05-23 18:09:15.403 [INFO ] [reqId:] [o.a.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-05-23 18:09:15.743 [INFO ] [reqId:] [o.a.c.c.C.[.[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2021-05-23 18:09:15.744 [INFO ] [reqId:] [o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 4155 ms
+2021-05-23 18:09:16.363 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2021-05-23 18:09:17.512 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2021-05-23 18:09:19.055 [INFO ] [reqId:] [s.d.s.w.PropertySourcedRequestMappingHandlerMapping] Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-05-23 18:09:19.127 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 18:09:19.127 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 18:09:19.136 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 18:09:19.136 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 18:09:19.518 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Initializing ExecutorService 'applicationTaskExecutor'
+2021-05-23 18:09:23.213 [INFO ] [reqId:] [o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration] Eureka HTTP Client uses Jersey
+2021-05-23 18:09:24.224 [WARN ] [reqId:] [o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger] You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2021-05-23 18:09:24.399 [INFO ] [reqId:] [o.s.c.n.e.InstanceInfoFactory] Setting initial instance status as: STARTING
+2021-05-23 18:09:24.509 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Initializing Eureka in region us-east-1
+2021-05-23 18:09:24.938 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON encoding codec LegacyJacksonJson
+2021-05-23 18:09:24.938 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON decoding codec LegacyJacksonJson
+2021-05-23 18:09:25.184 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML encoding codec XStreamXml
+2021-05-23 18:09:25.184 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML decoding codec XStreamXml
+2021-05-23 18:09:25.750 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 18:09:26.387 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Disable delta property : false
+2021-05-23 18:09:26.387 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Single vip registry refresh property : null
+2021-05-23 18:09:26.387 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Force full registry fetch : false
+2021-05-23 18:09:26.387 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application is null : false
+2021-05-23 18:09:26.388 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Registered Applications size is zero : true
+2021-05-23 18:09:26.388 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application version is -1: true
+2021-05-23 18:09:26.388 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Getting all instance registry info from the eureka server
+2021-05-23 18:09:26.904 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] The response status is 200
+2021-05-23 18:09:26.908 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Starting heartbeat executor: renew interval is: 30
+2021-05-23 18:09:26.911 [INFO ] [reqId:] [c.n.d.InstanceInfoReplicator] InstanceInfoReplicator onDemand update allowed rate per min is 4
+2021-05-23 18:09:26.921 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Discovery Client initialized at timestamp 1621764566917 with initial instances count: 2
+2021-05-23 18:09:26.928 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Registering application MICRO-BLOG-ACCOUNT with eureka with status UP
+2021-05-23 18:09:26.930 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621764566930, current=UP, previous=STARTING]
+2021-05-23 18:09:26.934 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081: registering service...
+2021-05-23 18:09:26.935 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8081"]
+2021-05-23 18:09:26.993 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat started on port(s): 8081 (http) with context path ''
+2021-05-23 18:09:26.995 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaAutoServiceRegistration] Updating port to 8081
+2021-05-23 18:09:28.214 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Context refreshed
+2021-05-23 18:09:28.290 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Found 1 custom documentation plugin(s)
+2021-05-23 18:09:28.439 [INFO ] [reqId:] [s.d.s.w.s.ApiListingReferenceScanner] Scanning for api listing references
+2021-05-23 18:09:28.764 [INFO ] [reqId:] [s.d.s.w.r.o.CachingOperationNameGenerator] Generating unique operation named: testUsingGET_1
+2021-05-23 18:09:28.807 [INFO ] [reqId:] [com.ajie.blog.account.App] Started App in 24.187 seconds (JVM running for 30.284)
+2021-05-23 18:09:32.619 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - registration status: 204
+2021-05-23 18:11:31.868 [INFO ] [reqId:] [o.a.c.c.C.[.[localhost].[/]] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-05-23 18:11:31.869 [INFO ] [reqId:] [o.s.w.servlet.DispatcherServlet] Initializing Servlet 'dispatcherServlet'
+2021-05-23 18:11:31.886 [INFO ] [reqId:] [o.s.w.servlet.DispatcherServlet] Completed initialization in 17 ms
+2021-05-23 18:11:32.025 [INFO ] [reqId:o3y1qs5txb93] [c.a.b.a.aop.AccountApiLogAspect] API start===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]]
+2021-05-23 18:11:32.540 [DEBUG] [reqId:o3y1qs5txb93] [c.a.b.a.m.A.selectList] ==>  Preparing: SELECT id,account_name,auto_account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,create_person,update_person,del FROM mb_account WHERE del = ? AND del = ? AND id IN (?) ORDER BY create_time DESC 
+2021-05-23 18:11:32.570 [DEBUG] [reqId:o3y1qs5txb93] [c.a.b.a.m.A.selectList] ==> Parameters: 0(Integer), 0(Integer), 1395288739512655873(String)
+2021-05-23 18:11:33.386 [DEBUG] [reqId:o3y1qs5txb93] [c.a.b.a.m.A.selectList] <==      Total: 1
+2021-05-23 18:11:33.444 [INFO ] [reqId:o3y1qs5txb93] [c.a.b.a.aop.AccountApiLogAspect] API end ===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]],response:{"msg":"请求成功","code":200,"data":[{"gender":1,"accountName":"ajie","nickName":"独孤怎会求败","personalSign":"","headerUrl":"http://www.nzjie.cn/static/images/logo.jpg","id":1395288739512655873}]}
+2021-05-23 18:13:50.122 [INFO ] [reqId:m970xa7rtbyv] [c.a.b.a.aop.AccountApiLogAspect] API start===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]]
+2021-05-23 18:13:50.128 [DEBUG] [reqId:m970xa7rtbyv] [c.a.b.a.m.A.selectList] ==>  Preparing: SELECT id,account_name,auto_account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,create_person,update_person,del FROM mb_account WHERE del = ? AND del = ? AND id IN (?) ORDER BY create_time DESC 
+2021-05-23 18:13:50.129 [DEBUG] [reqId:m970xa7rtbyv] [c.a.b.a.m.A.selectList] ==> Parameters: 0(Integer), 0(Integer), 1395288739512655873(String)
+2021-05-23 18:13:50.132 [DEBUG] [reqId:m970xa7rtbyv] [c.a.b.a.m.A.selectList] <==      Total: 1
+2021-05-23 18:13:50.133 [INFO ] [reqId:m970xa7rtbyv] [c.a.b.a.aop.AccountApiLogAspect] API end ===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]],response:{"msg":"请求成功","code":200,"data":[{"gender":1,"accountName":"ajie","nickName":"独孤怎会求败","personalSign":"","headerUrl":"http://www.nzjie.cn/static/images/logo.jpg","id":1395288739512655873}]}
+2021-05-23 18:14:26.391 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 18:17:39.746 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Unregistering application MICRO-BLOG-ACCOUNT with eureka with status DOWN
+2021-05-23 18:17:39.747 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621765059747, current=DOWN, previous=UP]
+2021-05-23 18:17:39.747 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081: registering service...
+2021-05-23 18:17:39.753 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - registration status: 204
+2021-05-23 18:17:41.506 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-05-23 18:17:41.515 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+2021-05-23 18:17:41.538 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+2021-05-23 18:17:41.542 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Shutting down DiscoveryClient ...
+2021-05-23 18:17:44.547 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Unregistering ...
+2021-05-23 18:17:44.569 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - deregister  status: 200
+2021-05-23 18:17:44.591 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Completed shut down of DiscoveryClient
+2021-05-23 18:18:00.365 [INFO ] [reqId:] [o.h.v.internal.util.Version] HV000001: Hibernate Validator 6.1.7.Final
+2021-05-23 18:18:03.104 [INFO ] [reqId:] [com.ajie.blog.account.App] The following profiles are active: dev
+2021-05-23 18:18:07.697 [INFO ] [reqId:] [o.s.c.context.scope.GenericScope] BeanFactory id=0fc942cd-38b0-3343-8713-13b700b0d397
+2021-05-23 18:18:08.804 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8081 (http)
+2021-05-23 18:18:08.822 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8081"]
+2021-05-23 18:18:08.824 [INFO ] [reqId:] [o.a.c.core.StandardService] Starting service [Tomcat]
+2021-05-23 18:18:08.825 [INFO ] [reqId:] [o.a.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-05-23 18:18:09.087 [INFO ] [reqId:] [o.a.c.c.C.[.[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2021-05-23 18:18:09.087 [INFO ] [reqId:] [o.s.b.w.s.c.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 5902 ms
+2021-05-23 18:18:09.545 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2021-05-23 18:18:09.953 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2021-05-23 18:18:11.781 [INFO ] [reqId:] [s.d.s.w.PropertySourcedRequestMappingHandlerMapping] Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-05-23 18:18:11.838 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 18:18:11.838 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 18:18:11.845 [WARN ] [reqId:] [c.n.c.s.URLConfigurationSource] No URLs will be polled as dynamic configuration sources.
+2021-05-23 18:18:11.845 [INFO ] [reqId:] [c.n.c.s.URLConfigurationSource] To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-05-23 18:18:12.159 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Initializing ExecutorService 'applicationTaskExecutor'
+2021-05-23 18:18:13.988 [INFO ] [reqId:] [o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration] Eureka HTTP Client uses Jersey
+2021-05-23 18:18:15.175 [WARN ] [reqId:] [o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger] You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2021-05-23 18:18:15.404 [INFO ] [reqId:] [o.s.c.n.e.InstanceInfoFactory] Setting initial instance status as: STARTING
+2021-05-23 18:18:15.525 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Initializing Eureka in region us-east-1
+2021-05-23 18:18:15.829 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON encoding codec LegacyJacksonJson
+2021-05-23 18:18:15.829 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using JSON decoding codec LegacyJacksonJson
+2021-05-23 18:18:16.158 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML encoding codec XStreamXml
+2021-05-23 18:18:16.159 [INFO ] [reqId:] [c.n.d.p.DiscoveryJerseyProvider] Using XML decoding codec XStreamXml
+2021-05-23 18:18:17.192 [INFO ] [reqId:] [c.n.d.s.r.a.ConfigClusterResolver] Resolving eureka endpoints via configuration
+2021-05-23 18:18:17.940 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Disable delta property : false
+2021-05-23 18:18:17.940 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Single vip registry refresh property : null
+2021-05-23 18:18:17.940 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Force full registry fetch : false
+2021-05-23 18:18:17.941 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application is null : false
+2021-05-23 18:18:17.941 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Registered Applications size is zero : true
+2021-05-23 18:18:17.941 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Application version is -1: true
+2021-05-23 18:18:17.941 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Getting all instance registry info from the eureka server
+2021-05-23 18:18:18.352 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] The response status is 200
+2021-05-23 18:18:18.356 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Starting heartbeat executor: renew interval is: 30
+2021-05-23 18:18:18.364 [INFO ] [reqId:] [c.n.d.InstanceInfoReplicator] InstanceInfoReplicator onDemand update allowed rate per min is 4
+2021-05-23 18:18:18.378 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Discovery Client initialized at timestamp 1621765098374 with initial instances count: 2
+2021-05-23 18:18:18.388 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Registering application MICRO-BLOG-ACCOUNT with eureka with status UP
+2021-05-23 18:18:18.389 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621765098389, current=UP, previous=STARTING]
+2021-05-23 18:18:18.394 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081: registering service...
+2021-05-23 18:18:18.394 [INFO ] [reqId:] [o.a.c.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-8081"]
+2021-05-23 18:18:18.468 [INFO ] [reqId:] [o.s.b.w.e.tomcat.TomcatWebServer] Tomcat started on port(s): 8081 (http) with context path ''
+2021-05-23 18:18:18.471 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaAutoServiceRegistration] Updating port to 8081
+2021-05-23 18:18:18.488 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - registration status: 204
+2021-05-23 18:18:19.545 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Context refreshed
+2021-05-23 18:18:19.571 [INFO ] [reqId:] [s.d.s.w.p.DocumentationPluginsBootstrapper] Found 1 custom documentation plugin(s)
+2021-05-23 18:18:19.668 [INFO ] [reqId:] [s.d.s.w.s.ApiListingReferenceScanner] Scanning for api listing references
+2021-05-23 18:18:20.077 [INFO ] [reqId:] [s.d.s.w.r.o.CachingOperationNameGenerator] Generating unique operation named: testUsingGET_1
+2021-05-23 18:18:20.120 [INFO ] [reqId:] [com.ajie.blog.account.App] Started App in 22.964 seconds (JVM running for 28.537)
+2021-05-23 18:21:00.618 [INFO ] [reqId:] [o.a.c.c.C.[.[localhost].[/]] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-05-23 18:21:00.618 [INFO ] [reqId:] [o.s.w.servlet.DispatcherServlet] Initializing Servlet 'dispatcherServlet'
+2021-05-23 18:21:00.637 [INFO ] [reqId:] [o.s.w.servlet.DispatcherServlet] Completed initialization in 18 ms
+2021-05-23 18:21:00.750 [INFO ] [reqId:467lfclxefk3] [c.a.b.a.aop.AccountApiLogAspect] API start===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]]
+2021-05-23 18:21:01.247 [DEBUG] [reqId:467lfclxefk3] [c.a.b.a.m.A.selectList] ==>  Preparing: SELECT id,account_name,auto_account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,create_person,update_person,del FROM mb_account WHERE del = ? AND del = ? AND id IN (?) ORDER BY create_time DESC 
+2021-05-23 18:21:01.277 [DEBUG] [reqId:467lfclxefk3] [c.a.b.a.m.A.selectList] ==> Parameters: 0(Integer), 0(Integer), 1395288739512655873(String)
+2021-05-23 18:21:01.380 [DEBUG] [reqId:467lfclxefk3] [c.a.b.a.m.A.selectList] <==      Total: 1
+2021-05-23 18:21:01.435 [INFO ] [reqId:467lfclxefk3] [c.a.b.a.aop.AccountApiLogAspect] API end ===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]],response:{"msg":"请求成功","code":200,"data":[{"gender":1,"accountName":"ajie","nickName":"独孤怎会求败","personalSign":"","headerUrl":"http://www.nzjie.cn/static/images/logo.jpg","id":1395288739512655873}]}
+2021-05-23 18:21:43.169 [INFO ] [reqId:5xy1sb50du7t] [c.a.b.a.aop.AccountApiLogAspect] API start===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]]
+2021-05-23 18:21:43.174 [DEBUG] [reqId:5xy1sb50du7t] [c.a.b.a.m.A.selectList] ==>  Preparing: SELECT id,account_name,auto_account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,create_person,update_person,del FROM mb_account WHERE del = ? AND del = ? AND id IN (?) ORDER BY create_time DESC 
+2021-05-23 18:21:43.175 [DEBUG] [reqId:5xy1sb50du7t] [c.a.b.a.m.A.selectList] ==> Parameters: 0(Integer), 0(Integer), 1395288739512655873(String)
+2021-05-23 18:21:43.178 [DEBUG] [reqId:5xy1sb50du7t] [c.a.b.a.m.A.selectList] <==      Total: 1
+2021-05-23 18:21:43.179 [INFO ] [reqId:5xy1sb50du7t] [c.a.b.a.aop.AccountApiLogAspect] API end ===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]],response:{"msg":"请求成功","code":200,"data":[{"gender":1,"accountName":"ajie","nickName":"独孤怎会求败","personalSign":"","headerUrl":"http://www.nzjie.cn/static/images/logo.jpg","id":1395288739512655873}]}
+2021-05-23 18:22:04.935 [INFO ] [reqId:3751jfgl0cqv] [c.a.b.a.aop.AccountApiLogAspect] API start===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]]
+2021-05-23 18:22:04.940 [DEBUG] [reqId:3751jfgl0cqv] [c.a.b.a.m.A.selectList] ==>  Preparing: SELECT id,account_name,auto_account_name,nick_name,password,mail,phone,gender,personal_sign,header_url,create_time,update_time,create_person,update_person,del FROM mb_account WHERE del = ? AND del = ? AND id IN (?) ORDER BY create_time DESC 
+2021-05-23 18:22:04.942 [DEBUG] [reqId:3751jfgl0cqv] [c.a.b.a.m.A.selectList] ==> Parameters: 0(Integer), 0(Integer), 1395288739512655873(String)
+2021-05-23 18:22:04.945 [DEBUG] [reqId:3751jfgl0cqv] [c.a.b.a.m.A.selectList] <==      Total: 1
+2021-05-23 18:22:04.947 [INFO ] [reqId:3751jfgl0cqv] [c.a.b.a.aop.AccountApiLogAspect] API end ===> uri:/micro-blog/v2/account/query-account-info，method:POST,ip:127.0.0.1,classMethodcom.ajie.blog.account.controller.AccountController.queryAccountInfo,bizParam:[[1395288739512655873]],response:{"msg":"请求成功","code":200,"data":[{"gender":1,"accountName":"ajie","nickName":"独孤怎会求败","personalSign":"","headerUrl":"http://www.nzjie.cn/static/images/logo.jpg","id":1395288739512655873}]}
+2021-05-23 18:22:47.006 [INFO ] [reqId:] [o.s.c.n.e.s.EurekaServiceRegistry] Unregistering application MICRO-BLOG-ACCOUNT with eureka with status DOWN
+2021-05-23 18:22:47.006 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Saw local status change event StatusChangeEvent [timestamp=1621765367006, current=DOWN, previous=UP]
+2021-05-23 18:22:47.006 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081: registering service...
+2021-05-23 18:22:47.246 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - registration status: 204
+2021-05-23 18:22:48.362 [INFO ] [reqId:] [o.s.s.c.ThreadPoolTaskExecutor] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-05-23 18:22:48.373 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+2021-05-23 18:22:48.400 [INFO ] [reqId:] [c.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+2021-05-23 18:22:48.402 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Shutting down DiscoveryClient ...
+2021-05-23 18:22:51.405 [WARN ] [reqId:] [c.n.d.TimedSupervisorTask] task supervisor shutting down, can't accept the task
+2021-05-23 18:22:51.408 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Unregistering ...
+2021-05-23 18:22:51.451 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] DiscoveryClient_MICRO-BLOG-ACCOUNT/DESKTOP-MVUDEUV:micro-blog-account:8081 - deregister  status: 200
+2021-05-23 18:22:51.486 [INFO ] [reqId:] [c.n.discovery.DiscoveryClient] Completed shut down of DiscoveryClient

@@ -6,6 +6,7 @@ import com.ajie.blog.api.dto.BlogQueryReqDto;
 import com.ajie.blog.api.dto.BlogReqDto;
 import com.ajie.blog.api.dto.BlogRespDto;
 import com.ajie.blog.api.rest.BlogRestApi;
+import com.ajie.blog.migrate.MigrateService;
 import com.ajie.blog.service.BlogService;
 import com.ajie.commons.RestResponse;
 import com.ajie.commons.dto.PageDto;
@@ -31,6 +32,9 @@ public class BlogController implements BlogRestApi {
 
     @Resource
     private AccountRestApi accountRestApi;
+
+    @Resource
+    private MigrateService migrateService;
 
     @ApiOperation(value = "新增博文", notes = "新增博文")
     @PostMapping("/create")
@@ -72,8 +76,8 @@ public class BlogController implements BlogRestApi {
     }
 
     @GetMapping("migrate")
-    public RestResponse<Integer> migrate() {
-        return RestResponse.success(blogService.migrate());
+    public RestResponse<Integer> migrate(@RequestParam(required = false, name = "userId") String userId) {
+        return RestResponse.success(migrateService.migrate(userId));
     }
 
     @GetMapping("test")

@@ -22,7 +22,7 @@ public class AccountController implements AccountRestApi {
     }
 
     @Override
-    public RestResponse<String> login(LoginReqDto dto) {
+    public RestResponse<LoginRespDto> login(LoginReqDto dto) {
         return RestResponse.success(accountService.login(dto));
     }
 
@@ -42,8 +42,8 @@ public class AccountController implements AccountRestApi {
     }
 
     @Override
-    public RestResponse<Integer> updateAccountName(String accountName) {
-        return RestResponse.success(accountService.updateAccountName(accountName));
+    public RestResponse<Integer> updateAccountName(UpdateAccountNameReqDto dto) {
+        return RestResponse.success(accountService.updateAccountName(dto));
     }
 
     @Override

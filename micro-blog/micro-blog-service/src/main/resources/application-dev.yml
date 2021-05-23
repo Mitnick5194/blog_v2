@@ -21,6 +21,10 @@ eureka:
   instance:
     hostname: localhost
 
+ribbon:
+  ConnectTimeout: 4000
+  ReadTimeout: 6000
+
 #下划线转驼峰
 mybatis:
   configuration:
@@ -31,5 +35,10 @@ mybatis:
 #配置日志
 logging:
   #此处存放日志的路径
-  path:
-    config: classpath:logback-spring.xml
+  config: classpath:logback-spring.xml
+  lever:
+    root: INFO #root表示整个项目，也可单指定某个类（指定某个类放在logback文件指定也可以）
+
+properties:
+  ignoreAuthPath: []
+  authPath: ['**/create*/**','**/update*/**','**/save*/**','**/delete*/**','**/migrate*/**','**/change*/**',]

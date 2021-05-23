@@ -35,7 +35,7 @@ public interface AccountService {
      * @param dto
      * @return
      */
-    String login(LoginReqDto dto);
+    LoginRespDto login(LoginReqDto dto);
 
     /**
      * 退出登录
@@ -63,10 +63,10 @@ public interface AccountService {
     /**
      * 更新用户名
      *
-     * @param accountName
+     * @param dto
      * @return
      */
-    Integer updateAccountName(String accountName);
+    Integer updateAccountName(UpdateAccountNameReqDto dto);
 
     /**
      * 根据ID查询用户列表信息
