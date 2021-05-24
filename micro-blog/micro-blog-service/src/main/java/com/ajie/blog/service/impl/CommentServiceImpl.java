@@ -1,5 +1,8 @@
 package com.ajie.blog.service.impl;
 
+import com.ajie.blog.account.api.dto.AccountRespDto;
+import com.ajie.blog.account.api.rest.AccountRestApi;
+import com.ajie.blog.api.dto.BlogRespDto;
 import com.ajie.blog.api.dto.CommentDto;
 import com.ajie.blog.api.dto.CommentReqDto;
 import com.ajie.blog.api.dto.CommentRespDto;
@@ -8,6 +11,7 @@ import com.ajie.blog.exception.BlogException;
 import com.ajie.blog.mapper.CommentMapper;
 import com.ajie.blog.service.CommentService;
 import com.ajie.commons.dto.PageDto;
+import com.ajie.commons.utils.ApiUtil;
 import com.ajie.commons.utils.PageDtoUtil;
 import com.ajie.commons.utils.ParamCheck;
 import com.ajie.commons.utils.UserInfoUtil;
@@ -20,14 +24,18 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentMapper commentMapper;
+    @Resource
+    private AccountRestApi accountRestApi;
 
     @Override
     public Long createComment(CommentDto dto) {
@@ -55,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
         Page page = new Page(dto.getCurrentPage(), dto.getPageSize());
         CommentPO po = new CommentPO();
         po.setBlogId(blogId);
-        QueryWrapper<CommentPO> wrap = po.toQueryWrap();
+        QueryWrapper<CommentPO> wrap = po.wrap(CommentPO.class);
         wrap.isNull("parent_id");
         IPage<CommentPO> p = commentMapper.selectPage(page, wrap);
         List<CommentPO> records = p.getRecords();
@@ -68,6 +76,7 @@ public class CommentServiceImpl implements CommentService {
             return t;
         }).collect(Collectors.toList());
         fillChildrenComment(list);
+        fillAccountInfo(list);
         return PageDtoUtil.toPageDto(p, list);
     }
 
@@ -77,13 +86,14 @@ public class CommentServiceImpl implements CommentService {
     private void fillChildrenComment(List<CommentRespDto> list) {
         List<Long> ids = list.stream().map(CommentRespDto::getId).collect(Collectors.toList());
         CommentPO po = new CommentPO();
-        QueryWrapper<CommentPO> wrap = po.toQueryWrap();
+        QueryWrapper<CommentPO> wrap = po.wrap(CommentPO.class);
         wrap.in("parent_id", StringUtils.join(ids, ","));
         List<CommentPO> children = commentMapper.selectList(wrap);
         if (CollectionUtils.isEmpty(children)) {
             return;
         }
         Map<Long, List<CommentPO>> map = children.stream().collect(Collectors.groupingBy(CommentPO::getParentId));
+        List<CommentRespDto> all = new ArrayList<>();
         for (CommentRespDto item : list) {
             List<CommentPO> pos = map.get(item.getId());
             if (CollectionUtils.isEmpty(pos)) {
@@ -95,6 +105,28 @@ public class CommentServiceImpl implements CommentService {
                 return t;
             }).collect(Collectors.toList());
             item.setChildren(c);
+            all.addAll(c);
+        }
+        fillAccountInfo(all);
+    }
+
+    private void fillAccountInfo(List<CommentRespDto> records) {
+        if (CollectionUtils.isEmpty(records)) {
+            return;
+        }
+        List<Long> userIds = records.stream().map(CommentRespDto::getUserId).collect(Collectors.toList());
+        List<AccountRespDto> accountList = ApiUtil.checkAndGetData(accountRestApi.queryAccountInfo(userIds));
+        if (CollectionUtils.isNotEmpty(accountList)) {
+            Map<Long, AccountRespDto> map = accountList.stream().collect(Collectors.toMap(AccountRespDto::getId, Function.identity()));
+            for (CommentRespDto item : records) {
+                AccountRespDto account = map.get(item.getUserId());
+                if (null == account) {
+                    continue;
+                }
+                item.setUserHeaderUrl(account.getHeaderUrl());
+                item.setUserName(account.getAccountName());
+                item.setUserId(account.getId());
+            }
         }
     }
 }

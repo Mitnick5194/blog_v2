@@ -41,6 +41,13 @@ public class BlogRespDto extends BlogDto {
     @ApiModelProperty(value = "用户头像链接")
     private String userHeaderUrl;
 
+    @ApiModelProperty(value = "阅读数")
+    private int readCount;
+
+    @ApiModelProperty(value = "评论数")
+    private int commentCount;
+
+
     public void build(BlogPO blog) {
         BeanUtils.copyProperties(blog, this);
     }

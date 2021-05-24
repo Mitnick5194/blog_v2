@@ -8,9 +8,10 @@ spring:
     username: root
     password:
     driver-class-name: com.mysql.jdbc.Driver
-
   application:
     name: micro-blog-account
+  main:
+    allow-bean-definition-overriding: true
 
 eureka:
   client:

@@ -36,16 +36,12 @@ public class BlogController implements BlogRestApi {
     @Resource
     private MigrateService migrateService;
 
-    @ApiOperation(value = "新增博文", notes = "新增博文")
-    @PostMapping("/create")
     @Override
     public RestResponse<Long> create(BlogReqDto blog) {
         Long data = blogService.create(blog);
         return RestResponse.success(data);
     }
 
-    @ApiOperation(value = "更新博文", notes = "更新博文")
-    @PostMapping("/update")
     @Override
     public RestResponse<Integer> update(BlogReqDto blog) {
         return RestResponse.success(blogService.update(blog));
@@ -56,15 +52,11 @@ public class BlogController implements BlogRestApi {
         return RestResponse.success(blogService.saveDraft(blog));
     }
 
-    @ApiOperation(value = "根据ID删除", notes = "根据ID删除")
-    @GetMapping("/delete-by-id")
     @Override
     public RestResponse<Integer> deleteById(@RequestParam("id") Long id) {
         return RestResponse.success(blogService.deleteById(id));
     }
 
-    @ApiOperation(value = "分页查询", notes = "分页查询")
-    @PostMapping("/query-by-page")
     @Override
     public RestResponse<PageDto<List<BlogRespDto>>> queryByPage(@RequestBody BlogQueryReqDto dto) {
         return RestResponse.success(blogService.queryByPage(dto));
@@ -72,7 +64,7 @@ public class BlogController implements BlogRestApi {
 
     @Override
     public RestResponse<BlogRespDto> queryBlogById(Long id) {
-        return RestResponse.success(blogService.queryBlogById(id));
+       return RestResponse.success(blogService.queryBlogById(id));
     }
 
     @GetMapping("migrate")

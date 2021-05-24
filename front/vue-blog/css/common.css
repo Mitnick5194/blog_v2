@@ -99,5 +99,11 @@ input,textarea,select,a:focus {outline: none;}
 	to {opacity: 0;}
 }
 
+/*到底提示*/
+.footer-dv{display: flex;white-space: nowrap;padding-bottom: 15px;}
+.footer-content{padding: 0 15px;color: #888}
+.footer-line{position: relative;width: 100%;}
+.footer-line:after{content: '';position: absolute;width: 75%;height: 1px; background: #888;top:50%;right:0;    transform: scaleY(0.5);}
+.after-left:after{left: 0;}
 
 

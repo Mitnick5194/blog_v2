@@ -2,10 +2,7 @@ package com.ajie.blog.service.impl;
 
 import com.ajie.blog.account.api.dto.AccountRespDto;
 import com.ajie.blog.account.api.rest.AccountRestApi;
-import com.ajie.blog.api.dto.BlogQueryReqDto;
-import com.ajie.blog.api.dto.BlogReqDto;
-import com.ajie.blog.api.dto.BlogRespDto;
-import com.ajie.blog.api.dto.TagDto;
+import com.ajie.blog.api.dto.*;
 import com.ajie.blog.api.enums.BlogExceptionEmun;
 import com.ajie.blog.api.po.BlogPO;
 import com.ajie.blog.api.po.BlogTagPO;
@@ -31,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -171,6 +169,9 @@ public class BlogServiceImpl implements BlogService, TableConstant {
             wrap.in("tag_id", StringUtils.join(dto.getTagList(), ","));
             List<BlogTagPO> btp = blogTagMapper.selectList(wrap);
             blogIds = btp.stream().map(BlogTagPO::getBlogId).collect(Collectors.toList());
+            if (CollectionUtils.isEmpty(blogIds)) {
+                return PageDto.empty();
+            }
         }
         IPage<BlogRespDto> blogPoPage = blogMapper.queryByPage(page, dto, blogIds, UserInfoUtil.getUserId());
         List<BlogRespDto> records = blogPoPage.getRecords();
@@ -216,10 +217,29 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         if (null == blogPO) {
             return null;
         }
+
         BlogRespDto dto = new BlogRespDto();
         dto.build(blogPO);
+        fillTag(dto);
         fillAccountInfo(Collections.singletonList(dto));
         return dto;
+    }
+
+    private void fillTag(BlogRespDto blog) {
+        //查询标签
+        BlogTagPO po = new BlogTagPO();
+        po.setBlogId(blog.getId());
+        List<BlogTagPO> pos = blogTagMapper.selectList(po.wrap(BlogTagPO.class));
+        if (CollectionUtils.isEmpty(pos)) {
+            return;
+        }
+        List<TagDto> tags = new ArrayList<>();
+        for (BlogTagPO t : pos) {
+            TagDto dto = new TagDto();
+            dto.setTag(t.getTagName());
+            tags.add(dto);
+        }
+        blog.setTagList(tags);
     }
 
     public int migrate() {

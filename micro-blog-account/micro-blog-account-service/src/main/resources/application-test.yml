@@ -8,9 +8,10 @@ spring:
     username: root
     password:
     driver-class-name: com.mysql.jdbc.Driver
-
   application:
     name: micro-blog-account
+  main:
+    allow-bean-definition-overriding: true
 
 eureka:
   client:
@@ -39,7 +40,7 @@ logging:
   config: classpath:logback-spring.xml
   #指定不同目录下的日志的级别
   level:
-  #com.shimain.springboot.mapper: INFO
+    #com.shimain.springboot.mapper: INFO
     root: INFO #root表示整个项目，也可单指定某个类（指定某个类放在logback文件指定也可以）
 
 properties:

@@ -10,45 +10,61 @@
     </style>
 </head>
 <body class="darkMode ">
-<div class="main " id="app">
+<div class="main " id="app" v-cloak>
     <div id="iSlider" class="tag-btn darkMode">
         <span class="bar-icon"></span>
         <span class="bar-icon"></span>
         <span class="bar-icon"></span>
         <span class="bar-icon"></span>
     </div>
-    <div class="header-navi darkMode" id="iHeaderNavi">
-        <div class="addblog">写博客</div>
-        <div class="user-header">
-            <div class="login-btn" id="iLogin">登录/注册</div>
+    <div v-show="null == account.token " class="header-navi darkMode">
+        <div>
+            <input/>
         </div>
+        <div class="user-header">
+            <div class="search-dv">
+                <input v-model="keyword" @keyup.enter="search"/>
+                <div class="search-img" @click="search">搜索</div>
+            </div>
+            <div class="login-btn" @click="gotoLogin">登录/注册</div>
+        </div>
+        <div class="addblog">写博客</div>
+    </div>
+    <div v-show="null != account.token" class="header-navi darkMode">
+        <div class="search-dv">
+            <input v-model="keyword" @keyup.enter="search"/>
+            <div class="search-img" @click="search" @keyup.enter="search">搜索</div>
+        </div>
+        <div class="user-header">
+            <div class="user-info user" data-id="6" data-type="userinfo">
+                <img class="user-header-img" src="http://www.nzjie.cn/static/images/logo.jpg"/>
+                <div class="user-name">独孤怎会求败</div>
+            </div>
+        </div>
+        <div class="addblog">写博客</div>
     </div>
 
     <div class="container">
         <div id="iTags" class="tags-block darkMode">
             <div class="list-group " id="iListTags">
                 <div class="title">标签分类</div>
-                <div class="tag">全部</div>
-                <div class="tag" data-name="ubuntu">ubuntu（8）</div>
-                <div class="tag" data-name="ssh">ssh（3）</div>
-                <div class="tag" data-name="linux">linux（26）</div>
-                <div class="tag" data-name="服务器">服务器（5）</div>
-                <div class="tag" data-name="算法">算法（4）</div>
-                <div class="tag" data-name="前端">前端（6）</div>
-                <div class="tag" data-name="vue">vue（2）</div>
-                <div class="tag moreTags">更多标签</div>
+                <div class="tag" @click="searchByTag">全部</div>
+                <div v-for="(item,index) in tags" class="tag" :data-id="item.id" @click="searchByTag">
+                    {{item.tag}}（{{item.blogCount}}）
+                </div>
+                <div v-if="showLoadTagMore" class="tag moreTags" @click="loadMoreTag">更多标签</div>
             </div>
         </div>
         <div class="blogs" id="iBlogs">
             <section v-for="(item,index) in blogs" class="darkMode">
-                <div class="title">{{item.title}}</div>
+                <div class="title" :index="index" :data-id="item.id" @click="gotoDetail">{{item.title}}</div>
                 <div class="abstract-content">{{item.abstractContent}}</div>
                 <div class="extract-list">
                     <div class="list-left flex">
                         <img class="user" data-id="6" data-type="userinfo"
-                             src="http://www.nzjie.cn/static/images/logo.jpg">
-                        <div class="user" data-id="6" data-type="userinfo">独孤怎会求败</div>
-                        <div>10小时前</div>
+                             :src="item.userHeaderUrl">
+                        <div class="user" data-id="6" data-type="userinfo">{{item.userName}}</div>
+                        <div>{{item.simpleDate}}</div>
                     </div>
                     <div class="list-right flex">
                         <div>阅读 0</div>
@@ -56,6 +72,12 @@
                     </div>
                 </div>
             </section>
+            <div v-if="showLoadMore" class="load-more" @click="loadMore">{{loadMoreTip}}</div>
+            <div v-else class="footer-dv darkMode">
+                <div class="footer-line"></div>
+                <div class="footer-content" id="iFooter">我是有底线的</div>
+                <div class="footer-line after-left"></div>
+            </div>
         </div>
         <div class="qr-code">
             <div>关注公众号和小程序，获取获取最新状态</div>
@@ -73,36 +95,125 @@
 <script src="js/global/common.js"></script>
 <script src="js/global/request.js"></script>
 <script>
-    const queryParam = {
+    const queryBlogParam = {
         currentPage: 1,
         pageSize: 20,
         keyword: null,
         tagList: [],
         status: 1
     }
+    let queryTagParam = {
+        currentPage: 1,
+        pageSize: 20,
+    }
+    const loadMoreTips = ["加载更多", "正在加载……"];
     const account = {}
     new Vue({
         el: "#app",
         data: {
             blogs: [],
-            queryParam: queryParam,
+            tags: [],
+            tagId: null,
             account: account,
-
+            loadMoreTip: loadMoreTips[0],
+            currentPage: 1,//要触发计算属性，必须放在这里
+            totalBlog: 0,
+            totalTagCount: 0,
+            currentTagPage: 1,//要触发计算属性，必须放在这里
+            queryBlogParam: queryBlogParam,
+            queryTagParam: queryTagParam,
+            keyword: null,
         },
-        created: () => {
+        computed: {
+            showLoadMore: function () {
+                let currentTotal = this.currentPage * this.queryBlogParam.pageSize;
+                return this.totalBlog > currentTotal;
+            },
+            showLoadTagMore: function () {
+                let currentTotal = this.currentTagPage * this.queryTagParam.pageSize;
+                return this.totalTagCount > currentTotal;
+            }
+        },
+        created: function () {
+            let account = getLocalValue("account");
+            this.account = account;
         },
         mounted: function () {
-            this.loadBlog();
+            this.loadBlogs();
+            this.loadTags();
         },
         methods: {
-            loadBlog: function () {
+            loadBlogs: function (clearData) {
+                let isClear = !!clearData;
                 let that = this;
-                doPost("/api-blog/v2/blog/query-by-page", queryParam, function (data) {
+                doPost("/api-blog/v2/blog/query-by-page", this.queryBlogParam, function (data) {
                     if (data.data) {
-                        that.blogs = that.blogs.concat(data.data);
+                        let list = data.data || [];
+                        for (let i = 0; i < list.length; i++) {
+                            let item = list[i];
+                            let d = new Date(item.createTime);
+                            item["simpleDate"] = d.handleViewDate();
+                        }
+                        if (isClear) {
+                            that.blogs = list;
+                        } else {
+                            that.blogs = that.blogs.concat(list);
+                        }
+
+                        that.totalBlog = data.total;
                     }
+                    that.toggleLoadMore(true);
+                })
+            },
+            loadTags: function () {
+                let that = this;
+                doPost("/api-blog/v2/tag/query-by-page", queryTagParam, function (data) {
+                    if (data.data) {
+                        that.tags = that.tags.concat(data.data);
+                    }
+                    that.totalTagCount = data.total;
 
                 })
+            },
+            gotoDetail: function (e) {
+                let id = e.srcElement.dataset.id;
+                window.open("blog_detail.html?id=" + id);
+            },
+            gotoLogin: function () {
+                location.href = "login.html";
+            },
+            loadMore: function () {
+                this.currentPage += 1;
+                this.toggleLoadMore(false)
+                this.queryBlogParam.currentPage = this.currentPage;
+                this.loadBlogs();
+            },
+            toggleLoadMore(flag) { //true表示加载更多
+                if (flag) {
+                    this.loadMoreTip = loadMoreTips[0]
+                } else {
+                    this.loadMoreTip = loadMoreTips[1]
+                }
+            },
+            search: function (tagId, keyword) {
+                let kw = this.keyword;
+                this.queryBlogParam.keyword = kw;
+                this.queryBlogParam.currentPage = 1;
+                this.loadBlogs(true);
+            },
+            searchByTag: function (e) {
+                let id = e.srcElement.dataset.id;
+                if (id) {
+                    this.queryBlogParam.tagList = [].concat(id);
+                } else {
+                    this.queryBlogParam.tagList = [];
+                }
+                this.queryBlogParam.currentPage = 1;
+                this.loadBlogs(true);
+            },
+            loadMoreTag: function () {
+                this.currentTagPage += 1;
+                this.loadTags();
             }
         }
     })

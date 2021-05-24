@@ -24,7 +24,7 @@ public interface CommentRestApi {
      * @return
      */
     @ApiOperation(value = "新增评论", notes = "新增评论")
-    @PostMapping("/createComment")
+    @PostMapping("/create")
     RestResponse<Long> createComment(@RequestBody CommentDto dto);
 
     /**
@@ -34,7 +34,7 @@ public interface CommentRestApi {
      * @return
      */
     @ApiOperation(value = "删除评论", notes = "删除评论")
-    @PostMapping("/deleteComment")
+    @PostMapping("/delete")
     RestResponse<Integer> deleteComment(@RequestBody CommentDto dto);
 
     /**
@@ -44,6 +44,6 @@ public interface CommentRestApi {
      * @return
      */
     @ApiOperation(value = "根据博文ID分页查询", notes = "根据博文ID分页查询")
-    @PostMapping("/queryByBlogId")
+    @PostMapping("/query-by-blog-id")
     RestResponse<PageDto<CommentRespDto>> queryByBlogId(@RequestBody CommentReqDto dto);
 }

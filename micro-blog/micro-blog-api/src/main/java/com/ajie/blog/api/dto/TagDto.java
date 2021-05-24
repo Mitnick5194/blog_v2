@@ -19,6 +19,8 @@ public class TagDto extends BaseReqDto {
     private Long id;
     @ApiModelProperty(value = "标签名")
     private String tag;
+    @ApiModelProperty(value = "博客数")
+    private int blogCount;
 
     public String getTag() {
         return tag;

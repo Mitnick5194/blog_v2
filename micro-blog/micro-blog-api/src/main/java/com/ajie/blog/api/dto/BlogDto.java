@@ -45,5 +45,8 @@ public class BlogDto implements Serializable {
     @ApiModelProperty(name = "type", value = "类型，1正常，2私密")
     private Integer type;
 
+    @ApiModelProperty(name = "createTime", value = "创建时间")
+    private Date createTime;
+
 
 }

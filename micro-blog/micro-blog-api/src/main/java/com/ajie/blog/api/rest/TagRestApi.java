@@ -24,7 +24,7 @@ public interface TagRestApi {
      * @return
      */
     @ApiOperation(value = "新增标签，已存在不会添加，保存后id会保存到dto", notes = "新增标签，已存在不会添加，保存后id会保存到dto")
-    @PostMapping("/createTags")
+    @PostMapping("/create")
     RestResponse<Integer> createTags(@RequestBody List<TagDto> dto);
 
     /**
@@ -33,6 +33,6 @@ public interface TagRestApi {
      * @return
      */
     @ApiOperation(value = "分页查询", notes = "分页查询")
-    @PostMapping("/queryTagPage")
+    @PostMapping("/query-by-page")
     RestResponse<PageDto<TagDto>> queryTagPage(@RequestBody BasePageReqDto dto);
 }

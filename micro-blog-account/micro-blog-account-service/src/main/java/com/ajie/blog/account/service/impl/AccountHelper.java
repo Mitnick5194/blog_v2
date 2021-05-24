@@ -114,6 +114,9 @@ public class AccountHelper {
      * @return
      */
     public static String mask(String content) {
+        if (StringUtils.isBlank(content)) {
+            return content;
+        }
         StringBuilder sb = new StringBuilder();
         int length = content.length();
         if (length == 1) {

@@ -73,7 +73,7 @@ function handleRequestSuccess(response, callback, errorCallback) {
 }
 
 function handleRequestError(error, errorCallback) {
-    console.log(error);
+    console.error(error);
     if (typeof errorCallback === 'function') {
         errorCallback(error);
         return;

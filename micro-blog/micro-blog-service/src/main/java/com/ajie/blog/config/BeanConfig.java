@@ -50,4 +50,5 @@ public class BeanConfig {
     public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
     }
+
 }

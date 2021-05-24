@@ -2,8 +2,10 @@ package com.ajie.blog.service.impl;
 
 import com.ajie.blog.api.dto.TagDto;
 import com.ajie.blog.api.enums.BlogExceptionEmun;
+import com.ajie.blog.api.po.BlogTagPO;
 import com.ajie.blog.api.po.TagPO;
 import com.ajie.blog.exception.BlogException;
+import com.ajie.blog.mapper.BlogTagMapper;
 import com.ajie.blog.mapper.TagMapper;
 import com.ajie.blog.service.TagService;
 import com.ajie.commons.dto.BasePageReqDto;
@@ -28,6 +30,9 @@ import java.util.stream.Collectors;
 public class TagServiceImpl implements TagService {
     @Resource
     private TagMapper tagMapper;
+
+    @Resource
+    private BlogTagMapper blogTagMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -60,12 +65,9 @@ public class TagServiceImpl implements TagService {
     @Override
     public PageDto<TagDto> queryTagPage(BasePageReqDto dto) {
         Page page = new Page(dto.getCurrentPage(), dto.getPageSize());
-        IPage<TagPO> list = tagMapper.selectPage(page, new TagPO().toQueryWrap());
-        PageDto<TagDto> pageDto = PageDtoUtil.toPageDto(list, (s) -> {
-            TagDto t = new TagDto();
-            BeanUtils.copyProperties(s, t);
-            return t;
-        });
-        return pageDto;
+        IPage<TagDto> query = blogTagMapper.queryTag(page);
+        PageDto resp = PageDtoUtil.toPageDto(query);
+        List<TagDto> records = query.getRecords();
+        return resp;
     }
 }

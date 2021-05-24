@@ -19,6 +19,9 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * 旧数据迁移
+ */
 @Service
 public class MigrateService {
     @Resource
