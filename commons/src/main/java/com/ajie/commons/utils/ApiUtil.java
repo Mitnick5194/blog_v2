@@ -2,7 +2,6 @@ package com.ajie.commons.utils;
 
 import com.ajie.commons.RestResponse;
 import com.ajie.commons.exception.MicroCommonException;
-import com.alibaba.fastjson.JSONObject;
 
 public class ApiUtil {
 

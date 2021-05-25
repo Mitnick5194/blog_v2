@@ -90,6 +90,7 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         blogTag.setBlogId(blogId);
         for (TagDto t : tagList) {
             blogTag.setTagId(t.getId());
+            blogTag.setTagName(t.getTag());
             blogTagMapper.insert(blogTag);
         }
     }

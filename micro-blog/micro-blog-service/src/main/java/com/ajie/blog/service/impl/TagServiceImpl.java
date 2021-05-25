@@ -40,10 +40,10 @@ public class TagServiceImpl implements TagService {
         if (CollectionUtils.isEmpty(dto)) {
             throw BlogException.of(BlogExceptionEmun.PARAM_ERROR.getCode(), "标签内容为空");
         }
-        List<Long> ids = dto.stream().map(TagDto::getId).collect(Collectors.toList());
+        List<String> tagNames = dto.stream().map(TagDto::getTag).collect(Collectors.toList());
         TagPO po = new TagPO();
         QueryWrapper<TagPO> wrap = po.wrap(TagPO.class);
-        wrap.in("id", StringUtils.join(ids, ","));
+        wrap.in("tag_name", StringUtils.join(tagNames, ","));
         List<TagPO> tags = tagMapper.selectList(wrap);
         Map<String, TagPO> map = tags.stream().collect(Collectors.toMap(TagPO::getTagName, Function.identity()));
         int ret = 0;
@@ -67,7 +67,6 @@ public class TagServiceImpl implements TagService {
         Page page = new Page(dto.getCurrentPage(), dto.getPageSize());
         IPage<TagDto> query = blogTagMapper.queryTag(page);
         PageDto resp = PageDtoUtil.toPageDto(query);
-        List<TagDto> records = query.getRecords();
         return resp;
     }
 }

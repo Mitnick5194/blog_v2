@@ -5,6 +5,8 @@ import com.ajie.commons.enums.CommonsExceptionEmun;
 import com.ajie.commons.exception.CommonException;
 import com.ajie.commons.po.BasePO;
 import com.ajie.commons.utils.UserInfoUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -14,14 +16,12 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * mapper操作切面，子类负责注入
  */
 public abstract class AbstractMapperAspect {
-
-    public static final String IGNORE_CHECK_BELONG = "ignore_belong";
-    public static final String IGNORE_FILL = "ignore_fill";
 
     /**
      * 拦截插入接口
@@ -32,9 +32,6 @@ public abstract class AbstractMapperAspect {
      */
     @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.insert(..))")
     public Object insert(ProceedingJoinPoint point) throws Throwable {
-        if (IGNORE_FILL.equals(System.getProperty(IGNORE_FILL))) {
-            return point.proceed();
-        }
         Object param = point.getArgs()[0];
         if (param instanceof BasePO) {
             BasePO basePO = (BasePO) param;
@@ -52,9 +49,6 @@ public abstract class AbstractMapperAspect {
      */
     @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.update*(..))")
     public Object update(ProceedingJoinPoint point) throws Throwable {
-        if (IGNORE_FILL.equals(System.getProperty(IGNORE_FILL))) {
-            return point.proceed();
-        }
         Object param = point.getArgs()[0];
         if (param instanceof BasePO) {
             BasePO basePO = (BasePO) param;
@@ -72,9 +66,6 @@ public abstract class AbstractMapperAspect {
      * @return
      */
     private boolean checkBelong(ProceedingJoinPoint point, BasePO basePO) {
-        if (IGNORE_CHECK_BELONG.equals(System.getProperty(IGNORE_CHECK_BELONG))) {
-            return true;
-        }
         Long id = UserInfoUtil.getUserId();
        /* if (null == id) {
             throw new CommonException(CommonsExceptionEmun.BELONG_NOT_MATCH.getCode(), CommonsExceptionEmun.BELONG_NOT_MATCH.getMsg());
@@ -104,7 +95,7 @@ public abstract class AbstractMapperAspect {
      * @return
      * @throws Throwable
      */
-    @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.select*(..))")
+    @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.selectById(..))")
     public Object selectById(ProceedingJoinPoint point) throws Throwable {
         Object ret = point.proceed();
         if (ret instanceof BasePO) {
@@ -116,5 +107,42 @@ public abstract class AbstractMapperAspect {
             }
         }
         return ret;
+    }
+
+    /**
+     * 拦截查询接口
+     *
+     * @param point
+     * @return
+     * @throws Throwable
+     */
+    @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.select*(..))")
+    public Object query(ProceedingJoinPoint point) throws Throwable {
+        Object[] args = point.getArgs();
+        for (Object obj : args) {
+            fillBasePoDel(obj);
+        }
+        return point.proceed();
+    }
+
+    private void fillBasePoDel(Object obj) {
+        if (obj instanceof BasePO) {
+            BasePO po = (BasePO) obj;
+            po.setDel(TableConstant.NOT_DEL);
+            return;
+        }
+        if (obj instanceof QueryWrapper) {
+            QueryWrapper basePO = (QueryWrapper) obj;
+            Object entity = basePO.getEntity();
+            if (entity instanceof BasePO) {
+                BasePO po = (BasePO) obj;
+                po.setDel(TableConstant.NOT_DEL);
+            }
+            return;
+        }
+        if (obj instanceof Map) {
+            Map<Object, Object> map = (Map<Object, Object>) obj;
+            map.put("del", TableConstant.NOT_DEL);
+        }
     }
 }

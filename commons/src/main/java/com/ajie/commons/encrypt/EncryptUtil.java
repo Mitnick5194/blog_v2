@@ -2,9 +2,7 @@ package com.ajie.commons.encrypt;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import sun.applet.Main;
 
 import java.security.*;
 import java.util.HashMap;

@@ -8,7 +8,6 @@ import com.ajie.blog.account.mapper.AccountMapper;
 import com.ajie.blog.account.service.AccountService;
 import com.ajie.commons.constant.TableConstant;
 import com.ajie.commons.dto.JwtAccount;
-import com.ajie.commons.exception.CommonException;
 import com.ajie.commons.exception.MicroCommonException;
 import com.ajie.commons.utils.JwtUtil;
 import com.ajie.commons.utils.ParamCheck;
