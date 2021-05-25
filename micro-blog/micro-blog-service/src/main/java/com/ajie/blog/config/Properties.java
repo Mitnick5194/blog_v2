@@ -24,6 +24,16 @@ public class Properties {
      */
     public static List<String> authPath;
 
+    /**
+     * 上传文件保存的文件夹
+     */
+    public static String uploadFileDir;
+
+    /**
+     * 访问上面的文件夹的链接
+     */
+    public static String uploadFileUrl;
+
     public void setTokenSecret(String secret) {
         tokenSecret = secret;
     }
@@ -36,4 +46,11 @@ public class Properties {
         authPath = paths;
     }
 
+    public void setUploadFileDir(String uploadFileDir) {
+        Properties.uploadFileDir = uploadFileDir;
+    }
+
+    public void setUploadFileUrl(String uploadFileUrl) {
+        Properties.uploadFileUrl = uploadFileUrl;
+    }
 }

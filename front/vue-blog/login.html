@@ -14,10 +14,9 @@
         }
 
         .hidden {
-            display: none
+            display: none;
         }
 
-        ;
         .hiddenforce {
             display: none !important;
         }
@@ -212,10 +211,11 @@
             <div id="iForms" class="form-group ">
                 <div class="login-form form" id="iLoginForm">
                     <div class="key-dv">
-                        <input v-model="user" type="text" name="key" placeholder="用户名/手机号/邮箱"/>
+                        <input v-model="user" type="text" @keyup.enter="login" name="key" placeholder="用户名/手机号/邮箱"/>
                     </div>
                     <div class="passwd-dv">
-                        <input v-model="password" class="enter" data-type="login" type="password" name="password"
+                        <input v-model="password" class="enter" @keyup.enter="login" data-type="login" type="password"
+                               name="password"
                                placeholder="密码"/>
                     </div>
                     <div class="login-btn submitBtn" @click="login">登录</div>
@@ -274,6 +274,8 @@
                 doPost("/api-account/v2/account/login", param, function (data) {
                     saveLocalValue("account", data);
                     gotoRef();
+                }, function (error) {
+                    alert(error.msg);
                 })
             }
         }
@@ -282,8 +284,9 @@
     function gotoRef() {
         let href = location.href
         let ref = "index.html"
-        if (href.indexOf("ref") > -1) {
-            ref = href.substr(href.indexOf("ref=" + 4));
+        let idx = href.indexOf("ref=");
+        if (idx > -1) {
+            ref = href.substring(idx + 4);
         }
         location.href = ref;
     }

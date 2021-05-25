@@ -43,4 +43,7 @@ CKEDITOR.editorConfig = function( config ) {
     //如果不设置着默认风格为default
     config.codeSnippet_theme = 'zenburn';
 
+	config.image_previewText=' ';
+	config.filebrowserUploadUrl="http://blog.qyun.nzjie.cn/api-blog/v2/blog/imgupload";
+
 };

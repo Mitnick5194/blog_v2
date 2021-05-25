@@ -23,7 +23,7 @@ public interface BlogMapper extends BaseMapper<BlogPO> {
      * @param userId  当前登录者，如果有传，则把当前登录者状态为私有的博文一同查出来
      * @return
      */
-    @Select({"<script>",
+   /* @Select({"<script>",
             "(select * from mb_blog",
             "where del=0 and type=1",
             "<if test='blogIds != null and blogIds.size > 0'> ",
@@ -68,6 +68,25 @@ public interface BlogMapper extends BaseMapper<BlogPO> {
             "       and content like CONCAT('%',#{dto.keyword},'%') order by create_time desc)",
             "   </if>",
             "</if>",
+            "</script>"})*/
+
+    @Select({"<script>",
+            "select * from mb_blog",
+            "where del=0 and (type =1 ",
+            "<if  test='userId!=null'>",
+            "    or (type=0  and user_id=#{userId})" ,
+            "</if>",
+            ")",
+            "<if test='blogIds != null and blogIds.size > 0'> ",
+            " and id in ",
+            "  <foreach collection='blogIds' index='index' item='item' open='(' separator=',' close=')'> ",
+            "    #{item}",
+            "  </foreach> ",
+            "</if>",
+            "<if test='dto.keyword!=null'>",
+            "   and (title like CONCAT('%',#{dto.keyword},'%') or  content like CONCAT('%',#{dto.keyword},'%')) ",
+            "</if>",
+            " order by create_time desc",
             "</script>"})
     IPage<BlogRespDto> queryByPage(@Param("page") IPage<BlogPO> page, @Param("dto") BlogQueryReqDto dto, @Param("blogIds") List<Long> blogIds, @Param("userId") Long userId);
 

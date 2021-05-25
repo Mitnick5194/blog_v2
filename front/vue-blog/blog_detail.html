@@ -21,11 +21,11 @@
     <div v-show="null != account.token" class="header-navi darkMode">
         <div class="user-header">
             <div class="user-info user" data-id="6" data-type="userinfo">
-                <img class="user-header-img" src="http://www.nzjie.cn/static/images/logo.jpg"/>
-                <div class="user-name">独孤怎会求败</div>
+                <img class="user-header-img" :src="account.headerUrl"/>
+                <div class="user-name">{{account.accountName}}</div>
             </div>
         </div>
-        <div class="addblog">写博客</div>
+        <div class="addblog" @click="gotoAddBlog">写博客</div>
     </div>
     <!------------------------end头部导航------------------------>
     <div class="container">
@@ -171,6 +171,9 @@
                         that.comments = list;
                     }
                 })
+            },
+            gotoAddBlog: function(){
+                location.href = "add_blog.html";
             }
         }
     })

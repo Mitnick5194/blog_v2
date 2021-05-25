@@ -1,10 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width , initial-scale=1,maximum-scale=1.0, user-scalable=0">
+    <title>博客创作</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css">
+    <link href="css/add_blog.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-$END$
+
+<div class="container" id="app">
+    <div v-show="null != account.token" class="header-navi darkMode">
+        <div class="user-header">
+            <div class="user-info user" data-id="6" data-type="userinfo">
+                <img class="user-header-img" :src="account.headerUrl"/>
+                <div class="user-name">{{account.accountName}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="flex main">
+        <div class="left">
+            <span class="hits">关注公众号和小程序，获取最新动态</span>
+            <div class="wxgz-qrcode">
+                <img alt="找不到图片" src="images/my_wxgz_qrcode.jpg">
+            </div>
+            <div class="wxgz-qrcode">
+                <img alt="找不到图片" src="images/my_wxapp_code.jpg">
+            </div>
+        </div>
+        <div class="editor-area">
+            <form class="form" id="iForm">
+                <input v-model="title" placeholder="文章标题" type="text" name="title"/>
+                <textarea name="editor" id="editor"></textarea>
+                <div class="labels flex">
+                    <div>文章标签：</div>
+                    <div class="input-group" id="iInputGruop">
+                        <section v-for="(item,index) in tags">
+                            <input v-model="tags[index].value" type="text" :value="item.value" focus="false">
+                            <span class="delLabelBtn">x</span>
+                        </section>
+                    </div>
+                    <div class="add-label" id="iAddLabelBtn">
+                        <div class="add-label-btn"><span></span><span></span></div>
+                        <div class="add-label-hits" @click="addTag">添加标签</div>
+                    </div>
+                </div>
+            </form>
+            <div class="submit-btn" id="iBtn" @click="submit">发布</div>
+            <div class="btn-col">
+                <div class="submit-btn" id="iSaveDraft">保存草稿箱</div>
+                <div class="submit-btn" id="iPre">预览</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="js/global/vue.js"></script>
+<script src="js/global/axios.js"></script>
+<script src="js/global/common.js"></script>
+<script src="js/global/request.js"></script>
+<script src="js/global/ckeditor/ckeditor.js"></script>
+<script>
+
+
+    new Vue({
+        el: "#app",
+        data: {
+            tags: [],
+            account: {},
+            title: null,
+        },
+        created: function () {
+            let account = getLocalValue("account") || {};
+            if (!account || !account.token) {
+                gotoLogin();
+                return;
+            }
+            //验证用户
+            doGet("/api-blog/v2/blog/auth")
+            this.account = account;
+        },
+        mounted: function () {
+
+        },
+        methods: {
+            addTag: function () {
+                this.tags = this.tags.concat({});
+            },
+            submit: function () {
+                let content = CKEDITOR.instances.editor.getData();
+                let title = this.title;
+                let tags = this.tags;
+                if (!title) {
+                    alert("请输入标题");
+                    return;
+                }
+                if (!content) {
+                    alert("请输入内容");
+                    return;
+                }
+                let tagArr = checkAndGetTags(this.tags);
+                if (!tagArr) {
+                    alert("请输入标签")
+                    return;
+                }
+                let param = {
+                    title: title,
+                    content: content,
+                    tagList: tagArr,
+                    type: 1
+                };
+                doPost("/api-blog/v2/blog/create", param, function (data) {
+                    window.open("index.html");
+                })
+
+            }
+        }
+    })
+
+    function checkAndGetTags(tags) {
+        if (!tags || !tags.length) {
+            return null;
+        }
+        let arr = [];
+        for (let i = 0; i < tags.length; i++) {
+            let tag = tags[i];
+            if (!tag.value) {
+                continue;
+            }
+            arr.push({tag: tag.value});
+        }
+        if (!arr.length) {
+            return null;
+        }
+        return arr;
+    }
+
+    function gotoLogin() {
+        let ref = location.href;
+        location.href = "login.html?ref=" + ref;
+    }
+
+    CKEDITOR.replace('editor', {
+        language: 'zh-cn',
+        height: 600,
+    });
+</script>
 </body>
 </html>

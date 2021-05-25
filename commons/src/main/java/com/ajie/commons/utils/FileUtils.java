@@ -1,4 +1,4 @@
-package com.baihua.utils;
+package com.ajie.commons.utils;
 
 import org.springframework.util.StringUtils;
 

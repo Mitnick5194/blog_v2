@@ -1,4 +1,4 @@
-const host = "http://blog.qyun.nzjie.cn";
+const host = "http://localhost";
 
 /**
  * 请求
@@ -37,7 +37,10 @@ function doRequest(uri, params, method, succCallback, errorCallback) {
 function doGet(uri, params, succCallback, errorCallback) {
     let url = host + uri;
     axios.get(url, {
-        params: params
+        params: params,
+        headers:{
+            "auth": getToken()
+        }
     }).then(function (response) {
         handleRequestSuccess(response, succCallback, errorCallback);
     }).catch(function (error) {
@@ -55,7 +58,7 @@ function doGet(uri, params, succCallback, errorCallback) {
 function doPost(uri, params, succCallback, errorCallback) {
     let url = host + uri;
     //Post请求
-    axios.post(url, params).then(function (response) {
+    axios.post(url, params, {headers: {auth: getToken()}}).then(function (response) {
         handleRequestSuccess(response, succCallback, errorCallback);
     }).catch(function (error) {
         handleRequestError(error);
@@ -105,7 +108,8 @@ function checkAndGetData(data, errorCallback) {
         //判断状态
         if (code == 401) {
             //登录过期
-            window.location.href = "login.html";
+            let ref = location.href;
+            window.location.href = "login.html?ref=" + ref;
             return;
         }
         if (code == 403) {
@@ -117,4 +121,16 @@ function checkAndGetData(data, errorCallback) {
         return false;
     }
     return ret.data == 0 ? 0 : ret.data || true;
+}
+
+function getToken() {
+    try {
+        let account = getLocalValue("account");
+        if (account) {
+            return account.token;
+        }
+    } catch (e) {
+    }
+    return null;
+
 }

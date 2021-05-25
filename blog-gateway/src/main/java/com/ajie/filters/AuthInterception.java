@@ -16,6 +16,7 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.RequestPath;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -32,8 +33,11 @@ public class AuthInterception implements GlobalFilter, Ordered {
     private static final Logger logger = LoggerFactory.getLogger(AuthInterception.class);
     private static final String LOGINRESP = "{\"code\":401,\"msg\":\"未登录\",\"data\":\"\"}";
     private static final String FORBIDDEN = "{\"code\":403,\"msg\":\"权限不足\",\"data\":\"\"}";
+    private static final String AUTH_SUCCESS = "{\"code\":200,\"msg\":\"\",\"data\":\"\"}";
 
     private static final String SERVER_ERROR = "{\"code\":500,\"msg\":\"服务器异常\",\"data\":\"\"}";
+
+    private static final String AUTH_PATH = "auth";
     /**
      * 解析后的用户信息
      */
@@ -45,6 +49,16 @@ public class AuthInterception implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         try {
             ServerHttpRequest request = exchange.getRequest();
+            String path = request.getPath().toString();
+            String token = request.getHeaders().getFirst("auth");
+            if (isAuth(path)) {
+                if (StringUtils.isBlank(token)) {
+                    return write(LOGINRESP, exchange);
+                }
+                //验证token
+                JwtUtil.verifyToken(token, Properties.tokenSecret);
+                return write(AUTH_SUCCESS, exchange);
+            }
             //日志追踪7
             String reqId = RandomUtil.getRandomString(12, true);
             //日志追踪id
@@ -57,7 +71,6 @@ public class AuthInterception implements GlobalFilter, Ordered {
                 //不需要登录，放行
                 return chain.filter(exchange);
             }
-            String token = request.getHeaders().getFirst("auth");
             if (StringUtils.isBlank(token)) {
                 return write(LOGINRESP, exchange);
             }
@@ -69,13 +82,25 @@ public class AuthInterception implements GlobalFilter, Ordered {
             //将用户信息放入头部
             mutate.header(TICKET_KEY, JSON.toJSONString(account));
             return chain.filter(exchange);
-        }/* catch (VerifyException e) {
+        } catch (VerifyException e) {
             logger.error("用户验证异常", e);
             return write(LOGINRESP, exchange);
-        } */catch (Throwable e) {
+        } catch (Throwable e) {
             logger.error("", e);
             return write(SERVER_ERROR, exchange);
         }
+    }
+
+    private boolean isAuth(String path) {
+        if (StringUtils.isBlank(path)) {
+            return false;
+        }
+        int idx = path.lastIndexOf("/auth");
+        if (-1 == idx) {
+            return false;
+        }
+        String substring = path.substring(idx+1);
+        return AUTH_PATH.equals(substring);
     }
 
     private Mono<Void> write(String msg, ServerWebExchange exchange) {
