@@ -13,7 +13,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,8 +42,17 @@ public abstract class GlobalLogAspect {
         String classMethod = new StringBuilder().append(point.getSignature().getDeclaringTypeName()).append(".").
                 append(point.getSignature().getName()).toString();
         StringBuilder sb = new StringBuilder();
+        Object[] args = point.getArgs();
+        Object json = "";
+        try {
+            json = JSON.toJSON(args);
+        } catch (Exception e) {
+            if (logger.isTraceEnabled()) {
+                logger.trace("无法序列化参数", e);
+            }
+        }
         sb.append("uri:").append(uri).append("，method:").append(method).
-                append(",ip:").append(ip).append(",classMethod").append(classMethod).append(",bizParam:").append(JSON.toJSON(point.getArgs()));
+                append(",ip:").append(ip).append(",classMethod").append(classMethod).append(",bizParam:").append(json);
         logger.info("API start===> {}", sb.toString());
         Long start = System.currentTimeMillis();
         Long end;

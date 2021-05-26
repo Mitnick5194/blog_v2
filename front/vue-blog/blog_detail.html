@@ -10,7 +10,7 @@
     </style>
 </head>
 <body class="darkMode">
-<div class="main" id="app">
+<div class="main" id="app" v-cloak>
     <!------------------------头部导航------------------------>
     <div v-show="null == account.token " class="header-navi darkMode">
         <div class="user-header">
@@ -22,7 +22,7 @@
         <div class="user-header">
             <div class="user-info user" data-id="6" data-type="userinfo">
                 <img class="user-header-img" :src="account.headerUrl"/>
-                <div class="user-name">{{account.accountName}}</div>
+                <div class="user-name" @click="logout">{{account.accountName}}</div>
             </div>
         </div>
         <div class="addblog" @click="gotoAddBlog">写博客</div>
@@ -174,6 +174,12 @@
             },
             gotoAddBlog: function(){
                 location.href = "add_blog.html";
+            },
+            logout: function () {
+                if (confirm("是否退出登录")) {
+                    saveLocalValue("account", "");
+                    location.reload();
+                }
             }
         }
     })

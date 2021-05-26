@@ -41,9 +41,13 @@ public class TagServiceImpl implements TagService {
             throw BlogException.of(BlogExceptionEmun.PARAM_ERROR.getCode(), "标签内容为空");
         }
         List<String> tagNames = dto.stream().map(TagDto::getTag).collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(tagNames)) {
+            throw BlogException.of(BlogExceptionEmun.PARAM_ERROR.getCode(), "标签内容为空");
+        }
+        //根据标签名查询标签，已存在的不做插入
         TagPO po = new TagPO();
         QueryWrapper<TagPO> wrap = po.wrap(TagPO.class);
-        wrap.in("tag_name", StringUtils.join(tagNames, ","));
+        wrap.in("tag_name", tagNames.toArray());
         List<TagPO> tags = tagMapper.selectList(wrap);
         Map<String, TagPO> map = tags.stream().collect(Collectors.toMap(TagPO::getTagName, Function.identity()));
         int ret = 0;

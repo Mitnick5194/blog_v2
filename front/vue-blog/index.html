@@ -35,7 +35,7 @@
         <div class="user-header">
             <div class="user-info user" data-id="6" data-type="userinfo">
                 <img class="user-header-img" :src="account.headerUrl"/>
-                <div class="user-name">{{account.accountName}}</div>
+                <div class="user-name" @click="logout">{{account.accountName}}</div>
             </div>
         </div>
         <div class="addblog" @click="gotoAddBlog">写博客</div>
@@ -232,6 +232,12 @@
             },
             slideOutTag: function () {
                 this.slideOutTagFlag = !this.slideOutTagFlag;
+            },
+            logout: function () {
+                if (confirm("是否退出登录")) {
+                    saveLocalValue("account", "");
+                    location.reload()
+                }
             }
         }
     })

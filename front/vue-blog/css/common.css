@@ -106,4 +106,8 @@ input,textarea,select,a:focus {outline: none;}
 .footer-line:after{content: '';position: absolute;width: 75%;height: 1px; background: #888;top:50%;right:0;    transform: scaleY(0.5);}
 .after-left:after{left: 0;}
 
+[v-cloak] {
+	display: none;
+}
+
 

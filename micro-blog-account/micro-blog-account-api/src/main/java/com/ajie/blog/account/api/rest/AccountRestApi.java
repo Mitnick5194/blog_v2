@@ -83,15 +83,4 @@ public interface AccountRestApi {
     @PostMapping("/query-account-info")
     RestResponse<List<AccountRespDto>> queryAccountInfo(@RequestBody List<Long> ids);
 
-    /**
-     * 根据ID查询用户列表信息
-     *
-     * @param =
-     * @return
-     */
-    @ApiOperation(value = "根据ID查询用户列表信息", notes = "根据ID查询用户列表信息")
-    @GetMapping("/hello")
-    RestResponse<AccountRespDto> test();
-
-
 }

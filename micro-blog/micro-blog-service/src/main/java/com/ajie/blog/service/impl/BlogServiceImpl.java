@@ -167,7 +167,7 @@ public class BlogServiceImpl implements BlogService, TableConstant {
             //查询标签中间表
             BlogTagPO blogTag = new BlogTagPO();
             QueryWrapper<BlogTagPO> wrap = new QueryWrapper<>();
-            wrap.in("tag_id", StringUtils.join(dto.getTagList(), ","));
+            wrap.in("tag_id", dto.getTagList().toArray());
             List<BlogTagPO> btp = blogTagMapper.selectList(wrap);
             blogIds = btp.stream().map(BlogTagPO::getBlogId).collect(Collectors.toList());
             if (CollectionUtils.isEmpty(blogIds)) {
@@ -176,13 +176,19 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         }
         IPage<BlogRespDto> blogPoPage = blogMapper.queryByPage(page, dto, blogIds, UserInfoUtil.getUserId());
         List<BlogRespDto> records = blogPoPage.getRecords();
-        fillAccountInfo(records);
+        try {
+            fillAccountInfo(records);
+        } catch (Exception e) {
+            //不要影响主业务
+            logger.warn("获取用户信息失败", e);
+        }
+
         PageDto<List<BlogRespDto>> result = PageDtoUtil.toPageDto(blogPoPage);
         return result;
     }
 
     private void fillAccountInfo(List<BlogRespDto> records) {
-        List<Long> userIds = records.stream().map(BlogRespDto::getUserId).collect(Collectors.toList());
+        List<Long> userIds = records.stream().map(BlogRespDto::getUserId).distinct().collect(Collectors.toList());
         List<AccountRespDto> accountList = ApiUtil.checkAndGetData(accountRestApi.queryAccountInfo(userIds));
         if (CollectionUtils.isNotEmpty(accountList)) {
             Map<Long, AccountRespDto> map = accountList.stream().collect(Collectors.toMap(AccountRespDto::getId, Function.identity()));
@@ -222,7 +228,12 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         BlogRespDto dto = new BlogRespDto();
         dto.build(blogPO);
         fillTag(dto);
-        fillAccountInfo(Collections.singletonList(dto));
+        try {
+            fillAccountInfo(Collections.singletonList(dto));
+        } catch (Exception e) {
+            //不要影响主业务
+            logger.warn("获取用户信息失败", e);
+        }
         return dto;
     }
 

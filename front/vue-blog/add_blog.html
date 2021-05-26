@@ -9,12 +9,12 @@
 </head>
 <body>
 
-<div class="container" id="app">
+<div class="container" id="app" v-cloak>
     <div v-show="null != account.token" class="header-navi darkMode">
         <div class="user-header">
             <div class="user-info user" data-id="6" data-type="userinfo">
                 <img class="user-header-img" :src="account.headerUrl"/>
-                <div class="user-name">{{account.accountName}}</div>
+                <div class="user-name" @click="logout">{{account.accountName}}</div>
             </div>
         </div>
     </div>
@@ -114,6 +114,12 @@
                     window.open("index.html");
                 })
 
+            },
+            logout: function () {
+                if (confirm("是否退出登录")) {
+                    saveLocalValue("account", "");
+                    window.open("index.html");
+                }
             }
         }
     })

@@ -151,7 +151,8 @@ public class BasePO implements Serializable {
             Object value = next.getValue();
             wrap.eq(key, value);
         }
-        wrap.eq("del", 0);
+        //注释说明：basepo的del属性已经有值了
+        /* wrap.eq("del", 0);*/
         wrap.orderByDesc("create_time");
         return wrap;
     }

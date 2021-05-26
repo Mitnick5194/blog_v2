@@ -44,6 +44,6 @@ CKEDITOR.editorConfig = function( config ) {
     config.codeSnippet_theme = 'zenburn';
 
 	config.image_previewText=' ';
-	config.filebrowserUploadUrl="http://blog.qyun.nzjie.cn/api-blog/v2/blog/imgupload";
+	config.filebrowserUploadUrl="http://localhost/api-blog/v2/blog/imgupload";
 
 };

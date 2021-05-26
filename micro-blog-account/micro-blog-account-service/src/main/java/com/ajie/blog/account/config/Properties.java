@@ -22,6 +22,11 @@ public class Properties {
     public static List<String> ignoreAuthPath;
 
     /**
+     * 用户默认头像
+     */
+    public static String defaultUserHeader;
+
+    /**
      * 登录拦截路径，如存在，需要验证是否登录，优先级小于ignoreAuthPath
      */
     public static List<String> authPath;
@@ -36,5 +41,9 @@ public class Properties {
 
     public void setAuthPath(List<String> paths) {
         authPath = paths;
+    }
+
+    public void setDefaultUserHeader(String defaultUserHeader) {
+        Properties.defaultUserHeader = defaultUserHeader;
     }
 }

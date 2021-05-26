@@ -32,10 +32,15 @@ public class AccountServcieImpl implements AccountService {
     @Override
     public Integer register(RegisterReqDto dto) {
         //ParamCheck.assertNull(dto.getAccountName(), MicroCommonException.PARAM_ERROR.paramErrorFiled("用户名"));
-        ParamCheck.assertNull(dto.getNickName(), MicroCommonException.PARAM_ERROR.paramErrorFiled("昵称"));
+        /* ParamCheck.assertNull(dto.getNickName(), MicroCommonException.PARAM_ERROR.paramErrorFiled("昵称"));*/
         ParamCheck.assertNull(dto.getPassword(), MicroCommonException.PARAM_ERROR.paramErrorFiled("密码"));
         AccountPO po = new AccountPO();
         BeanUtils.copyProperties(dto, po);
+        String headerUrl = dto.getHeaderUrl();
+        if (StringUtils.isBlank(headerUrl)) {
+            headerUrl = Properties.defaultUserHeader;
+            po.setHeaderUrl(headerUrl);
+        }
         String accountName = dto.getAccountName();
         if (StringUtils.isBlank(accountName)) {
             //用户名为空，生成随机用户名
@@ -193,8 +198,9 @@ public class AccountServcieImpl implements AccountService {
         }
         AccountPO po = new AccountPO();
         QueryWrapper<AccountPO> wrap = po.wrap(AccountPO.class);
-        wrap.in("id", StringUtils.join(ids, ","));
+        wrap.in("id", ids.toArray());
         List<AccountPO> accounts = accountMapper.selectList(wrap);
+        //List<AccountPO> accounts = accountMapper.queryList(ids);
         if (CollectionUtils.isEmpty(accounts)) {
             return Collections.emptyList();
         }

@@ -42,3 +42,4 @@ logging:
 properties:
   ignoreAuthPath: []
   authPath: ['**/create*/**','**/update*/**','**/save*/**','**/delete*/**','**/migrate*/**','**/change*/**',]
+  frontGetImageHtml: /get_image.html

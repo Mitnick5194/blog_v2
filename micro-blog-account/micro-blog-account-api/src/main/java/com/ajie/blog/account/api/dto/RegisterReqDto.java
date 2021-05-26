@@ -14,5 +14,9 @@ public class RegisterReqDto extends UpdateUserReqDto {
     private String accountName;
     @ApiModelProperty(name = "password", value = "密码")
     private String password;
+    @ApiModelProperty(name = "key", value = "验证码key")
+    private String key;
+    @ApiModelProperty(name = "verifyCode", value = "验证码")
+    private String verifyCode;
 
 }

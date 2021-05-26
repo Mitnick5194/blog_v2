@@ -2,13 +2,24 @@ package com.ajie.blog.account.controller;
 
 import com.ajie.blog.account.api.dto.*;
 import com.ajie.blog.account.api.rest.AccountRestApi;
+import com.ajie.blog.account.exception.AccountException;
 import com.ajie.blog.account.service.AccountService;
 import com.ajie.commons.RestResponse;
+import com.ajie.commons.exception.MicroCommonException;
+import com.ajie.commons.utils.RandomUtil;
+import com.ajie.commons.utils.VerifyCodeUtil;
+import io.swagger.annotations.ApiOperation;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/micro-blog/v2/account")
@@ -18,6 +29,12 @@ public class AccountController implements AccountRestApi {
 
     @Override
     public RestResponse<Integer> register(RegisterReqDto dto) {
+        String key = dto.getKey();
+        String verifyCode = dto.getVerifyCode();
+        String s = verifyCodeMap.get(key);
+        if (null == s || !s.equalsIgnoreCase(verifyCode)) {
+            throw new AccountException(MicroCommonException.PARAM_ERROR.getCode(), "验证码错误");
+        }
         return RestResponse.success(accountService.register(dto));
     }
 
@@ -51,11 +68,21 @@ public class AccountController implements AccountRestApi {
         return RestResponse.success(accountService.queryAccountInfo(ids));
     }
 
-    @Override
-    public RestResponse<AccountRespDto> test() {
-        AccountRespDto data = new AccountRespDto();
-        data.setNickName("xylx");
-        data.setAccountName("独孤怎会求败");
-        return RestResponse.success(data);
+    //TODO 改成redis
+    private Map<String, String> verifyCodeMap = new HashMap<>();
+
+    @ApiOperation(value = "获取验证码", notes = "获取验证码")
+    @GetMapping("/get-verify-code")
+    public RestResponse<VerifyCodeRestDto> getVerifyCode() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        String code = VerifyCodeUtil.drawImage(out);
+        //转成base64
+        String encodeCode = Base64.encodeBase64String(out.toByteArray());
+        String key = RandomUtil.getRandomString_36();
+        verifyCodeMap.put(key, code);
+        VerifyCodeRestDto dto = new VerifyCodeRestDto();
+        dto.setKey(key);
+        dto.setVerifyCode(encodeCode);
+        return RestResponse.success(dto);
     }
 }

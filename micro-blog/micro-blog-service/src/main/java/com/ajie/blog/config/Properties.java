@@ -34,6 +34,11 @@ public class Properties {
      */
     public static String uploadFileUrl;
 
+    /**
+     * 前端富文本获取图片的中转处理页面
+     */
+    public static String frontGetImageHtml;
+
     public void setTokenSecret(String secret) {
         tokenSecret = secret;
     }
@@ -52,5 +57,9 @@ public class Properties {
 
     public void setUploadFileUrl(String uploadFileUrl) {
         Properties.uploadFileUrl = uploadFileUrl;
+    }
+
+    public void setFrontGetImageHtml(String frontGetImageHtml) {
+        Properties.frontGetImageHtml = frontGetImageHtml;
     }
 }

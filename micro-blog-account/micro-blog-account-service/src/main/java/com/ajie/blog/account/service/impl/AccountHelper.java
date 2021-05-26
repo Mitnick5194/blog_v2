@@ -158,7 +158,7 @@ public class AccountHelper {
         System.out.println(mask("1234556"));
         System.out.println(mask("1234556@qq.com"));
 
-        String p = encryptPassword("ajie2233", "ajie");
+        String p = encryptPassword("123", "xylx");
         System.out.println(p);
 
 

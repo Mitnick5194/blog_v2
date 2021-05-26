@@ -44,3 +44,5 @@ properties:
   authPath: ['**/create*/**','**/update*/**','**/save*/**','**/delete*/**','**/migrate*/**','**/change*/**',]
   uploadFileDir: N:\develop\nginx-1.8.1\html\upload-imgs\
   uploadFileUrl: http://localhost/upload-imgs/
+  frontGetImageHtml: /vue-blog/get_image.html
+

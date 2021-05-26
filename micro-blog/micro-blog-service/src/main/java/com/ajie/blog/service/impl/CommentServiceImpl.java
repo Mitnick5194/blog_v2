@@ -87,7 +87,7 @@ public class CommentServiceImpl implements CommentService {
         List<Long> ids = list.stream().map(CommentRespDto::getId).collect(Collectors.toList());
         CommentPO po = new CommentPO();
         QueryWrapper<CommentPO> wrap = po.wrap(CommentPO.class);
-        wrap.in("parent_id", StringUtils.join(ids, ","));
+        wrap.in("parent_id", ids.toArray());
         List<CommentPO> children = commentMapper.selectList(wrap);
         if (CollectionUtils.isEmpty(children)) {
             return;

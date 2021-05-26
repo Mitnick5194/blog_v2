@@ -8,25 +8,21 @@ import com.ajie.blog.api.rest.BlogRestApi;
 import com.ajie.blog.config.Properties;
 import com.ajie.blog.migrate.MigrateService;
 import com.ajie.blog.service.BlogService;
-import com.ajie.chilli.picture.Picture;
-import com.ajie.chilli.picture.PictureException;
-import com.ajie.chilli.utils.TimeUtil;
+import com.ajie.blog.service.impl.BlogServiceImpl;
 import com.ajie.commons.RestResponse;
 import com.ajie.commons.dto.PageDto;
 import com.ajie.commons.utils.FileUtils;
 import io.swagger.annotations.Api;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,6 +32,8 @@ import java.util.List;
 @RequestMapping("/micro-blog/v2/blog")
 @RestController
 public class BlogController implements BlogRestApi {
+    private Logger logger = LoggerFactory.getLogger(BlogController.class);
+
 
     @Resource
     private BlogService blogService;
@@ -99,20 +97,24 @@ public class BlogController implements BlogRestApi {
     @ResponseBody
     @RequestMapping("/imgupload")
     public void imgupload(@RequestParam("upload") MultipartFile file,
-                          HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        //图片存放路径
-        String imageFolder = Properties.uploadFileDir;
-        FileUtils.createFolderIfNotExist(imageFolder);
-        //根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
-        String fileName = "BL-" + System.currentTimeMillis() + file.getOriginalFilename();
-        File destFile = new File(imageFolder, fileName);
-        file.transferTo(destFile);
-        String callback = request.getParameter("CKEditorFuncNum");
+                          HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 获取get_image.html的请求地址
-        String backUrl = request.getHeader("Origin") + "/vue-blog/get_image.html";
-        String imageUrl = Properties.uploadFileUrl + fileName;
-        response.sendRedirect(backUrl + "?ImageUrl=" + imageUrl + "&CKEditorFuncNum=" + callback);
+        String backUrl = request.getHeader("Origin") + Properties.frontGetImageHtml;
+        try {
+            //图片存放路径
+            String imageFolder = Properties.uploadFileDir;
+            FileUtils.createFolderIfNotExist(imageFolder);
+            //根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
+            String fileName = "BL-" + System.currentTimeMillis() + file.getOriginalFilename();
+            File destFile = new File(imageFolder, fileName);
+            file.transferTo(destFile);
+            String callback = request.getParameter("CKEditorFuncNum");
+            String imageUrl = Properties.uploadFileUrl + fileName;
+            response.sendRedirect(backUrl + "?ImageUrl=" + imageUrl + "&CKEditorFuncNum=" + callback);
+        } catch (Exception e) {
+            logger.error("图片上传失败");
+            response.sendRedirect(backUrl + "?error=" + e.getMessage());
+        }
     }
 
 }
