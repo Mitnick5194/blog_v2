@@ -25,6 +25,11 @@ public class JwtAccount {
      */
     private String attach;
 
+    /**
+     * 签名，禁序列化
+     */
+    transient private String sign;
+
     public <T> T getAttachObject(Class<T> clazz) {
         if (null == attach || attach.trim().length() == 0) {
             return (T) null;
@@ -70,5 +75,13 @@ public class JwtAccount {
 
     public void setAttach(String attach) {
         this.attach = attach;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 }

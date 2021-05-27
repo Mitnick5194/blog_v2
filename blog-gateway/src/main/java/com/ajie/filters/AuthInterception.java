@@ -15,18 +15,15 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.server.RequestPath;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.List;
 
 @Component
 public class AuthInterception implements GlobalFilter, Ordered {
@@ -38,6 +35,9 @@ public class AuthInterception implements GlobalFilter, Ordered {
     private static final String SERVER_ERROR = "{\"code\":500,\"msg\":\"服务器异常\",\"data\":\"\"}";
 
     private static final String AUTH_PATH = "auth";
+
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
     /**
      * 解析后的用户信息
      */
@@ -55,8 +55,10 @@ public class AuthInterception implements GlobalFilter, Ordered {
                 if (StringUtils.isBlank(token)) {
                     return write(LOGINRESP, exchange);
                 }
-                //验证token
-                JwtUtil.verifyToken(token, Properties.tokenSecret);
+                if (null == getAndCheckAccount(token)) {
+                    //token黑名单
+                    return write(LOGINRESP, exchange);
+                }
                 return write(AUTH_SUCCESS, exchange);
             }
             //日志追踪7
@@ -77,8 +79,11 @@ public class AuthInterception implements GlobalFilter, Ordered {
             if (testHeader.equals(token) && isDev()) {
                 return chain.filter(exchange);
             }
-            //获取jwt信息
-            JwtAccount account = JwtUtil.verifyToken(token, Properties.tokenSecret);
+            JwtAccount account = getAndCheckAccount(token);
+            if (null == account) {
+                //token黑名单
+                return write(LOGINRESP, exchange);
+            }
             //将用户信息放入头部
             mutate.header(TICKET_KEY, JSON.toJSONString(account));
             return chain.filter(exchange);
@@ -99,8 +104,25 @@ public class AuthInterception implements GlobalFilter, Ordered {
         if (-1 == idx) {
             return false;
         }
-        String substring = path.substring(idx+1);
+        String substring = path.substring(idx + 1);
         return AUTH_PATH.equals(substring);
+    }
+
+    /**
+     * 验证当前token是否退出登录或者进了黑名单
+     *
+     * @param token
+     * @return
+     */
+    private JwtAccount getAndCheckAccount(String token) {
+        //验证token
+        //获取jwt信息
+        JwtAccount account = JwtUtil.verifyToken(token, Properties.tokenSecret);
+        String s = stringRedisTemplate.opsForValue().get(account.getSign());
+        if (null != s) {
+            return null;
+        }
+        return account;
     }
 
     private Mono<Void> write(String msg, ServerWebExchange exchange) {

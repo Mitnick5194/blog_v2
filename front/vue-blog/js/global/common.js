@@ -53,3 +53,8 @@ Date.prototype.handleViewDate = function () {
     }
     return YY + "-" + MM + "-" + DD
 }
+
+function gotoLoginPage() {
+    let ref = location.href;
+    location.href = "login.html?ref=" + ref;
+}

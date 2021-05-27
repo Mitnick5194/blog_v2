@@ -43,8 +43,8 @@
 
     <!--手机版搜索栏-->
     <div class="search-box">
-        <input  v-model="keyword" placeholder="搜索" @keyup.enter="search" />
-        <div class="img-box"  @click="search">
+        <input v-model="keyword" placeholder="搜索" @keyup.enter="search"/>
+        <div class="img-box" @click="search">
             <img src="images/search.png"/>
         </div>
 
@@ -74,8 +74,8 @@
                         <div>{{item.simpleDate}}</div>
                     </div>
                     <div class="list-right flex">
-                        <div>阅读 0</div>
-                        <div>评论 0</div>
+                        <div>阅读 {{item.readCount}}</div>
+                        <div>评论 {{item.commentCount}}</div>
                     </div>
                 </div>
             </section>
@@ -85,6 +85,11 @@
                 <div class="footer-content" id="iFooter">我是有底线的</div>
                 <div class="footer-line after-left"></div>
             </div>
+
+            <div class="loading-mask" :class="{'hide-mask':hideMask}">
+                <div class="shapes-4"></div>
+            </div>
+
         </div>
         <div class="qr-code">
             <div>关注公众号和小程序，获取获取最新状态</div>
@@ -96,7 +101,9 @@
             </div>
         </div>
     </div>
+
 </div>
+
 <script src="js/global/vue.js"></script>
 <script src="js/global/axios.js"></script>
 <script src="js/global/common.js"></script>
@@ -130,6 +137,7 @@
             keyword: null,
             slideOutTagFlag: false,//控制标签划出
             tagIdx: -1, //选中的标签
+            hideMask: false,
         },
         computed: {
             showLoadMore: function () {
@@ -171,6 +179,9 @@
                         that.totalBlog = data.total;
                     }
                     that.toggleLoadMore(true);
+                    if (!that.hideMask) {
+                        that.hideMask = true;
+                    }
                 })
             },
             loadTags: function () {
@@ -204,6 +215,7 @@
                 }
             },
             search: function (tagId, keyword) {
+                this.hideMask = false;
                 let kw = this.keyword;
                 queryBlogParam.keyword = kw;
                 this.currentPage = 1;
@@ -235,8 +247,11 @@
             },
             logout: function () {
                 if (confirm("是否退出登录")) {
-                    saveLocalValue("account", "");
-                    location.reload()
+                    doGet("/api-account/v2/account/logout", {}, function () {
+                        saveLocalValue("account", "");
+                        location.reload()
+                    });
+
                 }
             }
         }

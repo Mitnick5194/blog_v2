@@ -40,8 +40,8 @@ public interface AccountRestApi {
      * @return
      */
     @ApiOperation(value = "退出登录", notes = "退出登录")
-    @GetMapping("/login-out")
-    RestResponse<Integer> loginout();
+    @GetMapping("/logout")
+    RestResponse<Integer> logout();
 
     /**
      * 修改密码

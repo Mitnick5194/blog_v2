@@ -36,13 +36,18 @@
                     <span class="title-text">{{blog.title}}</span>
                 </section>
                 <section class="user-list">
-                    <span>{{blog.simpleDate}} | </span><span class="user" data-id="6">{{blog.userName}} | </span><span>阅读数 {{blog.readNum}}</span>
+                    <span>{{blog.simpleDate}} | </span><span class="user" data-id="6">{{blog.userName}} | </span><span>阅读数 {{blog.readCount}}</span>
                 </section>
                 <section class="tags">
                     <span>标签</span>
                     <span v-for="item in blog.tagList">{{item.tag}}</span>
                 </section>
                 <section v-html="blog.content"></section>
+
+                <div class="loading-mask" :class="{'hide-mask':hideMask}">
+                    <div class="shapes-4"></div>
+                </div>
+
             </div>
             <div class="right-info">
                 <span class="hits">关注公众号和小程序，获取最新动态</span>
@@ -60,9 +65,10 @@
             <input type="hidden" id="iUser" value="">
             <img alt="" src="images/default_user_header.png" id="iUserHeader">
             <div class="text-dv">
-                <textarea id="iComment" class="comment-text darkMode" placeholder="想对作者说点什么"></textarea>
+                <textarea v-model="commentContent" id="iComment" class="comment-text darkMode"
+                          placeholder="想对作者说点什么"></textarea>
             </div>
-            <div class="submit-btn" id="iSubmit">发表</div>
+            <div class="submit-btn" id="iSubmit" @click="publish">发表</div>
         </div>
         <div class="comment-list darkMode" id="iComments">
             <section v-for="(item,index) in comments" class="comment-item">
@@ -70,7 +76,11 @@
                     <img :src="item.userHeaderUrl">
                 </div>
                 <div class="right-comment-info">
-                    <span class="commenter">{{item.userName}}：</span><span>{{item.content}}<span class="create-date">（{{item.simpleDate}}	#{{index}}楼）</span></span>
+                    <span class="commenter">{{item.userName}}：</span>
+                    <span>
+                        {{item.content}}
+                        <span class="create-date">（{{item.simpleDate}}	#{{index+1}}楼）</span>
+                    </span>
                 </div>
             </section>
         </div>
@@ -87,25 +97,33 @@
             </div>
         </div>
     </div>
-</div>
 
-<!-- 登录弹窗 -->
-<div class="login-frame" id="iLoginFrame">
-    <div class="login-dv">
-        <div class="mobile-login-dv">
-            <div class="navBar">
-                <div>登录</div>
-            </div>
-            <div id="iForms" class="form-group ">
-                <div class="login-form" id="iLoginForm">
-                    <div class="key-dv"><input type="text" name="key" placeholder="用户名/手机号/邮箱"/></div>
-                    <div class="passwd-dv"><input type="password" name="password" placeholder="密码"/></div>
-                    <div id="iLoginBtn" class="login-btn submitBtn">登录</div>
+    <!-- 登录弹窗 -->
+    <div v-show="showLogin" class="login-mask" @click.self="hideLoginMask">
+        <div class="login-frame" id="iLoginFrame">
+            <div class="login-dv">
+                <div class="mobile-login-dv">
+                    <div class="navBar">
+                        <div>登录</div>
+                    </div>
+                    <div id="iForms" class="form-group ">
+                        <div class="login-form" id="iLoginForm">
+                            <div class="key-dv">
+                                <input type="text" v-model="user" name="key" placeholder="用户名/手机号/邮箱"/>
+                            </div>
+                            <div class="passwd-dv">
+                                <input type="password" v-model="password" name="password" placeholder="密码"/>
+                            </div>
+                            <div id="iLoginBtn" class="login-btn submitBtn" @click="login">登录</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 <div class="log-frame" id="iLogFrame">
     <div class="log-nav">
         <div>页面日志</div>
@@ -126,6 +144,11 @@
             comments: [],
             blogId: null,
             account: {},
+            hideMask: false, //加载动画
+            showLogin: false, //登录页面
+            user: null,
+            password: null,
+            commentContent: null,//评论内容
         },
         created: function () {
             let account = getLocalValue("account") || {};
@@ -146,15 +169,16 @@
                 let id = this.blogId;
                 let that = this;
                 doGet("/api-blog/v2/blog/query-by-id", {id: id}, function (data) {
-                    if(data){
+                    if (data) {
                         let date = new Date(data.createTime);
                         data["simpleDate"] = date.handleViewDate();
                     }
                     that.blog = data;
+                    that.hideMask = true;
                 })
             },
             gotoLogin: function () {
-                location.href = "login.html";
+                gotoLoginPage();
             },
             loadComments: function () {
                 let id = this.blogId;
@@ -164,22 +188,76 @@
                 }, function (data) {
                     if (data && data.data) {
                         let list = data.data || [];
-                        for (let item in list) {
+                        list.forEach(function(item){
                             let d = new Date(item.createTime);
-                            list["simpleDate"] = d.handleViewDate();
-                        }
+                            item["simpleDate"] = d.handleViewDate();
+                        })
                         that.comments = list;
                     }
                 })
             },
-            gotoAddBlog: function(){
+            gotoAddBlog: function () {
                 location.href = "add_blog.html";
             },
             logout: function () {
                 if (confirm("是否退出登录")) {
-                    saveLocalValue("account", "");
-                    location.reload();
+                    doGet("/api-account/v2/account/logout", {}, function () {
+                        saveLocalValue("account", "");
+                        location.reload()
+                    });
                 }
+            },
+            publish: function () {
+                let that = this;
+                doGet("/api-blog/v2/blog/auth", {}, function () {
+                    let content = that.commentContent;
+                    if (!content || !content.trim().length) {
+                        alert("请输入内容");
+                        return;
+                    }
+                    doPost("/api-blog/v2/comment/create", {
+                        blogId: that.blogId,
+                        content: content
+                    }, function () {
+                        that.loadComments();
+                        that.commentContent = null;
+                    })
+                }, function () {
+                    //失败，登录过期了
+                    if (that.account && that.account.token) {
+                        //登录过，但是已经过期
+                        alert("登录已过期，请重新登录");
+                        saveLocalValue("account", "");
+                    }
+                    that.showLogin = true;
+                })
+            },
+            login: function () {
+                let that = this;
+                let user = this.user;
+                let password = this.password;
+                if (!user) {
+                    alert("请输入用户名/手机号/邮箱")
+                    return;
+                }
+                if (!password) {
+                    alert("请输入密码")
+                    return;
+                }
+                let param = {
+                    user: user,
+                    password: password
+                }
+                doPost("/api-account/v2/account/login", param, function (data) {
+                    saveLocalValue("account", data);
+                    that.account = data;
+                    that.showLogin = false;
+                }, function (error) {
+                    alert(error.msg);
+                })
+            },
+            hideLoginMask: function () {
+                this.showLogin = false;
             }
         }
     })

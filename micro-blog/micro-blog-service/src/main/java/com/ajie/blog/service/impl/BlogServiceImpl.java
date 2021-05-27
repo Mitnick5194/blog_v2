@@ -24,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +49,8 @@ public class BlogServiceImpl implements BlogService, TableConstant {
     private TagService tagService;
     @Resource
     private AccountRestApi accountRestApi;
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -178,8 +181,8 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         List<BlogRespDto> records = blogPoPage.getRecords();
         try {
             fillAccountInfo(records);
-        } catch (Exception e) {
-            //不要影响主业务
+            fillCount(records);
+        } catch (Exception e) {//不要影响主业务
             logger.warn("获取用户信息失败", e);
         }
 
@@ -198,6 +201,22 @@ public class BlogServiceImpl implements BlogService, TableConstant {
                     continue;
                 }
                 item.build(accountRespDto);
+            }
+        }
+    }
+
+    /**
+     * 填充阅读数和评论数 TODO 后续redis改成map，否则数据太多，不好管理
+     */
+    private void fillCount(List<BlogRespDto> records) {
+        for (BlogRespDto dto : records) {
+            String rc = stringRedisTemplate.opsForValue().get(READ_COUNT_KEY_PRE + dto.getId());
+            if (StringUtils.isNotBlank(rc)) {
+                dto.setReadCount(Integer.valueOf(rc));
+            }
+            String cc = stringRedisTemplate.opsForValue().get(COMMENT_COUNT_KEY_PRE + dto.getId());
+            if (StringUtils.isNotBlank(cc)) {
+                dto.setCommentCount(Integer.valueOf(cc));
             }
         }
     }
@@ -224,11 +243,17 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         if (null == blogPO) {
             return null;
         }
-
         BlogRespDto dto = new BlogRespDto();
         dto.build(blogPO);
         fillTag(dto);
         try {
+            //阅读数+1
+            long count = stringRedisTemplate.opsForValue().increment(READ_COUNT_KEY_PRE + dto.getId());
+            dto.setReadCount(Integer.valueOf((int) count));
+            String cc = stringRedisTemplate.opsForValue().get(COMMENT_COUNT_KEY_PRE + dto.getId());
+            if (StringUtils.isNotBlank(cc)) {
+                dto.setCommentCount(Integer.valueOf(cc));
+            }
             fillAccountInfo(Collections.singletonList(dto));
         } catch (Exception e) {
             //不要影响主业务

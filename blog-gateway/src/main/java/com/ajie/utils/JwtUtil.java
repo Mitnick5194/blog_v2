@@ -33,6 +33,7 @@ public class JwtUtil {
             String json = StringUtils.newStringUtf8(Base64.decodeBase64(payload));
             JwtAccount jwtAccount = JSON.parseObject(json, JwtAccount.class);
             jwtAccount.setId(Long.valueOf(decode.getAudience().get(0)));
+            jwtAccount.setSign(decode.getSignature());
             return jwtAccount;
         } catch (Exception e) {
             throw new VerifyException(e);

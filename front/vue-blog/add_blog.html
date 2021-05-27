@@ -73,7 +73,7 @@
         created: function () {
             let account = getLocalValue("account") || {};
             if (!account || !account.token) {
-                gotoLogin();
+                gotoLoginPage();
                 return;
             }
             //验证用户
@@ -111,14 +111,16 @@
                     type: 1
                 };
                 doPost("/api-blog/v2/blog/create", param, function (data) {
-                    window.open("index.html");
+                    location.href = "index.html"
                 })
 
             },
             logout: function () {
                 if (confirm("是否退出登录")) {
-                    saveLocalValue("account", "");
-                    window.open("index.html");
+                    doGet("/api-account/v2/account/logout", {}, function () {
+                        saveLocalValue("account", "");
+                        location.href = "index.html"
+                    });
                 }
             }
         }
@@ -140,11 +142,6 @@
             return null;
         }
         return arr;
-    }
-
-    function gotoLogin() {
-        let ref = location.href;
-        location.href = "login.html?ref=" + ref;
     }
 
     CKEDITOR.replace('editor', {

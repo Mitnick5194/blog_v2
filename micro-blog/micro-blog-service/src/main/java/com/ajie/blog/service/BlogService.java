@@ -10,6 +10,16 @@ import java.util.List;
 public interface BlogService {
 
     /**
+     * 阅读数redis缓存key前缀
+     */
+    public static final String READ_COUNT_KEY_PRE = "RC-";
+
+    /**
+     * 评论数redis缓存key前缀
+     */
+    public static final String COMMENT_COUNT_KEY_PRE = "CC-";
+
+    /**
      * 新增
      *
      * @param blog
@@ -51,7 +61,7 @@ public interface BlogService {
     PageDto<List<BlogRespDto>> queryByPage(BlogQueryReqDto dto);
 
     /**
-     * 根据ID查询
+     * 根据ID查询 ，注意，此方法会增加博客的阅读数，所以如果是内部需要根据id获取，另写个方法获取
      *
      * @param id
      * @return

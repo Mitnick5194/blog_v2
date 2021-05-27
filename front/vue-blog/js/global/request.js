@@ -1,4 +1,4 @@
-const host = "http://localhost";
+const host = "http://blog.qyun.nzjie.cn";
 
 /**
  * 请求
@@ -131,6 +131,6 @@ function getToken() {
         }
     } catch (e) {
     }
-    return null;
+    return "";
 
 }

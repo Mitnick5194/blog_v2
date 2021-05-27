@@ -9,31 +9,50 @@ import com.ajie.blog.account.service.AccountService;
 import com.ajie.commons.constant.TableConstant;
 import com.ajie.commons.dto.JwtAccount;
 import com.ajie.commons.exception.MicroCommonException;
-import com.ajie.commons.utils.JwtUtil;
-import com.ajie.commons.utils.ParamCheck;
-import com.ajie.commons.utils.UserInfoUtil;
+import com.ajie.commons.utils.*;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayOutputStream;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
-public class AccountServcieImpl implements AccountService {
+public class AccountServiceImpl implements AccountService {
     @Resource
     private AccountMapper accountMapper;
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public Integer register(RegisterReqDto dto) {
         //ParamCheck.assertNull(dto.getAccountName(), MicroCommonException.PARAM_ERROR.paramErrorFiled("用户名"));
         /* ParamCheck.assertNull(dto.getNickName(), MicroCommonException.PARAM_ERROR.paramErrorFiled("昵称"));*/
         ParamCheck.assertNull(dto.getPassword(), MicroCommonException.PARAM_ERROR.paramErrorFiled("密码"));
+        ParamCheck.assertNull(dto.getVerifyCode(), MicroCommonException.PARAM_ERROR.paramErrorFiled("验证码"));
+        String key = dto.getKey();
+        String s = stringRedisTemplate.opsForValue().get(key);
+        String verifyCode = dto.getVerifyCode();
+        if (null == s || !s.equalsIgnoreCase(verifyCode)) {
+            throw new AccountException(MicroCommonException.PARAM_ERROR.getCode(), "验证码错误");
+        }
         AccountPO po = new AccountPO();
         BeanUtils.copyProperties(dto, po);
         String headerUrl = dto.getHeaderUrl();
@@ -126,9 +145,32 @@ public class AccountServcieImpl implements AccountService {
     }
 
     @Override
-    public Integer loginout() {
-        //TODO 将token加入黑名单
-        return null;
+    public Integer logout() {
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = requestAttributes.getRequest();
+        String auth = request.getHeader("auth");
+        if (StringUtils.isBlank(auth)) {
+            return 0;
+        }
+        try {
+            JwtAccount account = JwtUtil.verifyToken(auth, Properties.tokenSecret);
+            if (null == account) {
+                return 0;
+            }
+            Date expire = account.getExpire();
+            LocalDateTime localDateTime = DateUtil.date2LocalDateTime(expire);
+            Duration between = Duration.between( DateUtil.date2LocalDateTime(new Date()),localDateTime);
+            long sec = between.getSeconds();//秒
+            if (0 >= sec) {
+                //过期了
+                return 0;
+            }
+            stringRedisTemplate.opsForValue().set(account.getSign(), "1", sec, TimeUnit.SECONDS);
+            return 1;
+        } catch (TokenExpiredException e) {
+            //已经过期了
+        }
+        return 0;
     }
 
     @Override
@@ -209,6 +251,20 @@ public class AccountServcieImpl implements AccountService {
             BeanUtils.copyProperties(s, t);
             return t;
         }).collect(Collectors.toList());
+    }
+
+    public VerifyCodeRestDto getVerifyCode() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        String code = VerifyCodeUtil.drawImage(out);
+        //转成base64
+        String encodeCode = Base64.encodeBase64String(out.toByteArray());
+        String key = RandomUtil.getRandomString_36();
+        VerifyCodeRestDto dto = new VerifyCodeRestDto();
+        dto.setKey(key);
+        dto.setVerifyCode(encodeCode);
+        //将key放入redis,5分钟有效
+        stringRedisTemplate.opsForValue().set(key, code, 300, TimeUnit.SECONDS);
+        return dto;
     }
 
     /**

@@ -28,7 +28,18 @@ spring:
           filters:
             - StripPrefix=1
             - PrefixPath=/micro-blog
-
+  redis:
+    host:
+    port: 15001
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+    lettuce:
+      shutdown-timeout: 0
 eureka:
   client:
     register-with-eureka: true    # 是否将自己注册进eurekaServer，默认true

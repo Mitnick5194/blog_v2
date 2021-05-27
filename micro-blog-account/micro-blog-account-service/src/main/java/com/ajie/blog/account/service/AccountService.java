@@ -42,7 +42,7 @@ public interface AccountService {
      *
      * @return
      */
-    Integer loginout();
+    Integer logout();
 
     /**
      * 修改密码
@@ -75,4 +75,6 @@ public interface AccountService {
      * @return
      */
     List<AccountRespDto> queryAccountInfo(List<Long> ids);
+
+    VerifyCodeRestDto getVerifyCode();
 }

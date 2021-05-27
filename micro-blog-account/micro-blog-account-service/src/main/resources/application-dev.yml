@@ -9,9 +9,21 @@ spring:
     password:
     driver-class-name: com.mysql.jdbc.Driver
   application:
-    name: micro-blog-account
+    name: micro-blog-account-dev
   main:
     allow-bean-definition-overriding: true
+  redis:
+    host:
+    port: 15001
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 500
+        min-idle: 0
+    lettuce:
+      shutdown-timeout: 0
 
 eureka:
   client:

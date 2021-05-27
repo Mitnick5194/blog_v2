@@ -77,6 +77,8 @@ public class JwtUtil {
             String json = StringUtils.newStringUtf8(Base64.decodeBase64(payload));
             JwtAccount jwtAccount = JSON.parseObject(json, JwtAccount.class);
             jwtAccount.setId(Long.valueOf(decode.getAudience().get(0)));
+            jwtAccount.setExpire(decode.getExpiresAt());
+            jwtAccount.setSign(decode.getSignature());
             return jwtAccount;
         } catch (TokenExpiredException e) {
             //过期了
@@ -98,6 +100,6 @@ public class JwtUtil {
         String token = createToken("test", account);
         System.out.println(token);
         JwtAccount c = verifyToken(token, "test");
-        System.out.println(JSON.toJSON(c));
+        System.out.println(c.getSign());
     }
 }

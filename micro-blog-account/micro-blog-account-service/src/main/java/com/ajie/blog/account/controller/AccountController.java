@@ -11,6 +11,7 @@ import com.ajie.commons.utils.VerifyCodeUtil;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.StringUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/micro-blog/v2/account")
@@ -27,14 +29,9 @@ public class AccountController implements AccountRestApi {
     @Resource
     private AccountService accountService;
 
+
     @Override
     public RestResponse<Integer> register(RegisterReqDto dto) {
-        String key = dto.getKey();
-        String verifyCode = dto.getVerifyCode();
-        String s = verifyCodeMap.get(key);
-        if (null == s || !s.equalsIgnoreCase(verifyCode)) {
-            throw new AccountException(MicroCommonException.PARAM_ERROR.getCode(), "验证码错误");
-        }
         return RestResponse.success(accountService.register(dto));
     }
 
@@ -44,8 +41,8 @@ public class AccountController implements AccountRestApi {
     }
 
     @Override
-    public RestResponse<Integer> loginout() {
-        return RestResponse.success(accountService.loginout());
+    public RestResponse<Integer> logout() {
+        return RestResponse.success(accountService.logout());
     }
 
     @Override
@@ -68,21 +65,9 @@ public class AccountController implements AccountRestApi {
         return RestResponse.success(accountService.queryAccountInfo(ids));
     }
 
-    //TODO 改成redis
-    private Map<String, String> verifyCodeMap = new HashMap<>();
-
     @ApiOperation(value = "获取验证码", notes = "获取验证码")
     @GetMapping("/get-verify-code")
     public RestResponse<VerifyCodeRestDto> getVerifyCode() {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        String code = VerifyCodeUtil.drawImage(out);
-        //转成base64
-        String encodeCode = Base64.encodeBase64String(out.toByteArray());
-        String key = RandomUtil.getRandomString_36();
-        verifyCodeMap.put(key, code);
-        VerifyCodeRestDto dto = new VerifyCodeRestDto();
-        dto.setKey(key);
-        dto.setVerifyCode(encodeCode);
-        return RestResponse.success(dto);
+        return RestResponse.success(accountService.getVerifyCode());
     }
 }

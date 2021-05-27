@@ -9,6 +9,7 @@ import com.ajie.blog.api.dto.CommentRespDto;
 import com.ajie.blog.api.po.CommentPO;
 import com.ajie.blog.exception.BlogException;
 import com.ajie.blog.mapper.CommentMapper;
+import com.ajie.blog.service.BlogService;
 import com.ajie.blog.service.CommentService;
 import com.ajie.commons.dto.PageDto;
 import com.ajie.commons.utils.ApiUtil;
@@ -20,7 +21,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,10 +36,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
+    private Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
+
     @Resource
     private CommentMapper commentMapper;
     @Resource
     private AccountRestApi accountRestApi;
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
 
     @Override
     public Long createComment(CommentDto dto) {
@@ -44,6 +52,14 @@ public class CommentServiceImpl implements CommentService {
         CommentPO po = new CommentPO();
         BeanUtils.copyProperties(dto, po);
         po.setUserId(UserInfoUtil.getUserId());
+        commentMapper.insert(po);
+        try {
+            //评论数+1
+            stringRedisTemplate.opsForValue().increment(BlogService.COMMENT_COUNT_KEY_PRE + dto.getBlogId());
+        } catch (Exception e) {
+            logger.warn("设置评论数失败", e);
+        }
+
         return po.getId();
     }
 
