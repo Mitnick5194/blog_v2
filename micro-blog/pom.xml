@@ -27,7 +27,7 @@
         <dependency>
             <groupId>com.ajie</groupId>
             <artifactId>commons</artifactId>
-            <version>${modules.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
