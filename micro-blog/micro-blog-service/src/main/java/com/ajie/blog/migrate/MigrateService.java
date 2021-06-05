@@ -1,5 +1,9 @@
 package com.ajie.blog.migrate;
 
+import com.ajie.blog.api.constant.BlogConstant;
+import com.ajie.blog.api.dto.BlogRespDto;
+import com.ajie.blog.api.dto.MigrateDto;
+import com.ajie.blog.api.migrate.MigrateRestApi;
 import com.ajie.blog.api.po.BlogPO;
 import com.ajie.blog.api.po.BlogTagPO;
 import com.ajie.blog.api.po.CommentPO;
@@ -8,10 +12,14 @@ import com.ajie.blog.mapper.BlogMapper;
 import com.ajie.blog.mapper.BlogTagMapper;
 import com.ajie.blog.mapper.CommentMapper;
 import com.ajie.blog.mapper.TagMapper;
+import com.ajie.commons.RestResponse;
 import com.ajie.commons.aop.AbstractMapperAspect;
+import com.ajie.commons.exception.MicroCommonException;
+import com.ajie.commons.utils.ApiUtil;
 import com.ajie.commons.utils.HtmlFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,12 +42,21 @@ public class MigrateService {
     private CommentMapper commentMapper;
     @Resource
     private BlogTagMapper blogTagMapper;
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private MigrateRestApi migrateRestApi;
 
-    public int migrate(String createPerson) {
+    public int migrate(String createPerson, String password) {
+        //标记忽略字段填充（时间字段创建人字段）
+        System.setProperty(AbstractMapperAspect.IGNORE_FILL, AbstractMapperAspect.IGNORE_FILL);
+        if (StringUtils.isBlank(password) || !"xylx".equals(password)) {
+            throw new MicroCommonException(-1, "非法操作");
+        }
         List<OldBlogPO> oldBlogPOS = mapper.selectBlog();
         List<OldCommentPO> oldCommentPOS = mapper.selectComment();
         List<BlogPO> blogs = new ArrayList<>();
-        //评论博客中间表
+        //旧博客和新的id映射
         Map<Integer, Long> map = new HashMap<>();
         for (OldBlogPO b : oldBlogPOS) {
             BlogPO p = new BlogPO();
@@ -55,7 +72,25 @@ public class MigrateService {
             blogs.add(p);
             map.put(b.getId(), p.getId());
         }
+        //博客ID和博客映射
         Map<Long, BlogPO> idMap = blogs.stream().collect(Collectors.toMap(BlogPO::getId, Function.identity()));
+        handleComment(createPerson, oldCommentPOS, map, idMap);
+        handleTag(oldBlogPOS, map, idMap);
+        handleReadCount(map, idMap);
+        return oldBlogPOS.size();
+    }
+
+    /**
+     * 处理评论
+     *
+     * @param createPerson
+     * @param oldCommentPOS
+     * @param map           旧博客id和新博客id映射
+     * @param idMap         新博客的id和实体映射
+     */
+    private void handleComment(String createPerson, List<OldCommentPO> oldCommentPOS, Map<Integer, Long> map, Map<Long, BlogPO> idMap) {
+        //统计博客评论数用
+        Map<Long, List<CommentPO>> blogCommentMap = new HashMap<>();
         for (OldCommentPO b : oldCommentPOS) {
             Integer blogId = b.getBlogId();
             Long aLong = map.get(blogId);
@@ -73,7 +108,25 @@ public class MigrateService {
             p.setUpdatePerson(createPerson);
             p.setDel(0);
             commentMapper.insert(p);
+            List<CommentPO> commentPOS = blogCommentMap.get(aLong);
+            if (null == commentPOS) {
+                commentPOS = new ArrayList<>();
+                blogCommentMap.put(aLong, commentPOS);
+            }
+            commentPOS.add(p);
         }
+        //评论数
+        Iterator<Map.Entry<Long, List<CommentPO>>> iterator = blogCommentMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Long, List<CommentPO>> next = iterator.next();
+            Long key = next.getKey();
+            List<CommentPO> value = next.getValue();
+            //评论数
+            stringRedisTemplate.opsForHash().increment(BlogConstant.COMMENT_COUNT_KEY, String.valueOf(key), Long.valueOf(value.size()));
+        }
+    }
+
+    private void handleTag(List<OldBlogPO> oldBlogPOS, Map<Integer, Long> map, Map<Long, BlogPO> idMap) {
         Map<Long, List<Long>> blogTagMap = new HashMap<>();
         //新标签名和id映射
         Map<String, Long> tagNameIdMap = new HashMap<>();
@@ -131,7 +184,26 @@ public class MigrateService {
                 blogTagMapper.insert(po);
             }
         }
-        return oldBlogPOS.size();
+    }
+
+    /**
+     * 阅读数，通过链接请求阿里云服务器获取
+     *
+     * @param map   旧博客id和新博客id映射
+     * @param idMap 新博客的id和实体映射
+     */
+    private void handleReadCount(Map<Integer, Long> map, Map<Long, BlogPO> idMap) {
+        RestResponse<List<MigrateDto>> data = migrateRestApi.loadBlog();
+        List<MigrateDto> list = ApiUtil.checkAndGetData(data);
+        for (MigrateDto item : list) {
+            Long newId = map.get(item.getId());
+            BlogPO blogPO = idMap.get(newId);
+            if (null != blogPO) {
+                stringRedisTemplate.opsForHash().increment(BlogConstant.READ_COUNT_KEY, String.valueOf(blogPO.getId()), item.getReadNum());
+            }
+        }
+
+
     }
 
 
@@ -164,6 +236,27 @@ public class MigrateService {
             }
         }
         return content;
+    }
+
+    /**
+     * 处理内容，将里面的链接替换掉
+     *
+     * @return
+     */
+    private static String convertContent(String content) {
+        if (StringUtils.isBlank(content)) {
+            return content;
+        }
+        //http://www.nzjie.cn/static/images/blog/20210314/BI-ANsx7T48YwkPaDbDx1f1615699940238.PNG
+        //http://static.image.qyun.nzjie.cn/micro-blog/BL-1622024181961a59c089047554c17d726ca3f6da1a792.png
+        content = content.replaceAll("http://www.nzjie.cn/static/images/blog", "http://static.image.qyun.nzjie.cn/micro-blog");
+        return content;
+    }
+
+    public static void main(String[] args) {
+        String content = "我是图片哈哈http://www.nzjie.cn/static/images/blog/20210314/BI-ANsx7T48YwkPaDbDx1f1615699940238.PNG图片是我嘻嘻";
+        String s = convertContent(content);
+        System.out.println(s);
     }
 
 }

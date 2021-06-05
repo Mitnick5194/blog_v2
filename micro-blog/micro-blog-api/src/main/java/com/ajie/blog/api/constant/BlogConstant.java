@@ -20,4 +20,14 @@ public interface BlogConstant {
      */
     public static final Integer TYPE_PRIVATE = 2;
 
+    /**
+     * 阅读数redis缓存key，hash结构，hash的key为博客的ID
+     */
+    static final String READ_COUNT_KEY = "RC-BLOG";
+
+    /**
+     * 评论数redis缓存key,hash结构，hash的key为博客的ID
+     */
+    static final String COMMENT_COUNT_KEY = "CC-BLOG";
+
 }

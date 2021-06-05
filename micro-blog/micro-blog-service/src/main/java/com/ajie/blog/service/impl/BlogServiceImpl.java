@@ -2,6 +2,7 @@ package com.ajie.blog.service.impl;
 
 import com.ajie.blog.account.api.dto.AccountRespDto;
 import com.ajie.blog.account.api.rest.AccountRestApi;
+import com.ajie.blog.api.constant.BlogConstant;
 import com.ajie.blog.api.dto.*;
 import com.ajie.blog.api.enums.BlogExceptionEmun;
 import com.ajie.blog.api.po.BlogPO;
@@ -37,7 +38,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class BlogServiceImpl implements BlogService, TableConstant {
+public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant {
     private Logger logger = LoggerFactory.getLogger(BlogServiceImpl.class);
     @Resource
     private BlogMapper blogMapper;
@@ -183,7 +184,7 @@ public class BlogServiceImpl implements BlogService, TableConstant {
             fillAccountInfo(records);
             fillCount(records);
         } catch (Exception e) {//不要影响主业务
-            logger.warn("获取用户信息失败", e);
+            logger.warn("填充信息失败", e);
         }
 
         PageDto<List<BlogRespDto>> result = PageDtoUtil.toPageDto(blogPoPage);
@@ -206,15 +207,15 @@ public class BlogServiceImpl implements BlogService, TableConstant {
     }
 
     /**
-     * 填充阅读数和评论数 TODO 后续redis改成map，否则数据太多，不好管理
+     * 填充阅读数和评论数
      */
     private void fillCount(List<BlogRespDto> records) {
         for (BlogRespDto dto : records) {
-            String rc = stringRedisTemplate.opsForValue().get(READ_COUNT_KEY_PRE + dto.getId());
+            String rc = (String) stringRedisTemplate.opsForHash().get(READ_COUNT_KEY, String.valueOf(dto.getId()));
             if (StringUtils.isNotBlank(rc)) {
                 dto.setReadCount(Integer.valueOf(rc));
             }
-            String cc = stringRedisTemplate.opsForValue().get(COMMENT_COUNT_KEY_PRE + dto.getId());
+            String cc = (String) stringRedisTemplate.opsForHash().get(COMMENT_COUNT_KEY, String.valueOf(dto.getId()));
             if (StringUtils.isNotBlank(cc)) {
                 dto.setCommentCount(Integer.valueOf(cc));
             }
@@ -248,12 +249,8 @@ public class BlogServiceImpl implements BlogService, TableConstant {
         fillTag(dto);
         try {
             //阅读数+1
-            long count = stringRedisTemplate.opsForValue().increment(READ_COUNT_KEY_PRE + dto.getId());
-            dto.setReadCount(Integer.valueOf((int) count));
-            String cc = stringRedisTemplate.opsForValue().get(COMMENT_COUNT_KEY_PRE + dto.getId());
-            if (StringUtils.isNotBlank(cc)) {
-                dto.setCommentCount(Integer.valueOf(cc));
-            }
+            long rc = stringRedisTemplate.opsForHash().increment(READ_COUNT_KEY, String.valueOf(dto.getId()), 1L);
+            dto.setReadCount((int) rc);
             fillAccountInfo(Collections.singletonList(dto));
         } catch (Exception e) {
             //不要影响主业务

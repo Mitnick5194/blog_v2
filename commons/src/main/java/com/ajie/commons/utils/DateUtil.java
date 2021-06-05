@@ -51,6 +51,18 @@ public class DateUtil {
         return localDateTime2Date(localDate);
     }
 
+    /**
+     * 单位数字前面加个0
+     *
+     * @return
+     */
+    public static String prettyNum(int num) {
+        if (num > 9 || num < 0) {
+            return String.valueOf(num);
+        }
+        return "0" + num;
+    }
+
     public static void main(String[] args) {
         Date d = plusMills(new Date(), MILLI_OF_HOUR);
         System.out.println(d);

@@ -20,6 +20,12 @@ spring:
         max-wait: -1
         max-idle: 500
         min-idle: 0
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#        ip: localhost
+
 
 eureka:
   client:
@@ -51,7 +57,7 @@ logging:
 
 properties:
   ignoreAuthPath: []
-  authPath: ['**/create*/**','**/update*/**','**/save*/**','**/delete*/**','**/migrate*/**','**/change*/**',]
+  authPath: ['**/create*/**','**/update*/**','**/save*/**','**/delete*/**','**/change*/**',]
   uploadFileDir: N:\develop\nginx-1.8.1\html\upload-imgs\
   uploadFileUrl: http://localhost/upload-imgs/
   frontGetImageHtml: /vue-blog/get_image.html

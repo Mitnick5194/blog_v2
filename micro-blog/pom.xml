@@ -15,6 +15,7 @@
 
     <properties>
         <spring-cloud.version>Hoxton.SR10</spring-cloud.version>
+        <!--<alibaba.spring-cloud.version>2.2.1.RELEASE</alibaba.spring-cloud.version>-->
     </properties>
 
     <parent>
@@ -61,6 +62,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+           <!-- <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba</artifactId>
+                <version>${alibaba.spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>-->
         </dependencies>
     </dependencyManagement>
 

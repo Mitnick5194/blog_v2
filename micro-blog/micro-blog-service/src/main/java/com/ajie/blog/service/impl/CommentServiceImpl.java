@@ -2,14 +2,13 @@ package com.ajie.blog.service.impl;
 
 import com.ajie.blog.account.api.dto.AccountRespDto;
 import com.ajie.blog.account.api.rest.AccountRestApi;
-import com.ajie.blog.api.dto.BlogRespDto;
+import com.ajie.blog.api.constant.BlogConstant;
 import com.ajie.blog.api.dto.CommentDto;
 import com.ajie.blog.api.dto.CommentReqDto;
 import com.ajie.blog.api.dto.CommentRespDto;
 import com.ajie.blog.api.po.CommentPO;
 import com.ajie.blog.exception.BlogException;
 import com.ajie.blog.mapper.CommentMapper;
-import com.ajie.blog.service.BlogService;
 import com.ajie.blog.service.CommentService;
 import com.ajie.commons.dto.PageDto;
 import com.ajie.commons.utils.ApiUtil;
@@ -20,7 +19,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -35,7 +33,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl implements CommentService, BlogConstant {
     private Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
 
     @Resource
@@ -55,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
         commentMapper.insert(po);
         try {
             //评论数+1
-            stringRedisTemplate.opsForValue().increment(BlogService.COMMENT_COUNT_KEY_PRE + dto.getBlogId());
+            stringRedisTemplate.opsForHash().increment(COMMENT_COUNT_KEY, String.valueOf(dto.getBlogId()), 1L);
         } catch (Exception e) {
             logger.warn("设置评论数失败", e);
         }

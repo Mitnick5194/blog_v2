@@ -8,9 +8,9 @@ import com.ajie.blog.api.rest.BlogRestApi;
 import com.ajie.blog.config.Properties;
 import com.ajie.blog.migrate.MigrateService;
 import com.ajie.blog.service.BlogService;
-import com.ajie.blog.service.impl.BlogServiceImpl;
 import com.ajie.commons.RestResponse;
 import com.ajie.commons.dto.PageDto;
+import com.ajie.commons.utils.DateUtil;
 import com.ajie.commons.utils.FileUtils;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -82,8 +83,8 @@ public class BlogController implements BlogRestApi {
      * @return
      */
     @GetMapping("migrate")
-    public RestResponse<Integer> migrate(@RequestParam(required = false, name = "userId") String userId) {
-        return RestResponse.success(migrateService.migrate(userId));
+    public RestResponse<Integer> migrate(@RequestParam(required = false, name = "userId") String userId, @RequestParam("password") String password) {
+        return RestResponse.success(migrateService.migrate(userId,password));
     }
 
     /**
@@ -103,6 +104,15 @@ public class BlogController implements BlogRestApi {
         try {
             //图片存放路径
             String imageFolder = Properties.uploadFileDir;
+            LocalDate localDate = LocalDate.now();
+            StringBuilder sb = new StringBuilder();
+            sb.append(imageFolder);
+            if (!imageFolder.endsWith(File.separator)) {
+                sb.append(File.separator);
+            }
+            sb.append(localDate.getYear());
+            sb.append(DateUtil.prettyNum(localDate.getMonthValue()));
+            sb.append(DateUtil.prettyNum(localDate.getDayOfMonth()));
             FileUtils.createFolderIfNotExist(imageFolder);
             //根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
             String fileName = "BL-" + System.currentTimeMillis() + file.getOriginalFilename();

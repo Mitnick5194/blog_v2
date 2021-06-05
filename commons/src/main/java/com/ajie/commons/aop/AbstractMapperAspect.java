@@ -22,6 +22,10 @@ import java.util.Map;
  * mapper操作切面，子类负责注入
  */
 public abstract class AbstractMapperAspect {
+    /**
+     * 忽略填充，数据迁移使用
+     */
+    public static final String IGNORE_FILL = "ignore_fill";
 
     /**
      * 拦截插入接口
@@ -32,6 +36,9 @@ public abstract class AbstractMapperAspect {
      */
     @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.insert(..))")
     public Object insert(ProceedingJoinPoint point) throws Throwable {
+        if (IGNORE_FILL.equals(System.getProperty(IGNORE_FILL))) {
+            return point.proceed();
+        }
         Object param = point.getArgs()[0];
         if (param instanceof BasePO) {
             BasePO basePO = (BasePO) param;
@@ -49,6 +56,9 @@ public abstract class AbstractMapperAspect {
      */
     @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.update*(..))")
     public Object update(ProceedingJoinPoint point) throws Throwable {
+        if (IGNORE_FILL.equals(System.getProperty(IGNORE_FILL))) {
+            return point.proceed();
+        }
         Object param = point.getArgs()[0];
         if (param instanceof BasePO) {
             BasePO basePO = (BasePO) param;

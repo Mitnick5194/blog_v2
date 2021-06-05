@@ -10,16 +10,6 @@ import java.util.List;
 public interface BlogService {
 
     /**
-     * 阅读数redis缓存key前缀
-     */
-    public static final String READ_COUNT_KEY_PRE = "RC-";
-
-    /**
-     * 评论数redis缓存key前缀
-     */
-    public static final String COMMENT_COUNT_KEY_PRE = "CC-";
-
-    /**
      * 新增
      *
      * @param blog
