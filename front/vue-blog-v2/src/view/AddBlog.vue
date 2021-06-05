@@ -46,9 +46,8 @@
     </div>
   </div>
 </template>
-<script src="./node_modules/ckeditor4/ckeditor.js"></script>
+
 <script>
-//import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import RequestMixin from "@/mixin/RequestMixin";
 
 export default {

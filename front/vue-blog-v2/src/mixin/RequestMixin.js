@@ -94,7 +94,7 @@ const mixin = {
                 if (code == 401) {
                     //登录过期
                     let ref = location.href;
-                    window.location.href = "login.html?ref=" + ref;
+                    window.location.href = "login?ref=" + ref;
                     return;
                 }
                 if (code == 403) {

@@ -194,7 +194,7 @@ export default {
       window.open("blog_detail?id=" + id);
     },
     gotoLogin() {
-      location.href = "login.html";
+      location.href = "login";
     },
     loadMore() {
       this.currentPage += 1;
