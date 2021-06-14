@@ -2,6 +2,8 @@ package com.ajie.dto;
 
 import com.alibaba.fastjson.JSON;
 
+import java.util.Date;
+
 public class JwtAccount {
     /**
      * 用户ID
@@ -29,6 +31,11 @@ public class JwtAccount {
      * 签名，禁序列化
      */
     transient private String sign;
+
+    /**
+     * 过期信息，禁序列化
+     */
+    transient private Date expire;
 
     public <T> T getAttachObject(Class<T> clazz) {
         if (null == attach || attach.trim().length() == 0) {
@@ -83,5 +90,13 @@ public class JwtAccount {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    public Date getExpire() {
+        return expire;
+    }
+
+    public void setExpire(Date expire) {
+        this.expire = expire;
     }
 }

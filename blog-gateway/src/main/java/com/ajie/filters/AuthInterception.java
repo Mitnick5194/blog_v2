@@ -7,6 +7,7 @@ import com.ajie.utils.JwtUtil;
 import com.ajie.utils.PathUtil;
 import com.ajie.utils.RandomUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 @Component
 public class AuthInterception implements GlobalFilter, Ordered {
@@ -55,11 +57,12 @@ public class AuthInterception implements GlobalFilter, Ordered {
                 if (StringUtils.isBlank(token)) {
                     return write(LOGINRESP, exchange);
                 }
-                if (null == getAndCheckAccount(token)) {
+                JwtAccount account = getAndCheckAccount(token);
+                if (null == account) {
                     //token黑名单
                     return write(LOGINRESP, exchange);
                 }
-                return write(AUTH_SUCCESS, exchange);
+                return write(refreshToken(account, token), exchange);
             }
             //日志追踪7
             String reqId = RandomUtil.getRandomString(12, true);
@@ -142,5 +145,26 @@ public class AuthInterception implements GlobalFilter, Ordered {
     private boolean isDev() {
         String env = System.getProperty("env");
         return "dev".equals(env);
+    }
+
+    /**
+     * 刷新token，如果token已经过期，不会到这里，在校验token获取account时已经异常了
+     *
+     * @return
+     */
+    private String refreshToken(JwtAccount account, String oldToken) {
+        JSONObject obj = new JSONObject();
+        obj.put("code", 200);
+        obj.put("msg", "");
+        Date expire = account.getExpire();
+        //只有当剩余时间小于20分钟，才刷新
+        if (expire.getTime() - System.currentTimeMillis() > 20 * 60 * 1000) {
+            obj.put("data", oldToken);
+        } else {
+            //刷新token
+            String token = JwtUtil.createToken(Properties.tokenSecret, account);
+            obj.put("data", token);
+        }
+        return obj.toString();
     }
 }

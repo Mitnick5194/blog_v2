@@ -132,5 +132,18 @@ function getToken() {
     } catch (e) {
     }
     return "";
+}
 
+function auth(callback){
+    doGet("/api-blog/v2/blog/auth", {}, function (data) {
+        let account = getLocalValue("account") || {};
+        if (data.data) {
+            //刷新token
+            account.token = data.data;
+        }
+        callback(account);
+    }, function () {
+        //失败回调，表示登录过期
+        saveLocalValue("account", "");
+    })
 }

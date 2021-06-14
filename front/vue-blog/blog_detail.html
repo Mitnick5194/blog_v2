@@ -153,8 +153,11 @@
             commentContent: null,//评论内容
         },
         created: function () {
-            let account = getLocalValue("account") || {};
-            this.account = account;
+            //验证用户
+            let that = this;
+            auth(function(account){
+                that.account = account;
+            })
         },
         mounted: function () {
             let href = window.location.href;
