@@ -202,6 +202,7 @@ public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant
                     continue;
                 }
                 item.build(accountRespDto);
+                item.setCanModify(accountRespDto.getId().equals(item.getUserId()) ? 1 : 0);
             }
         }
     }

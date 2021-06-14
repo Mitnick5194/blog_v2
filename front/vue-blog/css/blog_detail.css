@@ -100,7 +100,7 @@ html, body {
 
 .center-main > .title > .edit {
     cursor: pointer;
-    background: url('/blog/images/edit.jpg') no-repeat left center;
+    background: url('../images/edit.jpg') no-repeat left center;
     padding-left: 20px;
     margin-left: 15px;
     white-space: normal;

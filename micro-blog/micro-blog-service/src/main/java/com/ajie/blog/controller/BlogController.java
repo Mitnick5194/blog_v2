@@ -40,9 +40,6 @@ public class BlogController implements BlogRestApi {
     private BlogService blogService;
 
     @Resource
-    private AccountRestApi accountRestApi;
-
-    @Resource
     private MigrateService migrateService;
 
     @Override

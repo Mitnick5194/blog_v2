@@ -47,6 +47,9 @@ public class BlogRespDto extends BlogDto {
     @ApiModelProperty(value = "评论数")
     private int commentCount;
 
+    @ApiModelProperty(value = "是否可操作（删除或修改），0否1是")
+    private int canModify;
+
 
     public void build(BlogPO blog) {
         BeanUtils.copyProperties(blog, this);

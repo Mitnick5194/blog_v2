@@ -75,7 +75,7 @@ public abstract class AbstractMapperAspect {
      *
      * @return
      */
-    private boolean checkBelong(ProceedingJoinPoint point, BasePO basePO) {
+    private void checkBelong(ProceedingJoinPoint point, BasePO basePO) {
         Long id = UserInfoUtil.getUserId();
        /* if (null == id) {
             throw new CommonException(CommonsExceptionEmun.BELONG_NOT_MATCH.getCode(), CommonsExceptionEmun.BELONG_NOT_MATCH.getMsg());
@@ -89,10 +89,9 @@ public abstract class AbstractMapperAspect {
                 throw new CommonException(CommonsExceptionEmun.PARAM_ERROR.getCode(), CommonsExceptionEmun.PARAM_ERROR.getMsg());
             }
             String createPerson = getById.getCreatePerson();
-            if (StringUtils.isBlank(createPerson)) {
-                return false;
+            if (StringUtils.isBlank(createPerson) || !id.equals(Long.valueOf(createPerson))) {
+                throw new CommonException(CommonsExceptionEmun.BELONG_NOT_MATCH.getCode(), CommonsExceptionEmun.BELONG_NOT_MATCH.getMsg());
             }
-            return id.equals(Long.valueOf(createPerson));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

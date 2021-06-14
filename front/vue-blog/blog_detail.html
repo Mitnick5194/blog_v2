@@ -16,7 +16,7 @@
         <div class="user-header">
             <div class="login-btn" @click="gotoLogin">登录/注册</div>
         </div>
-        <div class="addblog">写博客</div>
+        <div class="addblog" @click="gotoAddBlog">写博客</div>
     </div>
     <div v-show="null != account.token" class="header-navi darkMode">
         <div class="user-header">
@@ -34,6 +34,8 @@
             <div class="center-main darkMode" id="iBlogs">
                 <section class="title">
                     <span class="title-text">{{blog.title}}</span>
+                    <span v-show="blog.canModify" @click="edit" class="edit" data-id="121">编辑</span>
+                    <span v-show="blog.canModify" @click="deleteBlog" class="delete" data-id="121">删除</span>
                 </section>
                 <section class="user-list">
                     <span>{{blog.simpleDate}} | </span><span class="user" data-id="6">{{blog.userName}} | </span><span>阅读数 {{blog.readCount}}</span>
@@ -188,7 +190,7 @@
                 }, function (data) {
                     if (data && data.data) {
                         let list = data.data || [];
-                        list.forEach(function(item){
+                        list.forEach(function (item) {
                             let d = new Date(item.createTime);
                             item["simpleDate"] = d.handleViewDate();
                         })
@@ -258,6 +260,16 @@
             },
             hideLoginMask: function () {
                 this.showLogin = false;
+            },
+            deleteBlog: function () {
+                if (confirm("是否确认删除博客？")) {
+                    doGet("/api-blog/v2/blog/delete-by-id?id=" + this.blog.id, {}, function () {
+                        location.href = "index.html"
+                    });
+                }
+            },
+            edit: function () {
+                location.href = "add_blog.html?id=" + this.blog.id;
             }
         }
     })

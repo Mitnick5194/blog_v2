@@ -62,13 +62,14 @@
 <script src="js/global/ckeditor/ckeditor.js"></script>
 <script>
 
-
     new Vue({
         el: "#app",
         data: {
             tags: [],
             account: {},
             title: null,
+            blogId: null,//编辑才有
+            blog: null,//编辑才有
         },
         created: function () {
             let account = getLocalValue("account") || {};
@@ -81,7 +82,14 @@
             this.account = account;
         },
         mounted: function () {
-
+            let href = window.location.href;
+            if (href.indexOf("=") > -1) {
+                //先简单粗暴的处理吧
+                let id = href.substring(href.indexOf("=") + 1);
+                this.blogId = id;
+            }
+            //编辑的时候
+            this.loadBlog();
         },
         methods: {
             addTag: function () {
@@ -90,7 +98,6 @@
             submit: function () {
                 let content = CKEDITOR.instances.editor.getData();
                 let title = this.title;
-                let tags = this.tags;
                 if (!title) {
                     alert("请输入标题");
                     return;
@@ -110,10 +117,18 @@
                     tagList: tagArr,
                     type: 1
                 };
-                doPost("/api-blog/v2/blog/create", param, function (data) {
-                    location.href = "index.html"
-                })
-
+                let id = this.blogId;
+                if (id) {
+                    //更新
+                    param.id = id;
+                    doPost("/api-blog/v2/blog/update", param, function (data) {
+                        location.href = "index.html"
+                    })
+                } else {
+                    doPost("/api-blog/v2/blog/create", param, function (data) {
+                        location.href = "index.html"
+                    })
+                }
             },
             logout: function () {
                 if (confirm("是否退出登录")) {
@@ -122,6 +137,29 @@
                         location.href = "index.html"
                     });
                 }
+            },
+            loadBlog: function () {
+                let blogId = this.blogId;
+                if (!blogId) {
+                    return;
+                }
+                //编辑进来的
+                let that = this;
+                doGet("/api-blog/v2/blog/query-by-id", {id: blogId}, function (data) {
+                    if (data) {
+                        let date = new Date(data.createTime);
+                        data["simpleDate"] = date.handleViewDate();
+                    }
+                    that.title = data.title;
+                    let tags = data.tagList;
+                    let arr = [];
+                    for (let i = 0; i < tags.length; i++) {
+                        let t = tags[i];
+                        arr.push({value: t.tag})
+                    }
+                    that.tags = arr;
+                    fillContent(data.content);
+                })
             }
         }
     })
@@ -144,10 +182,29 @@
         return arr;
     }
 
+    /**
+     * 填充内容
+     */
+    function fillContent(content) {
+        CKEDITOR.instances.editor.setData(content);
+        //可能是文本编辑器初始化还没完成，设置内容不成功，延迟吧
+        setTimeout(function () {
+            //尝试获取内容
+            let data = CKEDITOR.instances.editor.getData();
+            console.log(data)
+            if (!data || !data.trim().length) {
+                CKEDITOR.instances.editor.setData(content);
+            }
+        }, 300);
+
+    }
+
     CKEDITOR.replace('editor', {
         language: 'zh-cn',
         height: 600,
     });
+
 </script>
+
 </body>
 </html>
