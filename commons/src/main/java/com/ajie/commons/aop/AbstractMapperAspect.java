@@ -27,6 +27,8 @@ public abstract class AbstractMapperAspect {
      */
     public static final String IGNORE_FILL = "ignore_fill";
 
+    public static final ThreadLocal<String> IGNORE_FILL_TL = new ThreadLocal<>();
+
     /**
      * 拦截插入接口
      *
@@ -36,7 +38,7 @@ public abstract class AbstractMapperAspect {
      */
     @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.insert(..))")
     public Object insert(ProceedingJoinPoint point) throws Throwable {
-        if (IGNORE_FILL.equals(System.getProperty(IGNORE_FILL))) {
+        if (IGNORE_FILL.equals(IGNORE_FILL_TL.get())) {
             return point.proceed();
         }
         Object param = point.getArgs()[0];
@@ -56,7 +58,7 @@ public abstract class AbstractMapperAspect {
      */
     @Around("execution(* com.baomidou.mybatisplus.core.mapper.BaseMapper.update*(..))")
     public Object update(ProceedingJoinPoint point) throws Throwable {
-        if (IGNORE_FILL.equals(System.getProperty(IGNORE_FILL))) {
+        if (IGNORE_FILL.equals(IGNORE_FILL_TL.get())) {
             return point.proceed();
         }
         Object param = point.getArgs()[0];

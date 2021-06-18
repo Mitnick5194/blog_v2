@@ -9,7 +9,7 @@ spring:
     password:
     driver-class-name: com.mysql.jdbc.Driver
   application:
-    name: micro-blog-account-dev
+    name: micro-blog-account
   main:
     allow-bean-definition-overriding: true
   redis:
@@ -24,6 +24,12 @@ spring:
         min-idle: 0
     lettuce:
       shutdown-timeout: 0
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#        ip: localhost
+
 
 eureka:
   client:
@@ -34,6 +40,8 @@ eureka:
       #defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka  #集群版
   instance:
     hostname: localhost
+
+
 
 ribbon:
   ConnectTimeout: 4000
@@ -53,11 +61,11 @@ logging:
   #指定不同目录下的日志的级别
   level:
     #com.shimain.springboot.mapper: INFO
-    root: INFO #root表示整个项目，也可单指定某个类（指定某个类放在logback文件指定也可以）
+    root: info #root表示整个项目，也可单指定某个类（指定某个类放在logback文件指定也可以）
 
 properties:
   #token秘钥
   tokenSecret: MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBALMDRWtDsRalb8neM0JavVw1Kww5EO/ocSNkmvufeM+eWzKZtNGqULFFoU6kOoGGWFv4sHZ+vGu5oZqi/KYVxFFT3mt7r5cWGPtFQrPJGEpMuA2RDRImh0Ot2KCICQV2uuQhTRw52N7YqSMy5cSpgekGDwH6aC7PtjLaiTsUGiEtAgMBAAECgYB7UACM4Edn2zSDcW4MAme40eNCezkAmjT9dXsRZAwbsPEPjTQyzcjiJJ32h0jKGppZWJluNuViq6/3ztiNLCdb2e5Cyuhum769Zd1MvOxemfb3EGcOg/hs9WkaWap64KPRfEI70yJ/e7/uvsyiijPsU7vw0DwNsh+UHkwnBVp13QJBAO5rJ9pfoVt43K+HvWYZXCQxJ1UBl2r1VDL9Q/ygfLq5Nu3seAOkX6GOy0OVtNlUTaMAbyuW8LRyrCbL+CE01bsCQQDANqh/g6Ie1DbxQu9MExeQMaceVfakJSOwsYCa9rusQVtcplx4fiS19q2dGojuzXKD3CQ9vyjOgTcnyAFqkkI3AkBDwK/Sntp75BzSxQBNw2cr4cwLnCgrfQwwcUigwfqwFXJGqqxwXIXQo4Of8Sszl4F4kOcGvB4rKWtCmzQoO5uBAkBn9Cek7xga/ELKsJyi1CCGR5ROf8dodv2abiVTqeVN//rdXMveDrrj/ole0h8Ep/ArCEBBdMUpChE+XpkFfhx5AkBmqR/AIPvmk8aTzh61aEtolBfVaitiPFcGn0NS33GNGtbMvJoRLgkeS0tFrOnyCgsFX1f8Ktcfw5xfIA75THFo
-  ignoreAuthPath: []
-  authPath: ['**/create*/**','**/update*/**','**/save*/**','**/delete*/**','**/migrate*/**','**/change*/**',]
+  #ignoreAuthPath: []
+  #authPath: ['**/create*/**','**/update*/**','**/save*/**','**/delete*/**','**/migrate*/**','**/change*/**',]
   defaultUserHeader: http://static.image.qyun.nzjie.cn/micro-blog-account/default_user_header.png

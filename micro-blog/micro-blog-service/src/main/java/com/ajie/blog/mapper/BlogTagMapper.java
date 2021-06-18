@@ -19,6 +19,7 @@ public interface BlogTagMapper extends BaseMapper<BlogTagPO> {
             "select t.id as id,t.tag_name as tag , count(b.tag_id) as blogCount from mb_tag t ",
             "left join mb_blog_tag b ",
             "on t.id = b.tag_id ",
+            "where t.del=0 and b.del=0",
             "GROUP BY b.tag_id ORDER BY blogCount DESC ",
             "</script>"})
     IPage<TagDto> queryTag(@Param("page") IPage<TagDto> page);

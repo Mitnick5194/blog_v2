@@ -37,19 +37,19 @@
                     <div class="input-group" id="iInputGruop">
                         <section v-for="(item,index) in tags">
                             <input v-model="tags[index].value" type="text" :value="item.value" focus="false">
-                            <span class="delLabelBtn">x</span>
+                            <span class="delLabelBtn" :data-idx="index" @click="delTag">x</span>
                         </section>
                     </div>
-                    <div class="add-label" id="iAddLabelBtn">
+                    <div class="add-label" id="iAddLabelBtn" @click="addTag">
                         <div class="add-label-btn"><span></span><span></span></div>
-                        <div class="add-label-hits" @click="addTag">添加标签</div>
+                        <div class="add-label-hits">添加标签</div>
                     </div>
                 </div>
             </form>
             <div class="submit-btn" id="iBtn" @click="submit">发布</div>
             <div class="btn-col">
-                <div class="submit-btn" id="iSaveDraft">保存草稿箱</div>
-                <div class="submit-btn" id="iPre">预览</div>
+                <div class="submit-btn" id="iSaveDraft" @click="saveDraft">保存草稿箱</div>
+                <div class="submit-btn" id="iPre" @click="preview">预览</div>
             </div>
 
         </div>
@@ -62,7 +62,7 @@
 <script src="js/global/ckeditor/ckeditor.js"></script>
 <script>
 
-    new Vue({
+    const vm = new Vue({
         el: "#app",
         data: {
             tags: [],
@@ -94,6 +94,10 @@
         methods: {
             addTag: function () {
                 this.tags = this.tags.concat({});
+            },
+            delTag: function (e) {
+                let idx = e.srcElement.dataset.idx;
+                this.tags.splice(parseInt(idx), 1);
             },
             submit: function () {
                 let content = CKEDITOR.instances.editor.getData();
@@ -160,6 +164,12 @@
                     that.tags = arr;
                     fillContent(data.content);
                 })
+            },
+            saveDraft: function () {
+                alert("尚未开通，敬请期待")
+            },
+            preview: function () {
+                alert("尚未开通，敬请期待")
             }
         }
     })

@@ -21,7 +21,7 @@ public class AccountDto implements Serializable {
      */
     @ApiModelProperty(name = "nickName", value = "昵称")
     private String nickName;
-   /* *//**
+    /* *//**
      * 密码
      *//*
     @ApiModelProperty(name = "password", value = "密码")
@@ -51,4 +51,5 @@ public class AccountDto implements Serializable {
      */
     @ApiModelProperty(name = "headerUrl", value = "头像地址")
     private String headerUrl;
+
 }

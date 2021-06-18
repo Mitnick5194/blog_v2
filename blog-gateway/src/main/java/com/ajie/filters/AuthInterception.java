@@ -73,7 +73,16 @@ public class AuthInterception implements GlobalFilter, Ordered {
             exchange = exchange.mutate().request(mutate.build()).build();
             //验证路径是否要登录
             if (!PathUtil.assertAuth(request.getPath().toString())) {
-                //不需要登录，放行
+                //不需要登录，看看是否有token，如果有token也要解析一下，因为有些页面会根据用户是否有登录而出现不同的展示（如编辑和删除）
+                try {
+                    JwtAccount account = getAndCheckAccount(token);
+                    //解析成功，将用户塞进ticket
+                    if(null != account){
+                        mutate.header(TICKET_KEY, JSON.toJSONString(account));
+                    }
+                }catch (Exception e){
+                    //解析失败，登录过期了或者token解析有问题，当不登录处理就好了
+                }
                 return chain.filter(exchange);
             }
             if (StringUtils.isBlank(token)) {

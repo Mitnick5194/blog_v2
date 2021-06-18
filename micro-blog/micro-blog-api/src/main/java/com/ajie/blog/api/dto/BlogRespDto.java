@@ -5,6 +5,7 @@ import com.ajie.blog.api.po.BlogPO;
 import com.ajie.blog.api.po.TagPO;
 import com.ajie.commons.dto.BaseReqDto;
 import com.ajie.commons.dto.BaseRespDto;
+import com.ajie.commons.utils.UserInfoUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -53,6 +54,9 @@ public class BlogRespDto extends BlogDto {
 
     public void build(BlogPO blog) {
         BeanUtils.copyProperties(blog, this);
+        if (blog.getUserId().equals(UserInfoUtil.getUserId())) {
+            canModify = 1;
+        }
     }
 
     public void build(AccountRespDto account) {

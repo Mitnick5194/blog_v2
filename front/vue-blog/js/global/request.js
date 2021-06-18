@@ -1,4 +1,4 @@
-const host = "http://blog.qyun.nzjie.cn";
+const host = "http://blog.nzjie.cn";
 
 /**
  * 请求

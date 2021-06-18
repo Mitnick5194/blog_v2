@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -82,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
         String password = dto.getPassword();
         password = AccountHelper.encryptPassword(password, accountName);
         po.setPassword(password);
-        //好像自定义sql不会自动生成id，只能手动来了
+        //自定义sql不会自动生成id，只能手动来了
         long id = IdWorker.getId();
         int ret = accountMapper.register(id, po);
         if (0 == ret) {
@@ -208,7 +207,7 @@ public class AccountServiceImpl implements AccountService {
     public Integer updateAccountName(UpdateAccountNameReqDto dto) {
         String password = dto.getPassword();
         String accountName = dto.getAccountName();
-        ParamCheck.assertNull(password, MicroCommonException.PARAM_ERROR.paramErrorFiled("登录账号为空"));
+        ParamCheck.assertNull(password, MicroCommonException.PARAM_ERROR.paramErrorFiled("密码"));
         ParamCheck.assertNull(accountName, MicroCommonException.PARAM_ERROR.paramErrorFiled("用户名"));
         AccountPO accountPO = getLoginAccount();
         if (null == accountPO) {

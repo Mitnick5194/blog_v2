@@ -12,10 +12,12 @@ public class AuthInterceptor extends AbstractAuthInterceptor {
     @Override
     protected boolean assertAuth(HttpServletRequest request) {
         //验证路径是否要登录
-        if (!PathUtil.assertAuth(request.getRequestURI(), Properties.ignoreAuthPath, Properties.authPath)) {
+        //注释说明：统一在网关验证
+       /* if (!PathUtil.assertAuth(request.getRequestURI(), Properties.ignoreAuthPath, Properties.authPath)) {
             //不需要登录
-            return false;
+            return true;
         }
+        return false;*/
         return true;
     }
 

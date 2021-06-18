@@ -45,12 +45,12 @@ public abstract class AbstractAuthInterceptor extends HandlerInterceptorAdapter 
         }
         //日志追踪id
         MDC.put("reqId", reqId);
+        String token = request.getHeader(TICKET_KEY);
+        parseTicket(token);
         //验证路径是否要登录
-        if (!assertAuth(request)) {
-            //不需要登录，放行
+        if (assertAuth(request)) { //一般都是true，只是为了系统更加强壮和可扩展，再做一次判断（因为网关已经校验过是否需要登录了）
             return true;
         }
-        String token = request.getHeader(TICKET_KEY);
         if (StringUtils.isBlank(token)) {
             return writer(response, LOGINRESP);
         }
@@ -59,10 +59,6 @@ public abstract class AbstractAuthInterceptor extends HandlerInterceptorAdapter 
             UserInfoUtil.setUserName(AUTH_TEST_KEY);
             return true;
         }
-        JwtAccount account = JSON.parseObject(token, JwtAccount.class);
-        UserInfoUtil.setUserId(account.getId());
-        UserInfoUtil.setUserHeader(account.getHeaderUrl());
-        UserInfoUtil.setUserName(account.getAccountName());
         return true;
     }
 
@@ -84,6 +80,17 @@ public abstract class AbstractAuthInterceptor extends HandlerInterceptorAdapter 
             out.close();
         }
         return false;
+    }
+
+    private JwtAccount parseTicket(String token) {
+        if (StringUtils.isBlank(token)) {
+            return null;
+        }
+        JwtAccount account = JSON.parseObject(token, JwtAccount.class);
+        UserInfoUtil.setUserId(account.getId());
+        UserInfoUtil.setUserHeader(account.getHeaderUrl());
+        UserInfoUtil.setUserName(account.getAccountName());
+        return account;
     }
 
 

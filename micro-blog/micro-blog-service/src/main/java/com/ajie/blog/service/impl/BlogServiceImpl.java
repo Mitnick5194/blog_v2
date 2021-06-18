@@ -202,7 +202,6 @@ public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant
                     continue;
                 }
                 item.build(accountRespDto);
-                item.setCanModify(accountRespDto.getId().equals(item.getUserId()) ? 1 : 0);
             }
         }
     }
@@ -247,6 +246,8 @@ public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant
         }
         BlogRespDto dto = new BlogRespDto();
         dto.build(blogPO);
+        logger.info("===>" + UserInfoUtil.getUserId());
+        logger.info("===>" + blogPO.getUserId());
         fillTag(dto);
         try {
             //阅读数+1

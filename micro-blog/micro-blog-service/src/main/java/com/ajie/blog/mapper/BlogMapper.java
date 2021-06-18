@@ -71,7 +71,7 @@ public interface BlogMapper extends BaseMapper<BlogPO> {
             "</script>"})*/
 
     @Select({"<script>",
-            "select * from mb_blog",
+            "select id,user_id,title,abstract_content,type,create_time,create_person from mb_blog",
             "where del=0 and (type =1 ",
             "<if  test='userId!=null'>",
             "    or (type=0  and user_id=#{userId})" ,

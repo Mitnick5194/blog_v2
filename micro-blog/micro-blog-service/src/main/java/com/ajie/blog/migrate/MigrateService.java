@@ -49,7 +49,7 @@ public class MigrateService {
 
     public int migrate(String createPerson, String password) {
         //标记忽略字段填充（时间字段创建人字段）
-        System.setProperty(AbstractMapperAspect.IGNORE_FILL, AbstractMapperAspect.IGNORE_FILL);
+        AbstractMapperAspect.IGNORE_FILL_TL.set(AbstractMapperAspect.IGNORE_FILL);
         if (StringUtils.isBlank(password) || !"xylx".equals(password)) {
             throw new MicroCommonException(-1, "非法操作");
         }
@@ -62,6 +62,7 @@ public class MigrateService {
             BlogPO p = new BlogPO();
             BeanUtils.copyProperties(b, p);
             p.setUpdateTime(b.getCreateTime());
+            p.setContent(convertContent(b.getContent()));
             p.setAbstractContent(handleAbstractContent(b.getContent()));
             p.setUserId(Long.valueOf(createPerson));
             p.setType(1);
