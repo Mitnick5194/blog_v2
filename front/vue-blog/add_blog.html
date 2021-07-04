@@ -201,7 +201,6 @@
         setTimeout(function () {
             //尝试获取内容
             let data = CKEDITOR.instances.editor.getData();
-            console.log(data)
             if (!data || !data.trim().length) {
                 CKEDITOR.instances.editor.setData(content);
             }

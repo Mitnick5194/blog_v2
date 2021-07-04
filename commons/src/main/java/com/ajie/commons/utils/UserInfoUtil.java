@@ -24,21 +24,20 @@ public class UserInfoUtil {
 
     private static ThreadLocal<Map<String, String>> threadLocal;
 
-    private static ThreadLocal<Map<String, String>> getThreadLocal() {
+    private static Map<String, String> getThreadLocalMap() {
         if (null == threadLocal) {
             synchronized (UserInfoUtil.class) {
                 if (null == threadLocal) {
                     threadLocal = new ThreadLocal<>();
-                    threadLocal.set(new HashMap<>(4));
                 }
             }
-        }else{
-            Map<String, String> map = threadLocal.get();
-            if(null == map){
-                threadLocal.set(new HashMap<>(4));
-            }
         }
-        return threadLocal;
+        Map<String, String> map = threadLocal.get();
+        if (null == map) {
+            map = new HashMap<>(4);
+            threadLocal.set(map);
+        }
+        return map;
     }
 
     public static Long getUserId() {
@@ -58,22 +57,32 @@ public class UserInfoUtil {
     }
 
     private static String getValue(String key) {
-        Map<String, String> map = getThreadLocal().get();
+        Map<String, String> map = getThreadLocalMap();
         return map.get(key);
     }
 
     public static void setUserId(Long id) {
-        Map<String, String> map = getThreadLocal().get();
+        Map<String, String> map = getThreadLocalMap();
         map.put(USER_ID_KEY, String.valueOf(id));
     }
 
     public static void setUserName(String userName) {
-        Map<String, String> map = getThreadLocal().get();
+        Map<String, String> map = getThreadLocalMap();
         map.put(USER_NAME_KEY, userName);
     }
 
     public static void setUserHeader(String userHeader) {
-        Map<String, String> map = getThreadLocal().get();
+        Map<String, String> map = getThreadLocalMap();
         map.put(USER_HEADER_KEY, userHeader);
+    }
+
+    /**
+     * 业务执行完后一定一定要调用此方法，否则线程复用会导致拿到旧值，且容易导致内存泄漏
+     */
+    public static void remove() {
+        if (null == threadLocal) {
+            return;
+        }
+        threadLocal.remove();
     }
 }

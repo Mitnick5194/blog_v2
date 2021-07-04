@@ -6,6 +6,7 @@ import com.ajie.blog.api.dto.BlogReqDto;
 import com.ajie.blog.api.dto.BlogRespDto;
 import com.ajie.blog.api.rest.BlogRestApi;
 import com.ajie.blog.config.Properties;
+import com.ajie.blog.interception.AuthInterceptor;
 import com.ajie.blog.migrate.MigrateService;
 import com.ajie.blog.service.BlogService;
 import com.ajie.commons.RestResponse;
@@ -32,6 +33,7 @@ import java.util.List;
 @Api(tags = "博文模块")
 @RequestMapping("/micro-blog/v2/blog")
 @RestController
+//@CrossOrigin
 public class BlogController implements BlogRestApi {
     private Logger logger = LoggerFactory.getLogger(BlogController.class);
 
@@ -59,18 +61,23 @@ public class BlogController implements BlogRestApi {
     }
 
     @Override
-    public RestResponse<Integer> deleteById(@RequestParam("id") Long id) {
+    public RestResponse<Integer> deleteById(Long id) {
         return RestResponse.success(blogService.deleteById(id));
     }
 
     @Override
-    public RestResponse<PageDto<List<BlogRespDto>>> queryByPage(@RequestBody BlogQueryReqDto dto) {
+    public RestResponse<PageDto<List<BlogRespDto>>> queryByPage(BlogQueryReqDto dto) {
         return RestResponse.success(blogService.queryByPage(dto));
     }
 
     @Override
     public RestResponse<BlogRespDto> queryBlogById(Long id) {
         return RestResponse.success(blogService.queryBlogById(id));
+    }
+
+    @Override
+    public RestResponse<Integer> togglePrivate(Long id, Integer type) {
+        return RestResponse.success(blogService.togglePrivate(id, type));
     }
 
     /**
@@ -81,7 +88,7 @@ public class BlogController implements BlogRestApi {
      */
     @GetMapping("migrate")
     public RestResponse<Integer> migrate(@RequestParam(required = false, name = "userId") String userId, @RequestParam("password") String password) {
-        return RestResponse.success(migrateService.migrate(userId,password));
+        return RestResponse.success(migrateService.migrate(userId, password));
     }
 
     /**

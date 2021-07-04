@@ -16,7 +16,7 @@ public interface BlogConstant {
      */
     public static final Integer TYPE_NORMAL = 1;
     /**
-     * 类型: 2草稿
+     * 类型: 2私有
      */
     public static final Integer TYPE_PRIVATE = 2;
 

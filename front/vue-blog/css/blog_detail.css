@@ -98,7 +98,11 @@ html, body {
     font-weight: bold;
 }
 
-.center-main > .title > .edit {
+.modify-block{
+    padding: 10px 0;
+}
+
+.modify-block  > .edit {
     cursor: pointer;
     background: url('../images/edit.jpg') no-repeat left center;
     padding-left: 20px;
@@ -107,14 +111,24 @@ html, body {
     display: inline-block;
 }
 
-.center-main > .title > .delete {
-    /*background: url('/blog/images/blog_del.jpg') no-repeat left center;*/
-    padding-left: 20px;
+.modify-block  > .delete {
+    background: url(../images/blog_del.jpg) no-repeat left center;
     margin-left: 15px;
     white-space: normal;
     display: inline-block;
     background-size: 18px;
     color: red;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+.modify-block>.set-private{
+    margin-left: 15px;
+    border: 1px solid #888;
+    padding: 2px 10px;
+    background: #337ab7;
+    color: #fff;
+    border-radius: 5px;
     cursor: pointer;
 }
 

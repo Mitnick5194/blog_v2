@@ -244,10 +244,12 @@ public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant
         if (null == blogPO) {
             return null;
         }
+        //是否私有博客
+        if (blogPO.getType() == TYPE_PRIVATE && (!blogPO.getUserId().equals(UserInfoUtil.getUserId()))) {
+            return null;
+        }
         BlogRespDto dto = new BlogRespDto();
         dto.build(blogPO);
-        logger.info("===>" + UserInfoUtil.getUserId());
-        logger.info("===>" + blogPO.getUserId());
         fillTag(dto);
         try {
             //阅读数+1
@@ -259,6 +261,23 @@ public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant
             logger.warn("获取用户信息失败", e);
         }
         return dto;
+    }
+
+    @Override
+    public Integer togglePrivate(Long id, Integer type) {
+        BlogPO blogPO = blogMapper.selectById(id);
+        if (null == blogPO) {
+            throw BlogException.of(BlogExceptionEmun.PARAM_ERROR.getCode(), "找不到文章：" + id);
+        }
+        if (null == type || (type != 1 && type != 2)) {
+            throw BlogException.paramError(String.valueOf(type));
+        }
+        Integer t = blogPO.getType();
+        if (t == type) {
+            return 0;
+        }
+        blogPO.setType(type);
+        return blogMapper.updateById(blogPO);
     }
 
     private void fillTag(BlogRespDto blog) {

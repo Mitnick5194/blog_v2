@@ -34,8 +34,13 @@
             <div class="center-main darkMode" id="iBlogs">
                 <section class="title">
                     <span class="title-text">{{blog.title}}</span>
-                    <span v-show="blog.canModify" @click="edit" class="edit" data-id="121">编辑</span>
-                    <span v-show="blog.canModify" @click="deleteBlog" class="delete" data-id="121">删除</span>
+                    <div v-show="blog.canModify" class="modify-block">
+                        <span @click="edit" class="edit">编辑</span>
+                        <span @click="deleteBlog" class="delete">删除</span>
+                        <span v-if="blog.type==1" @click="togglePrivate" class="set-private">设为私有</span>
+                        <span v-if="blog.type==2" @click="togglePrivate" class="set-private">设为公开</span>
+                    </div>
+
                 </section>
                 <section class="user-list">
                     <span>{{blog.simpleDate}} | </span><span class="user" data-id="6">{{blog.userName}} | </span><span>阅读数 {{blog.readCount}}</span>
@@ -155,7 +160,7 @@
         created: function () {
             //验证用户
             let that = this;
-            auth(function(account){
+            auth(function (account) {
                 that.account = account;
             })
         },
@@ -174,10 +179,13 @@
                 let id = this.blogId;
                 let that = this;
                 doGet("/api-blog/v2/blog/query-by-id", {id: id}, function (data) {
-                    if (data) {
-                        let date = new Date(data.createTime);
-                        data["simpleDate"] = date.handleViewDate();
+                    if (!data) {
+                        alert("文章不存在");
+                        that.hideMask = true;
+                        return;
                     }
+                    let date = new Date(data.createTime);
+                    data["simpleDate"] = date.handleViewDate();
                     that.blog = data;
                     that.hideMask = true;
                 })
@@ -187,6 +195,9 @@
             },
             loadComments: function () {
                 let id = this.blogId;
+                if (!id) {
+                    return;
+                }
                 let that = this;
                 doPost("/api-blog/v2/comment/query-by-blog-id", {
                     blogId: id
@@ -273,6 +284,27 @@
             },
             edit: function () {
                 location.href = "add_blog.html?id=" + this.blog.id;
+            },
+            togglePrivate: function () {
+                let that = this;
+                let blog = that.blog;
+                let oldType = blog.type;
+                let type = 2;
+                if (oldType == 2) {
+                    type = 1;
+                }
+                let msg = "是否设为私密";
+                if (blog.type == 2) {
+                    msg = "是否设为公开";
+                }
+                if (confirm(msg)) {
+                    doGet("/api-blog/v2/blog/toggle-private", {
+                        id: that.blog.id,
+                        type: type
+                    }, function () {
+                        that.blog.type = type;
+                    });
+                }
             }
         }
     })

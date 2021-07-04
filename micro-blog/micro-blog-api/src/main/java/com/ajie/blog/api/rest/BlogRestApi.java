@@ -72,5 +72,9 @@ public interface BlogRestApi {
     @GetMapping("/query-by-id")
     RestResponse<BlogRespDto> queryBlogById(@RequestParam("id") Long id);
 
+    @ApiOperation(value = "设为私有/设为公开", notes = "设为私有/设为公开")
+    @GetMapping("/toggle-private")
+    RestResponse<Integer> togglePrivate(@RequestParam("id") Long id, @RequestParam("type") Integer type);
+
 
 }

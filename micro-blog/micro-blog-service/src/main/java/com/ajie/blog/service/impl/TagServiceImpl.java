@@ -11,6 +11,7 @@ import com.ajie.blog.service.TagService;
 import com.ajie.commons.dto.BasePageReqDto;
 import com.ajie.commons.dto.PageDto;
 import com.ajie.commons.utils.PageDtoUtil;
+import com.ajie.commons.utils.UserInfoUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -69,7 +70,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public PageDto<TagDto> queryTagPage(BasePageReqDto dto) {
         Page page = new Page(dto.getCurrentPage(), dto.getPageSize());
-        IPage<TagDto> query = blogTagMapper.queryTag(page);
+        IPage<TagDto> query = blogTagMapper.queryTag(page, UserInfoUtil.getUserId());
         PageDto resp = PageDtoUtil.toPageDto(query);
         return resp;
     }

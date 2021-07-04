@@ -83,7 +83,8 @@ public class AuthInterception implements GlobalFilter, Ordered {
                 }catch (Exception e){
                     //解析失败，登录过期了或者token解析有问题，当不登录处理就好了
                 }
-                return chain.filter(exchange);
+                Mono<Void> filter = chain.filter(exchange);
+                return filter;
             }
             if (StringUtils.isBlank(token)) {
                 return write(LOGINRESP, exchange);
@@ -98,7 +99,8 @@ public class AuthInterception implements GlobalFilter, Ordered {
             }
             //将用户信息放入头部
             mutate.header(TICKET_KEY, JSON.toJSONString(account));
-            return chain.filter(exchange);
+            Mono<Void> filter = chain.filter(exchange);
+            return filter;
         } catch (VerifyException e) {
             logger.error("用户验证异常", e);
             return write(LOGINRESP, exchange);

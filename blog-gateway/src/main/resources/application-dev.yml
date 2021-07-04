@@ -56,7 +56,7 @@ logging:
   config: classpath:logback-spring.xml
   #指定不同目录下的日志的级别
   level:
-    root: trace #root表示整个项目，也可单指定某个类（指定某个类放在logback文件指定也可以）
+    root: info #root表示整个项目，也可单指定某个类（指定某个类放在logback文件指定也可以）
 
 
 

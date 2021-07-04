@@ -58,5 +58,13 @@ public interface BlogService {
      */
     BlogRespDto queryBlogById(Long id);
 
+    /**
+     * 设为私有/设为公开
+     *
+     * @param id
+     * @param type 1设为私有,2设为公开
+     */
+    Integer togglePrivate(Long id, Integer type);
+
     int migrate();
 }

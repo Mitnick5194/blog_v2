@@ -2,12 +2,14 @@ package com.ajie.commons.aop;
 
 import com.ajie.commons.RestResponse;
 import com.ajie.commons.exception.CommonException;
+import com.ajie.commons.utils.UserInfoUtil;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -39,6 +41,7 @@ public abstract class GlobalLogAspect {
         String uri = request.getRequestURI();
         String method = request.getMethod();
         String ip = request.getRemoteAddr();
+        String auth = request.getHeader("auth");
         String classMethod = new StringBuilder().append(point.getSignature().getDeclaringTypeName()).append(".").
                 append(point.getSignature().getName()).toString();
         StringBuilder sb = new StringBuilder();
@@ -51,8 +54,8 @@ public abstract class GlobalLogAspect {
                 logger.trace("无法序列化参数", e);
             }
         }
-        sb.append("uri:").append(uri).append("，method:").append(method).
-                append(",ip:").append(ip).append(",classMethod").append(classMethod).append(",bizParam:").append(json);
+        sb.append("uri:").append(uri).append("，method:").append(method).append(",ip:").append(ip).
+                append(",classMethod").append(classMethod).append(",bizParam:").append(json).append(",token:").append(auth);
         logger.info("API start===> {}", sb.toString());
         Long start = System.currentTimeMillis();
         Long end;
@@ -76,10 +79,6 @@ public abstract class GlobalLogAspect {
                 }
                 resp.setCode(code);
                 resp.setMsg(msg);
-                Map<String, String> map = new HashMap<>();
-                map.put("path", uri);
-                map.put("exception", e.getClass().getCanonicalName());
-                map.put("error", e.getMessage());
             } else {
                 String msg = e.getMessage();
                 if (StringUtils.isBlank(msg)) {
@@ -87,12 +86,18 @@ public abstract class GlobalLogAspect {
                 }
                 resp.setCode(CommonException.SERVICE_ERROR_CODE);
                 resp.setMsg(msg);
-                Map<String, String> map = new HashMap<>();
-                map.put("path", uri);
-                map.put("exception", e.getClass().getCanonicalName());
-                map.put("error", e.getMessage());
             }
+            Map<String, String> map = new HashMap<>();
+            map.put("path", uri);
+            map.put("exception", e.getClass().getCanonicalName());
+            map.put("error", e.getMessage());
+            map.put("reqId", MDC.get("reqId"));
+            resp.setData(map);
             proceed = resp;
+        } finally {
+            //业务执行完毕，移除线程上下文内容
+            UserInfoUtil.remove();
+            logger.info("移除UserInfo");
         }
         sb.append(",response:").append(JSON.toJSON(proceed));
         logger.info("API end ===> {}", sb.toString());

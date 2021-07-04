@@ -74,7 +74,7 @@ public interface BlogMapper extends BaseMapper<BlogPO> {
             "select id,user_id,title,abstract_content,type,create_time,create_person from mb_blog",
             "where del=0 and (type =1 ",
             "<if  test='userId!=null'>",
-            "    or (type=0  and user_id=#{userId})" ,
+            "    or (type=2  and user_id=#{userId})" ,
             "</if>",
             ")",
             "<if test='blogIds != null and blogIds.size > 0'> ",

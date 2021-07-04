@@ -1,4 +1,11 @@
-const host = "http://blog.nzjie.cn";
+//const host = "http://blog.nzjie.cn";
+const host = "http://localhost";
+
+/**
+ * 业务状态码非200错误返回标志
+ * @type {string}
+ */
+const BIZ_ERROR_MARK = "__biz_error__";
 
 /**
  * 请求
@@ -67,12 +74,9 @@ function doPost(uri, params, succCallback, errorCallback) {
 
 function handleRequestSuccess(response, callback, errorCallback) {
     let data = checkAndGetData(response, errorCallback);
-    if (data === 0 || data) {
-        //结果返回是0（注意要用严格===判断）或者对象或者true，则表示成功了
+    if(data != BIZ_ERROR_MARK){
         typeof callback === 'function' && callback(data);
     }
-
-
 }
 
 function handleRequestError(error, errorCallback) {
@@ -95,32 +99,32 @@ function checkAndGetData(data, errorCallback) {
     if (!ret) {
         if (typeof errorCallback === 'function') {
             errorCallback(ret);
-            return false;
         }
         console.error(data);
+        return BIZ_ERROR_MARK;
     }
     let code = ret.code;
     if (!code || code != 200) {
+        console.warn(ret);
         if (typeof errorCallback === 'function') {
             errorCallback(ret);
-            return false;
+            return BIZ_ERROR_MARK;
         }
         //判断状态
         if (code == 401) {
             //登录过期
             let ref = location.href;
             window.location.href = "login.html?ref=" + ref;
-            return;
+            return BIZ_ERROR_MARK;
         }
         if (code == 403) {
             //权限不足
             alert("无权限")
-            return;
+            return BIZ_ERROR_MARK;
         }
-        let msg = ret.msg ? ret.msg : "业务请求失败";
-        return false;
+        return BIZ_ERROR_MARK;
     }
-    return ret.data == 0 ? 0 : ret.data || true;
+    return ret.data;
 }
 
 function getToken() {
