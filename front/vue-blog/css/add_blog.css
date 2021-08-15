@@ -278,8 +278,75 @@
     margin-left: 15px;
 }
 
-/* 平板 */
+/* 登录弹窗 */
+.login-mask{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 10001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.3)
+}
+.login-frame {
+    background: #fff;
+    padding: 20px;
+    width: 250px;
+    height: 230px;
+}
+
+.mobile-login-dv {
+    overflow: hidden;
+    max-width: 400px;
+}
+
+.key-dv, .passwd-dv, .vertify-dv {
+    padding: 0 10px;
+    margin: 20px 0;
+    height: 45px;
+    line-height: 45px;
+    border: 1px solid #eee;
+    border-radius: 3px;
+}
+
+.key-dv > input, .passwd-dv > input {
+    border: none
+}
+
+.login-frame .login-btn {
+    padding: 10px 5px;
+    background: #337ab7;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.form-group {
+    display: flex;
+    width: 100%;
+}
+
+.form-group input {
+    width: 98%;
+    height: 80%;
+}
+
+.form-group > div {
+    width: 100%;
+}
+/* 登录弹窗结束 */
+/* 平板及以上屏幕 */
 @media screen and (min-width: 768px) {
+    .login-frame {
+        width: 400px;
+        height: 250px;
+    }
     .main > .left {
         display: block
     }

@@ -1,5 +1,5 @@
-//const host = "http://blog.nzjie.cn";
-const host = "http://localhost";
+const host = "http://blog.nzjie.cn";
+//const host = "http://localhost";
 
 /**
  * 业务状态码非200错误返回标志

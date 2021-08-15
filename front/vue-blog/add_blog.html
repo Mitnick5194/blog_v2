@@ -54,6 +54,30 @@
 
         </div>
     </div>
+
+    <!-- 登录弹窗 -->
+    <div v-show="showLogin" class="login-mask" @click.self="hideLoginMask">
+        <div class="login-frame" id="iLoginFrame">
+            <div class="login-dv">
+                <div class="mobile-login-dv">
+                    <div class="navBar">
+                        <div>登录</div>
+                    </div>
+                    <div id="iForms" class="form-group ">
+                        <div class="login-form" id="iLoginForm">
+                            <div class="key-dv">
+                                <input type="text" v-model="user" name="key" placeholder="用户名/手机号/邮箱"/>
+                            </div>
+                            <div class="passwd-dv">
+                                <input type="password" v-model="password" name="password" placeholder="密码"/>
+                            </div>
+                            <div id="iLoginBtn" class="login-btn submitBtn" @click="login">登录</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="js/global/vue.js"></script>
 <script src="js/global/axios.js"></script>
@@ -70,6 +94,7 @@
             title: null,
             blogId: null,//编辑才有
             blog: null,//编辑才有
+            showLogin: false, //登录页面
         },
         created: function () {
             let account = getLocalValue("account") || {};
@@ -122,17 +147,52 @@
                     type: 1
                 };
                 let id = this.blogId;
+                let that = this;
+                //未登录处理
+                let noLoginFn = function(){
+                    //失败，登录过期了
+                    if (that.account && that.account.token) {
+                        saveLocalValue("account", "");
+                        //登录过，但是已经过期
+                        alert("登录已过期，请重新登录");
+                    }
+                    that.showLogin = true;
+                }
                 if (id) {
                     //更新
                     param.id = id;
                     doPost("/api-blog/v2/blog/update", param, function (data) {
                         location.href = "index.html"
-                    })
+                    },noLoginFn)
                 } else {
                     doPost("/api-blog/v2/blog/create", param, function (data) {
                         location.href = "index.html"
-                    })
+                    },noLoginFn)
                 }
+            },
+            login: function () {
+                let that = this;
+                let user = this.user;
+                let password = this.password;
+                if (!user) {
+                    alert("请输入用户名/手机号/邮箱")
+                    return;
+                }
+                if (!password) {
+                    alert("请输入密码")
+                    return;
+                }
+                let param = {
+                    user: user,
+                    password: password
+                }
+                doPost("/api-account/v2/account/login", param, function (data) {
+                    saveLocalValue("account", data);
+                    that.account = data;
+                    that.showLogin = false;
+                }, function (error) {
+                    alert(error.msg);
+                })
             },
             logout: function () {
                 if (confirm("是否退出登录")) {
