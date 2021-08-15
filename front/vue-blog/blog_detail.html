@@ -181,7 +181,7 @@
                 doGet("/api-blog/v2/blog/query-by-id", {id: id}, function (data) {
                     if (!data) {
                         alert("文章不存在");
-                        that.hideMask = true;
+                        location.href = "/";
                         return;
                     }
                     let date = new Date(data.createTime);
