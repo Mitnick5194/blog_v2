@@ -69,7 +69,7 @@
 			// we will set default one.
 			if ( !editor._.codesnippet.highlighter ) {
 				var hljsHighlighter = new CKEDITOR.plugins.codesnippet.highlighter( {
-					languages: {
+					/*languages: {
 						apache: 'Apache',
 						bash: 'Bash',
 						coffeescript: 'CoffeeScript',
@@ -95,8 +95,10 @@
 						vbscript: 'VBScript',
 						xhtml: 'XHTML',
 						xml: 'XML'
+					},*/
+					languages: {
+						java: 'Java',
 					},
-
 					init: function( callback ) {
 						var that = this;
 
