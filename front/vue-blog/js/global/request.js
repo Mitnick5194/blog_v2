@@ -1,5 +1,5 @@
-const host = "http://blog.nzjie.cn";
-//const host = "http://localhost";
+//const host = "http://blog.nzjie.cn";
+const host = "http://localhost";
 
 /**
  * 业务状态码非200错误返回标志
@@ -68,6 +68,7 @@ function doPost(uri, params, succCallback, errorCallback) {
     axios.post(url, params, {headers: {auth: getToken()}}).then(function (response) {
         handleRequestSuccess(response, succCallback, errorCallback);
     }).catch(function (error) {
+        //非业务性异常，如404,500
         handleRequestError(error);
     });
 }
@@ -98,7 +99,7 @@ function checkAndGetData(data, errorCallback) {
     let ret = data.data;
     if (!ret) {
         if (typeof errorCallback === 'function') {
-            errorCallback(ret);
+            errorCallback({});
         }
         console.error(data);
         return BIZ_ERROR_MARK;
@@ -122,6 +123,8 @@ function checkAndGetData(data, errorCallback) {
             alert("无权限")
             return BIZ_ERROR_MARK;
         }
+        let msg = ret.msg || "服务器异常";
+        alert(msg);
         return BIZ_ERROR_MARK;
     }
     return ret.data;

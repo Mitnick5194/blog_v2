@@ -42,7 +42,7 @@ public interface BlogTagMapper extends BaseMapper<BlogTagPO> {
             "and _b.del = 0 and _tb.del=0) as tb ",
             " on t.id = tb.tag_id ",
             "where t.del=0",
-            "GROUP BY tb.tag_id  ORDER BY blogCount desc",
+            "GROUP BY tb.tag_id HAVING blogCount > 0 ORDER BY blogCount desc",
             "</script>"})
     IPage<TagDto> queryTag(@Param("page") IPage<TagDto> page, @Param("userId") Long userId);
 }

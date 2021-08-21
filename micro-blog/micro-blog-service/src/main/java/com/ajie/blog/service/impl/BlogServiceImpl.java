@@ -55,17 +55,28 @@ public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Long create(BlogReqDto dto) {
+    public Long save(BlogReqDto dto) {
         ParamCheck.assertNull(dto.getTitle(), BlogException.paramError("标题"));
         ParamCheck.assertNull(dto.getContent(), BlogException.paramError("内容"));
         ParamCheck.assertNull(dto.getTagList(), BlogException.paramError("标签"));
+
         BlogPO po = new BlogPO();
         BeanUtils.copyProperties(dto, po);
         po.setUserId(UserInfoUtil.getUserId());
         //处理摘要
         String ac = handleAbstractContent(dto.getContent());
         po.setAbstractContent(ac);
-        blogMapper.insert(po);
+        Long id = dto.getId();
+        //如果是草稿，也是不能查出来的
+        BlogPO blogPO = blogMapper.selectById(id);
+        if (null != blogPO) {
+            //更新
+            blogMapper.updateById(po);
+        } else {
+            //如果是数据库已存在的草稿发布，那么参数里的id是会有值的，但是是草稿的id，所以这里置空一下
+            po.setId(null);
+            blogMapper.insert(po);
+        }
         handleTag(dto.getTagList(), po.getId(), false);
         return po.getId();
     }
@@ -78,6 +89,9 @@ public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant
      * @param delBlogTag 是否需要删除中间表
      */
     private void handleTag(List<TagDto> tagList, Long blogId, boolean delBlogTag) {
+        if (CollectionUtils.isEmpty(tagList)) {
+            return;
+        }
         //保存标签
         tagService.createTags(tagList);
         if (delBlogTag) {
@@ -101,50 +115,58 @@ public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public Integer update(BlogReqDto dto) {
-        ParamCheck.assertNull(dto.getId(), BlogException.paramError("文章ID"));
-        ParamCheck.assertNull(dto.getTitle(), BlogException.paramError("标题"));
-        ParamCheck.assertNull(dto.getContent(), BlogException.paramError("内容"));
-        ParamCheck.assertNull(dto.getTagList(), BlogException.paramError("标签"));
-        BlogPO po = new BlogPO();
-        BeanUtils.copyProperties(dto, po);
-        //处理摘要
-        String ac = handleAbstractContent(dto.getContent());
-        po.setAbstractContent(ac);
-        int ret = blogMapper.updateById(po);
-        handleTag(dto.getTagList(), po.getId(), true);
-        return ret;
+    public Long saveDraft(DraftBlogReqDto blog) {
+        DraftBlogPO po = new DraftBlogPO();
+        //查询是否有该草稿
+        Long id = blog.getId();
+        BeanUtils.copyProperties(blog, po, "id");
+        boolean isUpdate = false;
+        if (null == id) {
+            //新建时保存草稿
+            //没有，新建
+            draftBlogMapper.insert(po);
+        } else {
+            isUpdate = saveDraftByExistId(po, blog);
+        }
+        //保存标签，因为标签列表会联表查询mb_blog_tag中间表并过滤数量为0的，所以保存草稿时将标签插入了也没事
+        handleTag(blog.getTagList(), po.getId(), isUpdate);
+        return po.getId();
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public Long saveDraft(BlogReqDto blog) {
-        List<TagDto> tagList = blog.getTagList();
-        if (CollectionUtils.isNotEmpty(tagList)) {
-            //保存标签
-            tagService.createTags(tagList);
+    /**
+     * @param po
+     * @param dto
+     * @return 是否更新
+     */
+    private boolean saveDraftByExistId(DraftBlogPO po, DraftBlogReqDto dto) {
+        //有id，有两种情况，一种id是草稿的id（编辑草稿），一种是博文id（编辑时保存为草稿）
+        //1尝试查询草稿，看看有没有
+        Long id = dto.getId();
+        DraftBlogPO draftBlogPO = draftBlogMapper.selectById(id);
+        if (null != draftBlogPO) {
+            //更新草稿
+            po.setId(id);
+            draftBlogMapper.updateById(po);
+            return true;
         }
-        DraftBlogPO po = new DraftBlogPO();
-        Long id = blog.getId();
-        if (null == id) {
-            //新建草稿
-            BeanUtils.copyProperties(blog, po);
+        //尝试使用博文id查询草稿
+        DraftBlogPO query = new DraftBlogPO();
+        query.setRefBlogId(id);
+        draftBlogPO = draftBlogMapper.selectOne(query.wrap(DraftBlogPO.class));
+        if (null == draftBlogPO) {
+            //没有，该博文第一次保存草稿
+            po.setRefBlogId(id);
             draftBlogMapper.insert(po);
-            return po.getId();
+            return false;
         }
-        //查询是否有该草稿
-        po.setRefBlogId(blog.getId());
-        DraftBlogPO draft = draftBlogMapper.selectOne(po.wrap(DraftBlogPO.class));
-        if (null != draft) {
-            //有了直接更新
-            BeanUtils.copyProperties(blog, draft);
-            draftBlogMapper.updateById(draft);
-            return draft.getId();
+        //该文章对应的草稿已经存在
+        if (dto.isForceSave()) {
+            //强制保存
+            po.setId(draftBlogPO.getId());
+            draftBlogMapper.updateById(po);
+            return true;
         }
-        //没有，新建
-        BeanUtils.copyProperties(blog, po);
-        draftBlogMapper.insert(po);
-        return po.getId();
+        throw new BlogException(BlogExceptionEmun.RECORD_EXIST.getCode(), "草稿已存在");
     }
 
     @Override

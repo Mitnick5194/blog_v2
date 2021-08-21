@@ -3,6 +3,7 @@ package com.ajie.blog.service;
 import com.ajie.blog.api.dto.BlogQueryReqDto;
 import com.ajie.blog.api.dto.BlogReqDto;
 import com.ajie.blog.api.dto.BlogRespDto;
+import com.ajie.blog.api.dto.DraftBlogReqDto;
 import com.ajie.commons.dto.PageDto;
 
 import java.util.List;
@@ -15,16 +16,7 @@ public interface BlogService {
      * @param blog
      * @return
      */
-    Long create(BlogReqDto blog);
-
-
-    /**
-     * 更新
-     *
-     * @param blog
-     * @return
-     */
-    Integer update(BlogReqDto blog);
+    Long save(BlogReqDto blog);
 
     /**
      * 保存草稿
@@ -32,7 +24,7 @@ public interface BlogService {
      * @param blog
      * @return
      */
-    Long saveDraft(BlogReqDto blog);
+    Long saveDraft(DraftBlogReqDto blog);
 
     /**
      * 根据ID删除

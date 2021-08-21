@@ -1,12 +1,11 @@
 package com.ajie.blog.controller;
 
-import com.ajie.blog.account.api.rest.AccountRestApi;
 import com.ajie.blog.api.dto.BlogQueryReqDto;
 import com.ajie.blog.api.dto.BlogReqDto;
 import com.ajie.blog.api.dto.BlogRespDto;
+import com.ajie.blog.api.dto.DraftBlogReqDto;
 import com.ajie.blog.api.rest.BlogRestApi;
 import com.ajie.blog.config.Properties;
-import com.ajie.blog.interception.AuthInterceptor;
 import com.ajie.blog.migrate.MigrateService;
 import com.ajie.blog.service.BlogService;
 import com.ajie.commons.RestResponse;
@@ -45,18 +44,13 @@ public class BlogController implements BlogRestApi {
     private MigrateService migrateService;
 
     @Override
-    public RestResponse<Long> create(BlogReqDto blog) {
-        Long data = blogService.create(blog);
+    public RestResponse<Long> save(BlogReqDto blog) {
+        Long data = blogService.save(blog);
         return RestResponse.success(data);
     }
 
     @Override
-    public RestResponse<Integer> update(BlogReqDto blog) {
-        return RestResponse.success(blogService.update(blog));
-    }
-
-    @Override
-    public RestResponse<Long> saveDraft(BlogReqDto blog) {
+    public RestResponse<Long> saveDraft(DraftBlogReqDto blog) {
         return RestResponse.success(blogService.saveDraft(blog));
     }
 

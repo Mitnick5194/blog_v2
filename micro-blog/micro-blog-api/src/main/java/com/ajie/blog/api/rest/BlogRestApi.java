@@ -3,6 +3,7 @@ package com.ajie.blog.api.rest;
 import com.ajie.blog.api.dto.BlogQueryReqDto;
 import com.ajie.blog.api.dto.BlogReqDto;
 import com.ajie.blog.api.dto.BlogRespDto;
+import com.ajie.blog.api.dto.DraftBlogReqDto;
 import com.ajie.commons.RestResponse;
 import com.ajie.commons.dto.PageDto;
 import io.swagger.annotations.Api;
@@ -24,19 +25,8 @@ public interface BlogRestApi {
      * @return
      */
     @ApiOperation(value = "新增博文", notes = "新增博文")
-    @PostMapping("/create")
-    RestResponse<Long> create(@RequestBody BlogReqDto blog);
-
-
-    /**
-     * 更新
-     *
-     * @param blog
-     * @return
-     */
-    @ApiOperation(value = "更新博文", notes = "更新博文")
-    @PostMapping("/update")
-    RestResponse<Integer> update(@RequestBody BlogReqDto blog);
+    @PostMapping("/save")
+    RestResponse<Long> save(@RequestBody BlogReqDto blog);
 
     /**
      * 保存草稿
@@ -46,7 +36,7 @@ public interface BlogRestApi {
      */
     @ApiOperation(value = "保存草稿", notes = "更新博文")
     @PostMapping("/save-draft")
-    RestResponse<Long> saveDraft(@RequestBody BlogReqDto blog);
+    RestResponse<Long> saveDraft(@RequestBody DraftBlogReqDto blog);
 
     /**
      * 根据ID删除

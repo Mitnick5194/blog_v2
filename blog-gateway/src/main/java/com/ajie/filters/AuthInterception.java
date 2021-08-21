@@ -73,7 +73,8 @@ public class AuthInterception implements GlobalFilter, Ordered {
             exchange = exchange.mutate().request(mutate.build()).build();
             //验证路径是否要登录
             if (!PathUtil.assertAuth(request.getPath().toString())) {
-                //不需要登录，看看是否有token，如果有token也要解析一下，因为有些页面会根据用户是否有登录而出现不同的展示（如编辑和删除）
+                //不需要登录，看看是否有token，如果有token也要解析一下，
+                // 因为有些页面会根据用户是否有登录而出现不同的展示（如详情页的编辑和删除）
                 try {
                     JwtAccount account = getAndCheckAccount(token);
                     //解析成功，将用户塞进ticket
@@ -134,6 +135,7 @@ public class AuthInterception implements GlobalFilter, Ordered {
         JwtAccount account = JwtUtil.verifyToken(token, Properties.tokenSecret);
         String s = stringRedisTemplate.opsForValue().get(account.getSign());
         if (null != s) {
+            //token已经注销或者被放入了黑名单
             return null;
         }
         return account;

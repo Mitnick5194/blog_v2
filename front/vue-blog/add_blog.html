@@ -95,6 +95,7 @@
             blogId: null,//编辑才有
             blog: null,//编辑才有
             showLogin: false, //登录页面
+            forceSaveDraft: 0,//是否强制保存草稿
         },
         created: function () {
             let account = getLocalValue("account") || {};
@@ -124,7 +125,10 @@
                 let idx = e.srcElement.dataset.idx;
                 this.tags.splice(parseInt(idx), 1);
             },
-            submit: function () {
+            submit: function (isDraft) {
+                this.doSubmit(false);
+            },
+            doSubmit: function (draftFlag) {
                 let content = CKEDITOR.instances.editor.getData();
                 let title = this.title;
                 if (!title) {
@@ -136,39 +140,57 @@
                     return;
                 }
                 let tagArr = checkAndGetTags(this.tags);
-                if (!tagArr) {
+                //草稿可以不输入标签哦
+                if (!tagArr && !draftFlag) {
                     alert("请输入标签")
                     return;
                 }
+                let that = this;
                 let param = {
                     title: title,
                     content: content,
                     tagList: tagArr,
                     type: 1
                 };
-                let id = this.blogId;
-                let that = this;
+                if(draftFlag){
+                    param.forceSaveDraft = that.forceSaveDraft;
+                }
+                param.id = this.blogId;
+
                 //未登录处理
-                let noLoginFn = function(){
-                    //失败，登录过期了
-                    if (that.account && that.account.token) {
-                        saveLocalValue("account", "");
-                        //登录过，但是已经过期
-                        alert("登录已过期，请重新登录");
+                let failFn = function (error) {
+                    let code = error.code;
+                    if (code == 401) {
+                        //失败，登录过期了
+                        if (that.account && that.account.token) {
+                            saveLocalValue("account", "");
+                            //登录过，但是已经过期
+                            alert("登录已过期，请重新登录");
+                        }
+                        that.showLogin = true;
+                    } else if (code == 1004) {
+                        //草稿已存在
+                        if (confirm(error.msg)) {
+                            that.forceSaveDraft = 1;
+                            that.doSubmit(true);
+                        }
+                    } else {
+                        let msg = error.msg || "服务器异常";
+                        alert(msg);
                     }
-                    that.showLogin = true;
                 }
-                if (id) {
-                    //更新
-                    param.id = id;
-                    doPost("/api-blog/v2/blog/update", param, function (data) {
-                        location.href = "index.html"
-                    },noLoginFn)
-                } else {
-                    doPost("/api-blog/v2/blog/create", param, function (data) {
-                        location.href = "index.html"
-                    },noLoginFn)
+                let uri = "/api-blog/v2/blog/save";
+                if (draftFlag) {
+                    uri = "/api-blog/v2/blog/save-draft";
                 }
+                doPost(uri, param, function () {
+                    if (draftFlag) {
+                        //保存草稿不跳转
+                        alert("保存成功");
+                        return;
+                    }
+                    location.href = "index.html"
+                }, failFn)
             },
             login: function () {
                 let that = this;
@@ -226,7 +248,7 @@
                 })
             },
             saveDraft: function () {
-                alert("尚未开通，敬请期待")
+                this.doSubmit(true);
             },
             preview: function () {
                 alert("尚未开通，敬请期待")
