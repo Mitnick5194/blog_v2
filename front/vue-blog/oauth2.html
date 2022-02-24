@@ -30,7 +30,7 @@
                     removeLocalValue(ref);
                 }
                 let code = getQueryString("code");
-                doGet("/micro-blog/v2/account/oauth/github",{code:code},(data)=>{
+                doGet("/api-account/v2/account/oauth/github",{code:code},(data)=>{
                     console.log(data);
                     saveLocalValue("account", data);
                    gotoRef(ref);
