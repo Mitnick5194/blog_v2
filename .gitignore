@@ -3,5 +3,6 @@
 **/target/
 **/target/
 logs/
+**.log
 generator-code/
 *.gz
