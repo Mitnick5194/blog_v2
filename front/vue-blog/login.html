@@ -36,16 +36,21 @@
                                placeholder="密码"/>
                     </div>
                     <div class="login-btn submitBtn" @click="login">登录</div>
+                    <div class="social-login">
+                        <span @click="githubAuth" class="github-login"><img src="images/github_logo.png"/></span>
+                    </div>
                 </div>
                 <div class="register-form form" id="iRegisterForm">
-                    <div class="key-dv"><input  v-model="user" type="text" name="key" placeholder="请输入用户名"/></div>
+                    <div class="key-dv"><input v-model="user" type="text" name="key" placeholder="请输入用户名"/></div>
                     <div class="exsit-name hidden">*用户名已存在</div>
-                    <div class="passwd-dv"><input type="password" v-model="password" name="password" placeholder="密码"/></div>
+                    <div class="passwd-dv"><input type="password" v-model="password" name="password" placeholder="密码"/>
+                    </div>
                     <div class="passwd-dv"><input v-model="confirmPassword" type="password" name="confirmPasswd"
                                                   placeholder="确认密码"/></div>
                     <div class="vertify-dv">
                         <div class="vertify-input-dv">
-                            <input type="text" name="vertifyCode"  v-model="code" class="enter" data-type="register" placeholder="验证码"/>
+                            <input type="text" name="vertifyCode" v-model="code" class="enter" data-type="register"
+                                   placeholder="验证码"/>
                         </div>
                         <div class="vertify-image">
                             <img v-if="null != verifyCode" @click="getVerifyCode" class="verifyImg" :src="verifyCode"/>
@@ -140,7 +145,7 @@
                 }
                 let param = {
                     accountName: user,
-                    nickName:"test",
+                    nickName: "test",
                     password: password,
                     verifyCode: code,
                     key: key
@@ -151,20 +156,31 @@
                 }, function (error) {
                     alert(error.msg);
                 })
+            },
+            githubAuth() {
+                let ref = getQueryString("ref");
+                if (ref && ref.length) {
+                    saveLocalValue("ref", ref);
+                }
+                location.href = "https://github.com/login/oauth/authorize?client_id=9b3e3a95ca4392cc0f33&redirect_uri=http://localhost:63342/front/vue-blog/oauth2.html?_ijt=ml23ea71jd5eramqenfrgs6qj5"
             }
         }
 
     })
 
-    function gotoRef() {
-        let href = location.href
-        let ref = "index.html"
-        let idx = href.indexOf("ref=");
-        if (idx > -1) {
-            ref = href.substring(idx + 4);
+    function gotoRef(ref) {
+        if (!ref) {
+            let href = location.href
+            ref = "index.html"
+            let idx = href.indexOf("ref=");
+            if (idx > -1) {
+                ref = href.substring(idx + 4);
+            }
         }
         location.href = ref;
     }
+
+
 </script>
 
 </html>

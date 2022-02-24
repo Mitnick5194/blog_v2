@@ -120,7 +120,7 @@ public class BlogController implements BlogRestApi {
             String imageUrl = Properties.uploadFileUrl + fileName;
             response.sendRedirect(backUrl + "?ImageUrl=" + imageUrl + "&CKEditorFuncNum=" + callback);
         } catch (Exception e) {
-            logger.error("图片上传失败");
+            logger.error("图片上传失败",e);
             response.sendRedirect(backUrl + "?error=" + e.getMessage());
         }
     }

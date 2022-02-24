@@ -6,15 +6,11 @@ import com.ajie.commons.exception.CommonException;
 import com.ajie.commons.po.BasePO;
 import com.ajie.commons.utils.UserInfoUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -79,10 +75,6 @@ public abstract class AbstractMapperAspect {
      */
     private void checkBelong(ProceedingJoinPoint point, BasePO basePO) {
         Long id = UserInfoUtil.getUserId();
-       /* if (null == id) {
-            throw new CommonException(CommonsExceptionEmun.BELONG_NOT_MATCH.getCode(), CommonsExceptionEmun.BELONG_NOT_MATCH.getMsg());
-        }*/
-        //这里拿到的是//com.baomidou.mybatisplus.core.override.MybatisMapperProxy，这是mapper代理后的对象，可转成mapper
         Object target = point.getTarget();
         try {
             Method m = target.getClass().getMethod("selectById", Serializable.class);
@@ -91,7 +83,8 @@ public abstract class AbstractMapperAspect {
                 throw new CommonException(CommonsExceptionEmun.PARAM_ERROR.getCode(), CommonsExceptionEmun.PARAM_ERROR.getMsg());
             }
             String createPerson = getById.getCreatePerson();
-            if (StringUtils.isBlank(createPerson) || !id.equals(Long.valueOf(createPerson))) {
+            //只有数据存在createPerson才要校验
+            if (StringUtils.isNotBlank(createPerson) && !createPerson.equals(id)) {
                 throw new CommonException(CommonsExceptionEmun.BELONG_NOT_MATCH.getCode(), CommonsExceptionEmun.BELONG_NOT_MATCH.getMsg());
             }
         } catch (Exception e) {

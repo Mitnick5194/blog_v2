@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第三方授权登录</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+
+    <script src="js/global/vue.js"></script>
+    <script src="js/global/axios.js"></script>
+    <script src="js/global/common.js"></script>
+    <script src="js/global/request.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+        },
+        created: () => {
+        },
+        mounted: function () {
+            this.oauthLogin();
+        },
+        methods: {
+            oauthLogin() {
+                let ref = getLocalValue("ref");
+                if (ref) {
+                    removeLocalValue(ref);
+                }
+                let code = getQueryString("code");
+                doGet("/micro-blog/v2/account/oauth/github",{code:code},(data)=>{
+                    console.log(data);
+                    saveLocalValue("account", data);
+                   gotoRef(ref);
+                })
+            }
+        }
+
+    })
+    function gotoRef(ref) {
+        if (!ref) {
+            let href = location.href
+            ref = "index.html"
+            let idx = href.indexOf("ref=");
+            if (idx > -1) {
+                ref = href.substring(idx + 4);
+            }
+        }
+        location.href = ref;
+    }
+</script>
+</body>
+</html>

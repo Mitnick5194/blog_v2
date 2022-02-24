@@ -21,21 +21,17 @@ public class AccountDto implements Serializable {
      */
     @ApiModelProperty(name = "nickName", value = "昵称")
     private String nickName;
-    /* *//**
-     * 密码
-     *//*
-    @ApiModelProperty(name = "password", value = "密码")
-    private String password;
-    *//**
+
+    /**
      * 邮箱
-     *//*
+     */
     @ApiModelProperty(name = "mail", value = "邮箱")
     private String mail;
-    *//**
+    /**
      * 手机号
-     *//*
+     */
     @ApiModelProperty(name = "phone", value = "手机号")
-    private String phone;*/
+    private String phone;
     /**
      * 性别，1男2女3保密
      */

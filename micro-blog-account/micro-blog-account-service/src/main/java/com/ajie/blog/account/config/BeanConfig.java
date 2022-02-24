@@ -7,6 +7,7 @@ import feign.Logger;
 import org.springframework.cloud.openfeign.FeignLoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Component
 public class BeanConfig {
@@ -51,4 +52,8 @@ public class BeanConfig {
         return new PaginationInterceptor();
     }
 
+    @Bean
+    public InternalResourceViewResolver viewResolver(){
+        return new InternalResourceViewResolver();
+    }
 }

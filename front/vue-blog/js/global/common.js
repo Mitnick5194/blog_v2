@@ -1,6 +1,4 @@
 const storage = localStorage
-const keyPre = location.host + "-";
-
 //写入cookie
 function saveLocalValue(name, value) {
     //判断value是否为对象
@@ -9,11 +7,11 @@ function saveLocalValue(name, value) {
     if (isObj) {
         obj = JSON.stringify(value);
     }
-    storage.setItem(keyPre + name, obj);
+    storage.setItem(name, obj);
 }
 
 function getLocalValue(name) {
-    let item = storage.getItem(keyPre + name);
+    let item = storage.getItem(name);
     //判断是否为对象
     try {
         let ret = JSON.parse(item);
@@ -22,6 +20,10 @@ function getLocalValue(name) {
         //不是对象
     }
     return item;
+}
+
+function removeLocalValue(name){
+    localStorage.removeItem(name);
 }
 
 /**
@@ -57,4 +59,21 @@ Date.prototype.handleViewDate = function () {
 function gotoLoginPage() {
     let ref = location.href;
     location.href = "login.html?ref=" + ref;
+}
+
+function getQueryString(name) {
+    let url = window.location.href;
+    let result = "";
+    if (url.indexOf("?") >= 0) {
+        let strs = url.split("?");
+        let o = strs[1];
+        let params = o.split("&");
+        for (let i = 0; i < params.length; i++) {
+            if (params[i].indexOf(name) >= 0) {
+                let vals = params[i].split("=");
+                result = vals[1];
+            }
+        }
+    }
+    return result;
 }

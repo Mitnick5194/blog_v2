@@ -33,8 +33,8 @@ spring:
 
 eureka:
   client:
-    register-with-eureka: true    # 是否将自己注册进eurekaServer，默认true
-    fetchRegistry: true         #是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
+    register-with-eureka: false    # 是否将自己注册进eurekaServer，默认true
+    fetchRegistry: false         #是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡
     service-url:
       defaultZone: http://localhost:9527/eureka   #单机版
       #defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka  #集群版
@@ -69,3 +69,9 @@ properties:
   #ignoreAuthPath: []
   #authPath: ['**/create*/**','**/update*/**','**/save*/**','**/delete*/**','**/migrate*/**','**/change*/**',]
   defaultUserHeader: http://static.image.qyun.nzjie.cn/micro-blog-account/default_user_header.png
+
+  github:
+    oauthUrl: https://github.com/login/oauth/access_token
+    userInfoUrl: https://api.github.com/user
+    clientId: 9b3e3a95ca4392cc0f33
+    clientSecret:
