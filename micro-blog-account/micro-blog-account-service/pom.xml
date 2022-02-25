@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>micro-blog-account-service</artifactId>
+    <properties>
+        <java.version>1.8</java.version>
+        <alibaba.version>2.2.5.RELEASE</alibaba.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -29,16 +33,20 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--alibaba spring cloud-->
-        <!-- <dependency>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-         </dependency>-->
-        <!-- <dependency>
-             <groupId>com.alibaba.cloud</groupId>
-             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-             <version>2.2.1.RELEASE</version>
-         </dependency>-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+            <version>${alibaba.version}</version>
+            <type>pom</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <version>2.1.4.RELEASE</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>

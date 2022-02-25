@@ -10,13 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 //@EnableDiscoveryClient
 @EnableFeignClients("com.ajie.blog.api.rest")
 public class App {
-    static InheritableThreadLocal<String> tl = new InheritableThreadLocal<>();
-
     public static void main(String[] args) {
         SpringApplication.run(App.class);
-       /* tl.set("aa");
-        new Thread(() -> {
-            System.out.println(tl.get());
-        }).start();*/
     }
 }
