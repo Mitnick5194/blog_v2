@@ -19,7 +19,7 @@
         data: {
             socialOauthUrlMap: {
                 "github": "/api-account/v2/account/oauth/github",
-                "gitee": "/micro-blog/v2/account/oauth/gitee"
+                "gitee": "/api-account/v2/account/oauth/gitee"
             }
         },
         created: () => {
@@ -40,7 +40,6 @@
                 }
                 let code = getQueryString("code");
                 doGet(uri, {code: code}, (data) => {
-                    console.log(data);
                     saveLocalValue("account", data);
                     gotoRef(ref);
                 })
