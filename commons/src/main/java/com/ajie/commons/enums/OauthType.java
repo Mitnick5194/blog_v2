@@ -7,7 +7,10 @@ package com.ajie.commons.enums;
  * @Date: 2022/2/23
  */
 public enum OauthType {
-    GITHUB(1, "github");
+    GITHUB(1, "github"),
+
+    GITEE(2, "gitee");
+
     private int code;
     private String msg;
 

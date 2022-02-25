@@ -71,7 +71,13 @@ properties:
   defaultUserHeader: http://static.image.qyun.nzjie.cn/micro-blog-account/default_user_header.png
 
   github:
-    oauthUrl: https://github.com/login/oauth/access_token
+    tokenUrl: https://github.com/login/oauth/access_token
     userInfoUrl: https://api.github.com/user
     clientId: 9b3e3a95ca4392cc0f33
+    clientSecret:
+  gitee:
+    tokenUrl: https://gitee.com/oauth/token
+    userInfoUrl: https://gitee.com/api/v5/user
+    redirectUrl: http://localhost:63342/front/vue-blog/oauth2.html?type=gitee
+    clientId: 88aafe177f4f5a653dd401e4fbb69797cf2bf55767be370285d7e95b5ae61f99
     clientSecret:

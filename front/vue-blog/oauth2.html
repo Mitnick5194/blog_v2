@@ -5,18 +5,22 @@
     <title>第三方授权登录</title>
 </head>
 <body>
-    <div id="app">
+<div id="app">
 
-    </div>
+</div>
 
-    <script src="js/global/vue.js"></script>
-    <script src="js/global/axios.js"></script>
-    <script src="js/global/common.js"></script>
-    <script src="js/global/request.js"></script>
+<script src="js/global/vue.js"></script>
+<script src="js/global/axios.js"></script>
+<script src="js/global/common.js"></script>
+<script src="js/global/request.js"></script>
 <script>
     new Vue({
         el: "#app",
         data: {
+            socialOauthUrlMap: {
+                "github": "/api-account/v2/account/oauth/github",
+                "gitee": "/micro-blog/v2/account/oauth/gitee"
+            }
         },
         created: () => {
         },
@@ -29,16 +33,22 @@
                 if (ref) {
                     removeLocalValue(ref);
                 }
+                let type = getQueryString("type") || "gitee";
+                let uri = this.socialOauthUrlMap[type];
+                if (!uri || !uri.length) {
+                    return;
+                }
                 let code = getQueryString("code");
-                doGet("/api-account/v2/account/oauth/github",{code:code},(data)=>{
+                doGet(uri, {code: code}, (data) => {
                     console.log(data);
                     saveLocalValue("account", data);
-                   gotoRef(ref);
+                    gotoRef(ref);
                 })
             }
         }
 
     })
+
     function gotoRef(ref) {
         if (!ref) {
             let href = location.href

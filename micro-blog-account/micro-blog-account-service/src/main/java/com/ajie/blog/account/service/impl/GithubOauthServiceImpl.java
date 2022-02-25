@@ -10,6 +10,8 @@ import com.ajie.blog.account.exception.AccountException;
 import com.ajie.blog.account.mapper.AccountMapper;
 import com.ajie.blog.account.mapper.OauthMapper;
 import com.ajie.blog.account.service.OAuthService;
+import com.ajie.blog.account.service.OauthServiceFactory;
+import com.ajie.blog.account.service.RegisterOauthService;
 import com.ajie.commons.dto.JwtAccount;
 import com.ajie.commons.enums.OauthType;
 import com.ajie.commons.utils.JwtUtil;
@@ -28,6 +30,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,13 +44,15 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-public class GithubOauthServiceImpl implements OAuthService {
+public class GithubOauthServiceImpl implements OAuthService, RegisterOauthService {
     @Resource
     private AccountMapper accountMapper;
     @Resource
     private OauthMapper oauthMapper;
     @Resource
     private GithubProperties githubProperties;
+    @Resource
+    private OauthServiceFactory oauthServiceFactory;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -61,7 +66,7 @@ public class GithubOauthServiceImpl implements OAuthService {
         map.put("code", code);
         HttpEntity<Map<String, String>> entity = new HttpEntity(map, headers);
         log.info("github登录授权，入参：{}", code);
-        ResponseEntity<String> response = restTemplate.postForEntity(githubProperties.getOauthUrl(), entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(githubProperties.getTokenUrl(), entity, String.class);
         String body = checkAndGetBody(response, HttpStatus.UNAUTHORIZED.value(), "登录失败");
         log.info("github登录授权，响应：{}", body);
         JSONObject json = JSON.parseObject(body);
@@ -162,11 +167,9 @@ public class GithubOauthServiceImpl implements OAuthService {
         return account;
     }
 
-    private <T> T checkAndGetBody(ResponseEntity<T> response, int code, String msg) {
-        HttpStatus statusCode = response.getStatusCode();
-        if (HttpStatus.OK.value() != statusCode.value()) {
-            throw new AccountException(code, msg);
-        }
-        return response.getBody();
+    @PostConstruct
+    @Override
+    public boolean register() {
+        return oauthServiceFactory.register(this, OauthType.GITHUB);
     }
 }

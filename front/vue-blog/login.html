@@ -37,7 +37,8 @@
                     </div>
                     <div class="login-btn submitBtn" @click="login">登录</div>
                     <div class="social-login">
-                        <span @click="githubAuth" class="github-login"><img src="images/github_logo.png"/></span>
+                        <span  @click="auth('github')" title="github登录" class="github-login"><img src="images/github_logo.png"/></span>
+                        <span  @click="auth('gitee')" title="gitee登录" class="gitee-login"><img src="images/gitee_logo.png"/></span>
                     </div>
                 </div>
                 <div class="register-form form" id="iRegisterForm">
@@ -80,6 +81,11 @@
             code: null, //用户输入的验证码
             verifyCode: null,
             confirmPassword: null,
+            socialLoginUrlMap:{
+              "github": "https://github.com/login/oauth/authorize?client_id=9b3e3a95ca4392cc0f33&redirect_uri=http://blog.nzjie.cn",
+              "gitee": "https://gitee.com/oauth/authorize?client_id=88aafe177f4f5a653dd401e4fbb69797cf2bf55767be370285d7e95b5ae61f99" +
+                  "&response_type=code&redirect_uri=http://localhost:63342/front/vue-blog/oauth2.html?type=gitee"
+            },
         },
         created: () => {
         },
@@ -157,12 +163,13 @@
                     alert(error.msg);
                 })
             },
-            githubAuth() {
+            auth(type) {
                 let ref = getQueryString("ref");
                 if (ref && ref.length) {
                     saveLocalValue("ref", ref);
                 }
-                location.href = "https://github.com/login/oauth/authorize?client_id=9b3e3a95ca4392cc0f33&redirect_uri=http://blog.nzjie.cn/oauth2.html"
+                let url = this.socialLoginUrlMap[type];
+                location.href = url;//"https://github.com/login/oauth/authorize?client_id=9b3e3a95ca4392cc0f33&redirect_uri=http://blog.nzjie.cn/oauth2.html"
             }
         }
 

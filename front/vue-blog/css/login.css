@@ -68,12 +68,19 @@ input, textarea, select, a:focus {
     justify-content: right;
 }
 
-.github-login{
+.social-login span{
     cursor: pointer;
+    margin-right: 5px;
 }
+
 .github-login img{
     width: 32px;
     height: 32px;
+}
+
+.gitee-login img{
+    width: 35px;
+    height: 36px;
 }
 
 .form-group {
