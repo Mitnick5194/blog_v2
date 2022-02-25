@@ -1,38 +1,23 @@
 package com.ajie.blog.account.service.impl;
 
-import com.ajie.blog.account.api.dto.LoginRespDto;
 import com.ajie.blog.account.api.dto.OAuthAccountDto;
-import com.ajie.blog.account.api.po.AccountPO;
-import com.ajie.blog.account.api.po.OauthAccountPO;
+import com.ajie.blog.account.api.dto.TokenDto;
 import com.ajie.blog.account.config.GithubProperties;
-import com.ajie.blog.account.config.Properties;
-import com.ajie.blog.account.exception.AccountException;
-import com.ajie.blog.account.mapper.AccountMapper;
-import com.ajie.blog.account.mapper.OauthMapper;
-import com.ajie.blog.account.service.OAuthService;
-import com.ajie.blog.account.service.OauthServiceFactory;
-import com.ajie.blog.account.service.RegisterOauthService;
-import com.ajie.commons.dto.JwtAccount;
 import com.ajie.commons.enums.OauthType;
-import com.ajie.commons.utils.JwtUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,19 +29,12 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-public class GithubOauthServiceImpl implements OAuthService, RegisterOauthService {
-    @Resource
-    private AccountMapper accountMapper;
-    @Resource
-    private OauthMapper oauthMapper;
+public class GithubOauthServiceImpl extends AbstractOauthServiceImpl {
     @Resource
     private GithubProperties githubProperties;
-    @Resource
-    private OauthServiceFactory oauthServiceFactory;
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
-    public LoginRespDto oauthLogin(String code) {
+    protected TokenDto getToken(String code) {
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String, String> headers = new LinkedMultiValueMap();
         headers.add("Accept", "application/json");
@@ -71,75 +49,19 @@ public class GithubOauthServiceImpl implements OAuthService, RegisterOauthServic
         log.info("github登录授权，响应：{}", body);
         JSONObject json = JSON.parseObject(body);
         String accessToken = json.getString("access_token");
-        OAuthAccountDto oauthUser = getOauthUser(accessToken);
-        if (null == oauthUser) {
-            throw new AccountException(HttpStatus.UNAUTHORIZED.value(), "登录失败");
-        }
-        OauthAccountPO account = new OauthAccountPO();
-        account.setOauthId(oauthUser.getOauthId());
-        account.setOauthType(OauthType.GITHUB.getCode());
-        OauthAccountPO oauthAccountPO = oauthMapper.selectOne(account.wrap(OauthAccountPO.class));
-        if (null != oauthAccountPO) {
-            //不是第一次授权
-            //更新一下信息
-            updateOauthAccount(oauthUser);
-            AccountPO accountPO = accountMapper.selectById(oauthAccountPO.getAccountId());
-            return buildRespAccount(accountPO);
-        }
-        AccountPO accountPO = registerOauthAccount(oauthUser);
-        return buildRespAccount(accountPO);
+        TokenDto token = new TokenDto();
+        token.setAccessToken(accessToken);
+        return token;
     }
 
-    private LoginRespDto buildRespAccount(AccountPO account) {
-        JwtAccount jwtAccount = new JwtAccount();
-        BeanUtils.copyProperties(account, jwtAccount);
-        String token = JwtUtil.createToken(Properties.tokenSecret, jwtAccount);
-        LoginRespDto resp = new LoginRespDto();
-        BeanUtils.copyProperties(account, resp);
-        //第三方认证不适用accountName，因为第三方系统的用户名可能会重复（github的用户名和微博的用户名重复一点都不奇怪~~~~~）
-        resp.setAccountName(account.getNickName());
-        resp.setNickName(account.getNickName());
-        resp.setPhone(AccountHelper.mask(account.getPhone()));
-        resp.setMail(AccountHelper.mask(account.getMail()));
-        resp.setToken(token);
-        return resp;
-    }
-
-    private AccountPO registerOauthAccount(OAuthAccountDto oAuthAccountDto) {
-        //插入本地用户表
-        AccountPO po = new AccountPO();
-        BeanUtils.copyProperties(oAuthAccountDto, po);
-        accountMapper.insert(po);
-        //插入第三方授权用户表
-        OauthAccountPO oauthAccountPO = new OauthAccountPO();
-        BeanUtils.copyProperties(oAuthAccountDto, oauthAccountPO);
-        oauthAccountPO.setAccountId(po.getId());
-        oauthAccountPO.setOauthType(OauthType.GITHUB.getCode());
-        oauthMapper.insert(oauthAccountPO);
-        return po;
-    }
-
-    private void updateOauthAccount(OAuthAccountDto oauthAccountDto) {
-        OauthAccountPO po = new OauthAccountPO();
-        po.setOauthId(oauthAccountDto.getOauthId());
-        OauthAccountPO oauthAccountPO = oauthMapper.selectOne(po.wrap(OauthAccountPO.class));
-        oauthAccountPO.setOauthName(oauthAccountDto.getOauthName());
-        oauthAccountPO.setAccessToken(oauthAccountDto.getAccessToken());
-        oauthAccountPO.setRefreshToken(oauthAccountDto.getRefreshToken());
-        oauthAccountPO.setUpdateTime(new Date());
-        oauthMapper.updateById(oauthAccountPO);
-        //更新用户表
-        Long accountId = oauthAccountPO.getAccountId();
-        AccountPO accountPO = accountMapper.selectById(accountId);
-        accountPO.setNickName(oauthAccountDto.getNickName());
-        accountPO.setMail(oauthAccountDto.getMail());
-        accountPO.setHeaderUrl(oauthAccountDto.getHeaderUrl());
-        accountMapper.updateById(accountPO);
+    @Override
+    protected OauthType getOauthType() {
+        return OauthType.GITHUB;
     }
 
 
     @Override
-    public OAuthAccountDto getOauthUser(String accessToken) {
+    public OAuthAccountDto getOauthUserByToken(String accessToken) {
         RestTemplate restTemplate = new RestTemplate();
         MultiValueMap<String, String> headers = new LinkedMultiValueMap();
         headers.add("Authorization", "token " + accessToken);
@@ -165,11 +87,5 @@ public class GithubOauthServiceImpl implements OAuthService, RegisterOauthServic
         account.setOauthName(name);
         account.setMail(json.getString("email"));
         return account;
-    }
-
-    @PostConstruct
-    @Override
-    public boolean register() {
-        return oauthServiceFactory.register(this, OauthType.GITHUB);
     }
 }
