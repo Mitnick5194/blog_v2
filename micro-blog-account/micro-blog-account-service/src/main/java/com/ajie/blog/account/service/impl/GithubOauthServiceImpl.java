@@ -54,7 +54,7 @@ public class GithubOauthServiceImpl extends AbstractOauthServiceImpl {
                 break;
             } catch (ResourceAccessException e) {
                 if (n >= RETRY_COUNT) {
-                    break;
+                    throw e;
                 }
                 log.info("第{}次获取github token失败", ++n, e);
             }
@@ -98,7 +98,7 @@ public class GithubOauthServiceImpl extends AbstractOauthServiceImpl {
                 response = restTemplate.exchange(githubProperties.getUserInfoUrl(), HttpMethod.GET, entity, String.class);
             } catch (ResourceAccessException e) {
                 if (n >= RETRY_COUNT) {
-                    break;
+                    throw e;
                 }
                 log.info("第{}次获取github token失败", ++n, e);
             }
