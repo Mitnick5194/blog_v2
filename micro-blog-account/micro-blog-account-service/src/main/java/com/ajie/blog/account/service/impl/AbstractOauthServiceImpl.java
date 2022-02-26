@@ -31,6 +31,10 @@ import java.util.Date;
  * @Date: 2022/2/26
  */
 public abstract class AbstractOauthServiceImpl implements OAuthService, RegisterOauthService {
+    /**
+     * 失败重试次数
+     */
+    protected final int RETRY_COUNT = 3;
     @Resource
     private AccountMapper accountMapper;
     @Resource

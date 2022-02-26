@@ -3,6 +3,7 @@ package com.ajie.blog.account.service.impl;
 import com.ajie.blog.account.api.dto.OAuthAccountDto;
 import com.ajie.blog.account.api.dto.TokenDto;
 import com.ajie.blog.account.config.GithubProperties;
+import com.ajie.blog.account.exception.AccountException;
 import com.ajie.commons.enums.OauthType;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
@@ -44,10 +46,31 @@ public class GithubOauthServiceImpl extends AbstractOauthServiceImpl {
         map.put("code", code);
         HttpEntity<Map<String, String>> entity = new HttpEntity(map, headers);
         log.info("github登录授权，入参：{}", code);
-        ResponseEntity<String> response = restTemplate.postForEntity(githubProperties.getTokenUrl(), entity, String.class);
+        ResponseEntity<String> response = null;
+        int n = 0;
+        while (n < RETRY_COUNT) {
+            try {
+                response = restTemplate.postForEntity(githubProperties.getTokenUrl(), entity, String.class);
+                break;
+            } catch (ResourceAccessException e) {
+                if (n >= RETRY_COUNT) {
+                    break;
+                }
+                log.info("第{}次获取github token失败", ++n, e);
+            }
+        }
+        if (null == response) {
+            throw new AccountException(HttpStatus.UNAUTHORIZED.value(), "无法获取token");
+        }
+        //http异常
         String body = checkAndGetBody(response, HttpStatus.UNAUTHORIZED.value(), "登录失败");
         log.info("github登录授权，响应：{}", body);
         JSONObject json = JSON.parseObject(body);
+        //判断业务异常
+        String error = json.getString("error");
+        if (StringUtils.isNotBlank(error)) {
+            throw new AccountException(HttpStatus.UNAUTHORIZED.value(), "无法获取token");
+        }
         String accessToken = json.getString("access_token");
         TokenDto token = new TokenDto();
         token.setAccessToken(accessToken);
@@ -68,7 +91,21 @@ public class GithubOauthServiceImpl extends AbstractOauthServiceImpl {
         headers.add("Accept", "application/json");
         Map<String, String> map = new HashMap<>(0);
         HttpEntity<?> entity = new HttpEntity(headers);
-        ResponseEntity<String> response = restTemplate.exchange(githubProperties.getUserInfoUrl(), HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = null;
+        int n = 0;
+        while (n < RETRY_COUNT) {
+            try {
+                response = restTemplate.exchange(githubProperties.getUserInfoUrl(), HttpMethod.GET, entity, String.class);
+            } catch (ResourceAccessException e) {
+                if (n >= RETRY_COUNT) {
+                    break;
+                }
+                log.info("第{}次获取github token失败", ++n, e);
+            }
+        }
+        if (null == response) {
+            return null;
+        }
         String body = checkAndGetBody(response, HttpStatus.UNAUTHORIZED.value(), "授权信息失效");
         JSONObject json = JSON.parseObject(body);
         String id = json.getString("id");

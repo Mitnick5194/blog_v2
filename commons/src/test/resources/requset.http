@@ -1,10 +1,5 @@
-POST  http://github.com/login/oauth/access_token
+GET  http://localhost:8081/micro-blog/v2/account/oauth/github?code=e3b2790fbf8d44a70eb3ad815818c6f5fcb20fff58bcd19ddb2f41f8aa4ddd8f
 Content-Type: application/json
 
-{
-  "client_id":"9b3e3a95ca4392cc0f33",
-  "client_secret": "085d079510240f2a4b5533225a6275956e1a041c",
-  "code": "14da405c2855373c4b29"
-}
 
 ###
