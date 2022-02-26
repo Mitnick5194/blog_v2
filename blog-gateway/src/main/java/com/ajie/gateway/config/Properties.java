@@ -1,4 +1,4 @@
-package com.ajie.config;
+package com.ajie.gateway.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

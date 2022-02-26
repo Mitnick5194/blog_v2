@@ -1,4 +1,4 @@
-package com.ajie.exception;
+package com.ajie.gateway.exception;
 
 public class VerifyException extends RuntimeException {
     public VerifyException() {

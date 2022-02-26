@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: blog-eureka
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    config:
+      overrideSystemProperties: false
+    nacos:
+      config:
+        namespace: 2a1579b0-0325-4d62-a02d-7b6f6088dbe0
+        extension-configs:
+          - data-id: blog-eureka.yaml
+

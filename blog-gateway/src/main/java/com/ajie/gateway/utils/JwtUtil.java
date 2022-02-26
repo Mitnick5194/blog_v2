@@ -1,7 +1,7 @@
-package com.ajie.utils;
+package com.ajie.gateway.utils;
 
-import com.ajie.dto.JwtAccount;
-import com.ajie.exception.VerifyException;
+import com.ajie.gateway.dto.JwtAccount;
+import com.ajie.gateway.exception.VerifyException;
 import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

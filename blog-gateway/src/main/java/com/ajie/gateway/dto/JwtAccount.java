@@ -1,4 +1,4 @@
-package com.ajie.dto;
+package com.ajie.gateway.dto;
 
 import com.alibaba.fastjson.JSON;
 

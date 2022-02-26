@@ -1,4 +1,4 @@
-package com.ajie.utils;
+package com.ajie.gateway.utils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

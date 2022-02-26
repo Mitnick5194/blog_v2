@@ -1,6 +1,6 @@
-package com.ajie.utils;
+package com.ajie.gateway.utils;
 
-import com.ajie.config.Properties;
+import com.ajie.gateway.config.Properties;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;

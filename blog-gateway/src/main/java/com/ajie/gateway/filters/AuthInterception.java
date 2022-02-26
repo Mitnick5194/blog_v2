@@ -1,11 +1,11 @@
-package com.ajie.filters;
+package com.ajie.gateway.filters;
 
-import com.ajie.config.Properties;
-import com.ajie.dto.JwtAccount;
-import com.ajie.exception.VerifyException;
-import com.ajie.utils.JwtUtil;
-import com.ajie.utils.PathUtil;
-import com.ajie.utils.RandomUtil;
+import com.ajie.gateway.config.Properties;
+import com.ajie.gateway.dto.JwtAccount;
+import com.ajie.gateway.exception.VerifyException;
+import com.ajie.gateway.utils.JwtUtil;
+import com.ajie.gateway.utils.PathUtil;
+import com.ajie.gateway.utils.RandomUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;

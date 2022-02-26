@@ -1,4 +1,4 @@
-package com.ajie.controller;
+package com.ajie.gateway.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
