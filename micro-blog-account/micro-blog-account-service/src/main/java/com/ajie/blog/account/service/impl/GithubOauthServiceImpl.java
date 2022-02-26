@@ -89,8 +89,8 @@ public class GithubOauthServiceImpl extends AbstractOauthServiceImpl {
         MultiValueMap<String, String> headers = new LinkedMultiValueMap();
         headers.add("Authorization", "token " + accessToken);
         headers.add("Accept", "application/json");
-        Map<String, String> map = new HashMap<>(0);
         HttpEntity<?> entity = new HttpEntity(headers);
+        log.info("github获取用户信息，入参：{}", accessToken);
         ResponseEntity<String> response = null;
         int n = 0;
         while (n < RETRY_COUNT) {
@@ -107,6 +107,7 @@ public class GithubOauthServiceImpl extends AbstractOauthServiceImpl {
             return null;
         }
         String body = checkAndGetBody(response, HttpStatus.UNAUTHORIZED.value(), "授权信息失效");
+        log.info("github获取用户信息，响应：{}", body);
         JSONObject json = JSON.parseObject(body);
         String id = json.getString("id");
         if (StringUtils.isBlank(id)) {
