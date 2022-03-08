@@ -70,7 +70,7 @@ public abstract class AbstractMapperAspect {
 
     /**
      * 属主判断，删除和修改的时候需要判断当前登录这是否为数据的拥有着，防止篡改
-     *
+     *1395288739512655873 1395288739512655873
      * @return
      */
     private void checkBelong(ProceedingJoinPoint point, BasePO basePO) {
@@ -84,7 +84,7 @@ public abstract class AbstractMapperAspect {
             }
             String createPerson = getById.getCreatePerson();
             //只有数据存在createPerson才要校验
-            if (StringUtils.isNotBlank(createPerson) && !createPerson.equals(id)) {
+            if (StringUtils.isNotBlank(createPerson) && !Long.valueOf(createPerson).equals(id)) {
                 throw new CommonException(CommonsExceptionEmun.BELONG_NOT_MATCH.getCode(), CommonsExceptionEmun.BELONG_NOT_MATCH.getMsg());
             }
         } catch (Exception e) {
