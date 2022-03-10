@@ -77,7 +77,7 @@ public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant
             po.setId(null);
             blogMapper.insert(po);
         }
-        handleTag(dto.getTagList(), po.getId(), false);
+        handleTag(dto.getTagList(), po.getId(), null != blogPO);
         return po.getId();
     }
 
@@ -86,7 +86,7 @@ public class BlogServiceImpl implements BlogService, TableConstant, BlogConstant
      *
      * @param tagList    标签
      * @param blogId     博客id
-     * @param delBlogTag 是否需要删除中间表
+     * @param delBlogTag 是否需要删除中间表，更新的时候要删除
      */
     private void handleTag(List<TagDto> tagList, Long blogId, boolean delBlogTag) {
         if (CollectionUtils.isEmpty(tagList)) {

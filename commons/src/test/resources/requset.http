@@ -1,3 +1,7 @@
+GET http://localhost:8081/micro-blog/v2/account/redirect
+Accept: application/json
+
+###
 GET  http://localhost:8081/micro-blog/v2/account/oauth/github?code=e3b2790fbf8d44a70eb3ad815818c6f5fcb20fff58bcd19ddb2f41f8aa4ddd8f
 Content-Type: application/json
 
