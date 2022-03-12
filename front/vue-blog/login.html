@@ -189,23 +189,30 @@
         }
         //ref有可能是编码过的，所以先解码（没有编码过的解码也不会有影响）
         ref = decodeURIComponent(ref);
-        let origin = location.origin;
+        //ref是否有参数
+        let refHasParam = ref.indexOf("?") > -1;
         //对比是不是同源，非同源token通过链接参数传过去
-        let idx = ref.indexOf("?");
-        if (idx == -1) {
-            //没有带参数，整个对比
-            if (origin != ref) {
-                ref += "?token=" + token;
-            }
+        let refOrigin;
+        if (ref.startsWith("https://")) {
+            refOrigin = ref.substring(8);
         } else {
-            //有参数,截取域名
-            let refOrigin = ref.substring(0, idx);
-            if (origin != refOrigin) {
-                ref += "&token=" + token;
-            }
+            refOrigin = ref.substring(7);
+        }
+
+        let idx = refOrigin.indexOf("/");
+        if (idx > -1) {
+            //存在uri，截取
+            refOrigin = refOrigin.substring(0, idx);
+        } else if (refHasParam) {
+            //不存在uri，看看有没有参数（存在uri时，截取uri连同参数一并截取了）
+            refOrigin = refOrigin.substring(0, idx);
+        }
+        let origin = location.hostname;
+        if (refOrigin != origin) {
+            let connector = refHasParam ? "&" : "?"
+            ref += connector + "token=" + token;
         }
         location.href = ref;
-
     }
 
 
