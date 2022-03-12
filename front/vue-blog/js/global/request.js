@@ -1,5 +1,5 @@
-//const host = "http://blog.nzjie.cn";
-const host = "http://localhost";
+const host = "http://blog.nzjie.cn";
+//const host = "http://localhost";
 
 /**
  * 业务状态码非200错误返回标志
@@ -115,6 +115,7 @@ function checkAndGetData(data, errorCallback) {
         if (code == 401) {
             //登录过期
             let ref = location.href;
+            ref = encodeURIComponent(ref);
             window.location.href = "login.html?ref=" + ref;
             return BIZ_ERROR_MARK;
         }
