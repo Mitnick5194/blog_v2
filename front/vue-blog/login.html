@@ -37,8 +37,10 @@
                     </div>
                     <div class="login-btn submitBtn" @click="login">登录</div>
                     <div class="social-login">
-                        <span  @click="auth('github')" title="github登录" class="github-login"><img src="images/github_logo.png"/></span>
-                        <span  @click="auth('gitee')" title="gitee登录" class="gitee-login"><img src="images/gitee_logo.png"/></span>
+                        <span @click="auth('github')" title="github登录" class="github-login"><img
+                                src="images/github_logo.png"/></span>
+                        <span @click="auth('gitee')" title="gitee登录" class="gitee-login"><img
+                                src="images/gitee_logo.png"/></span>
                     </div>
                 </div>
                 <div class="register-form form" id="iRegisterForm">
@@ -81,10 +83,10 @@
             code: null, //用户输入的验证码
             verifyCode: null,
             confirmPassword: null,
-            socialLoginUrlMap:{
-              "github": "https://github.com/login/oauth/authorize?client_id=9b3e3a95ca4392cc0f33&redirect_uri=http://blog.nzjie.cn/oauth2.html?type=github",
-              "gitee": "https://gitee.com/oauth/authorize?client_id=88aafe177f4f5a653dd401e4fbb69797cf2bf55767be370285d7e95b5ae61f99" +
-                  "&response_type=code&redirect_uri=http://blog.nzjie.cn/oauth2.html?type=gitee"
+            socialLoginUrlMap: {
+                "github": "https://github.com/login/oauth/authorize?client_id=9b3e3a95ca4392cc0f33&redirect_uri=http://blog.nzjie.cn/oauth2.html?type=github",
+                "gitee": "https://gitee.com/oauth/authorize?client_id=88aafe177f4f5a653dd401e4fbb69797cf2bf55767be370285d7e95b5ae61f99" +
+                    "&response_type=code&redirect_uri=http://blog.nzjie.cn/oauth2.html?type=gitee"
             },
         },
         created: () => {
@@ -108,9 +110,12 @@
                     user: user,
                     password: password
                 }
+                ///micro-blog/v2/account
+                ///api-account/v2/account/login
                 doPost("/api-account/v2/account/login", param, function (data) {
+                    //即使是第三方系统使用博客系统的登录，成功后博客系统也是处于登录状态的
                     saveLocalValue("account", data);
-                    gotoRef();
+                    gotoRef(data.token);
                 }, function (error) {
                     alert(error.msg);
                 })
@@ -175,16 +180,32 @@
 
     })
 
-    function gotoRef(ref) {
-        if (!ref) {
-            let href = location.href
-            ref = "index.html"
-            let idx = href.indexOf("ref=");
-            if (idx > -1) {
-                ref = href.substring(idx + 4);
+    function gotoRef(token) {
+        let ref = getQueryString("ref");
+        if (!ref || !ref.length) {
+            //不存在ref
+            location.href = "index.html";
+            return;
+        }
+        //ref有可能是编码过的，所以先解码（没有编码过的解码也不会有影响）
+        ref = decodeURIComponent(ref);
+        let origin = location.origin;
+        //对比是不是同源，非同源token通过链接参数传过去
+        let idx = ref.indexOf("?");
+        if (idx == -1) {
+            //没有带参数，整个对比
+            if (origin != ref) {
+                ref += "?token=" + token;
+            }
+        } else {
+            //有参数,截取域名
+            let refOrigin = ref.substring(0, idx);
+            if (origin != refOrigin) {
+                ref += "&token=" + token;
             }
         }
         location.href = ref;
+
     }
 
 
