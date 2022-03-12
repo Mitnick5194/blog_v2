@@ -1,4 +1,5 @@
 const storage = localStorage
+
 //写入cookie
 function saveLocalValue(name, value) {
     //判断value是否为对象
@@ -22,7 +23,7 @@ function getLocalValue(name) {
     return item;
 }
 
-function removeLocalValue(name){
+function removeLocalValue(name) {
     localStorage.removeItem(name);
 }
 
@@ -58,6 +59,7 @@ Date.prototype.handleViewDate = function () {
 
 function gotoLoginPage() {
     let ref = location.href;
+    ref = encodeURIComponent(ref);
     location.href = "login.html?ref=" + ref;
 }
 
