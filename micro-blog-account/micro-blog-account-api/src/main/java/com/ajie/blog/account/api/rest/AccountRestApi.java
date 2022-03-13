@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "micro-blog-account")
+@FeignClient(name = "micro-blog-account",url="${feign.micro-blog-account.url:}")
 @Api(tags = "用户模块")
 @RequestMapping("/micro-blog/v2/account")
 public interface AccountRestApi {
