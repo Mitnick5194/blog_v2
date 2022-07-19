@@ -2,8 +2,6 @@ package com.ajie.commons.po;
 
 import com.ajie.commons.utils.UserInfoUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.collections.CollectionUtils;
 
 import java.io.Serializable;
@@ -16,8 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 基础持久PO
  */
-@Getter
-@Setter
 public class BasePO implements Serializable {
     /**
      * 主键ID
@@ -218,12 +214,67 @@ public class BasePO implements Serializable {
         return sb.toString();
     }
 
-    static class Test extends BasePO {
-        private String test;
+    public Long getId() {
+        return id;
     }
 
-    public static void main(String[] args) {
-        Test t = new Test();
-        Test test = t.toQueryWrap();
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getCreatePerson() {
+        return createPerson;
+    }
+
+    public void setCreatePerson(String createPerson) {
+        this.createPerson = createPerson;
+    }
+
+    public String getUpdatePerson() {
+        return updatePerson;
+    }
+
+    public void setUpdatePerson(String updatePerson) {
+        this.updatePerson = updatePerson;
+    }
+
+    public int getDel() {
+        return del;
+    }
+
+    public void setDel(int del) {
+        this.del = del;
+    }
+
+    public static Map<String, Method> getMethods() {
+        return methods;
+    }
+
+    public static void setMethods(Map<String, Method> methods) {
+        BasePO.methods = methods;
+    }
+
+    public static Map<String, List<Field>> getPoFields() {
+        return poFields;
+    }
+
+    public static void setPoFields(Map<String, List<Field>> poFields) {
+        BasePO.poFields = poFields;
     }
 }
